@@ -1,5 +1,33 @@
-@()
 
 @main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+<html lang="en" class="no-js">
+    <head>
+       
+        <script src="@routes.Assets.versioned("javascripts/jquery-3.3.1.min.js")"></script>
+        <!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+    </head>
+    <body class="FreeLance-soen">
+    <h3>Welcome to FreeLanceLot</h3
+>        
+        <main class="main-wrap-open">
+            <div class="search">
+                
+                <form class="search__form" id="search-form">
+                    <input id="search-input" class="search__input" name="search" type="search" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                     <button type="submit" id="search-button">Search</button> 
+                </form>
+                
+                <div class="main-body">
+           
+                </div>
+            </div>
+        </main>
+        <div class="search-body">
+            <p class="p-headline">Top Searches</p>
+        </div>
+        <script src="@routes.Assets.versioned("javascripts/search.js")"></script>
+    </body>
+</html>
 }
