@@ -1,9 +1,22 @@
+@(searchResult:List[dao.ProjectResponse])
 
 @main("Welcome to Play") {
 <html lang="en" class="no-js">
     <head>
        
-        <script src="@routes.Assets.versioned("javascripts/jquery-3.3.1.min.js")"></script>
+        <script>
+        myStorage = window.sessionStorage;
+        var num = 0;
+        var str = num.toString();
+        myStorage.setItem('initialCount', str);	
+        function myFunction() {
+        	var str = myStorage.getItem('initialCount');	
+        	var newCount = parseInt(str) + 1;
+        	var str = newCount.toString();
+        	myStorage.setItem('initialCount', str);
+        	}
+        	console.log(sessionStorage.getItem('initialCount'));
+        </script>
         <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -14,9 +27,9 @@
         <main class="main-wrap-open">
             <div class="search">
                 
-                <form class="search__form" id="search-form">
-                    <input id="search-input" class="search__input" name="search" type="search" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-                     <button type="submit" id="search-button">Search</button> 
+                <form class="search__form" method="GET" action="/SearchPage" onsubmit="myFunction()">
+                    <input  class="search__input" id="s_val" name="keyWord" type="text" placeholder="Enter Search Terms"/>
+                     <input type="submit" id="btn_submit" value="Search" /> 
                 </form>
                 
                 <div class="main-body">
@@ -25,8 +38,24 @@
             </div>
         </main>
         <div class="search-body">
-            <p class="p-headline">Top Searches</p>
+            <p class="p-headline">Search Terms</p> <div id="node-id"></div>
         </div>
+        <table id="infoTable">
+			@if(searchResult!=null && searchResult.size()!=0){
+				@for(project<-searchResult){
+				<tr>
+			    <td>@project.owner_id </td>
+			    <td>@project.time_submitted</td>
+			    <td>@project.title</td>
+			    <td>type: @project.project_type</td>
+			    <td>skills: @for(skill<-project.skills){@skill} </td>
+			    <td>Readability Level</td>
+			    </tr>
+				}
+			} else{
+				<tr><td><h3><i>No Result to Show Please Search in box</i></h3></td></tr>
+			}
+		</table>
         <script src="@routes.Assets.versioned("javascripts/search.js")"></script>
     </body>
 </html>
