@@ -38,7 +38,7 @@
             </div>
         </main>
         <div class="search-body">
-            <p class="p-headline">Search Terms</p> <div id="node-id"></div>
+            <p class="p-headline">Search Terms :</p> <div id="node-id"></div>
         </div>
         <table id="infoTable">
 			@if(searchResult!=null && searchResult.size()!=0){
@@ -49,7 +49,7 @@
 			    <td>@project.title</td>
 			    <td>type: @project.project_type</td>
 			    <td>skills: @for(skill<-project.skills){@skill} </td>
-			    <td>Readability Level</td>
+			    <td>@project.educational_level</td>
 			    </tr>
 				}
 			} else{

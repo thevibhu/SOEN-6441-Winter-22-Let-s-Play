@@ -21,7 +21,13 @@ public class Project{
 		this.jobs = jobs;
 	}
 	public String preview_description;
-	 public boolean deleted;
+	 public String getPreview_description() {
+		return preview_description;
+	}
+	public void setPreview_description(String preview_description) {
+		this.preview_description = preview_description;
+	}
+	public boolean deleted;
 	 public boolean nonpublic;
 	 public boolean hidebids;
 	 public ArrayList<Job> jobs;
