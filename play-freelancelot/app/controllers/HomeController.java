@@ -1,7 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -10,21 +12,65 @@ import dao.ProjectResponse;
 import play.mvc.*;
 import services.FreeLancelotService;
 
+import play.mvc.Http.Session;
+import play.mvc.Http;
+import play.libs.concurrent.HttpExecutionContext;
+import play.libs.Json;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.inject.*;
+import scala.compat.java8.FutureConverters;
+import akka.actor.*;
+import static akka.pattern.Patterns.ask;
+import akka.stream.*;
+import play.libs.ws.*;
+
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
 public class HomeController extends Controller {
-
+	
+	private HttpExecutionContext httpExecutionContext;
+	private final HashMap<String, List<ProjectResponse>> cache;
+    
+    @Inject
+	public HomeController(HttpExecutionContext httpExecutionContext, WSClient ws) {
+    	this.httpExecutionContext = httpExecutionContext;
+        cache = new HashMap<String, List<ProjectResponse>>();
+    }
     /** searchResult.result.projects.toString()
      * An action that renders an HTML page with a welcome message.
      * The configuration in the <code>routes</code> file means that
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
-    public CompletionStage<Result> index(String keyWord) throws IOException{
-    	return FreeLancelotService.streamProjects(keyWord).thenApplyAsync(res -> ok(views.html.index.render(res))); 
+    public CompletionStage<Result> index(Http.Request request, String keyWord) throws IOException{
+    	System.out.println(request.session().data().size());
+    	System.out.println("Session :  "+request.session().data());
+        System.out.println("Hash Table:" + cache);
+        CompletableFuture<String> completableFuture = new CompletableFuture<>();
+        
+        if(request.session().get(keyWord).isPresent()){
+            completableFuture.complete(request.session().get(keyWord).get());
 
+            return completableFuture
+                    .thenApplyAsync(response -> ok(views.html.index.render(cache.get(keyWord), request,keyWord,cache)));
+        } else{
+            System.out.println("New Search == "+keyWord);
+            
+            return FreeLancelotService.streamProjects(keyWord)
+                    .thenApplyAsync(response->{
+                        if(((List<ProjectResponse>)response).size() > 0) {
+                            cache.put(keyWord, ((List<ProjectResponse>) response));
+                            return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache)).addingToSession(request, keyWord, keyWord);
+                        }
+                        return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache));
+                    });
+            
+        }
     }
   
 //       public void getActiveProjects(String keyword) throws InterruptedException, ExecutionException {

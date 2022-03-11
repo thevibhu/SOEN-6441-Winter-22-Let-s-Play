@@ -1,61 +1,94 @@
-@(searchResult:List[dao.ProjectResponse])
+@(searchResult:List[dao.ProjectResponse],request: play.mvc.Http.Request, keyWord: String, response: HashMap[String, List[dao.ProjectResponse]])
 
-@main("Welcome to Play") {
+@main("Freelancelot") {
 <html lang="en" class="no-js">
     <head>
-       
-        <script>
-        myStorage = window.sessionStorage;
-        var num = 0;
-        var str = num.toString();
-        myStorage.setItem('initialCount', str);	
-        function myFunction() {
-        	var str = myStorage.getItem('initialCount');	
-        	var newCount = parseInt(str) + 1;
-        	var str = newCount.toString();
-        	myStorage.setItem('initialCount', str);
-        	}
-        	console.log(sessionStorage.getItem('initialCount'));
-        </script>
+       	<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="public/javascripts/main.js"></script>
+        <link rel="stylesheet" href="public/stylesheets/main.css">
+        
         <!--[if IE]>
-  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
 		<![endif]-->
     </head>
     <body class="FreeLance-soen">
-    <h3>Welcome to FreeLanceLot</h3
->        
+    
+    <div class="container">
+   	<center><h3>Welcome to FreeLanceLot</h3>      
         <main class="main-wrap-open">
-            <div class="search">
-                
-                <form class="search__form" method="GET" action="/SearchPage" onsubmit="myFunction()">
-                    <input  class="search__input" id="s_val" name="keyWord" type="text" placeholder="Enter Search Terms"/>
-                     <input type="submit" id="btn_submit" value="Search" /> 
+            <div class="center">
+                <form class="form-inline" method="GET" action="/SearchPage" onsubmit="myFunction()">
+                    @if(request.session().data().size() < 9) {
+                    	<input class="form-control" id="s_val" name="keyWord" type="text" placeholder="Enter Search Terms"/>
+                    	<input type="submit" id="btn_submit" class="btn btn-success" value="Search" />
+                    } else {
+                    	<input class="form-control" id="s_val" name="keyWord" type="text" placeholder="Enter Search Terms" disabled/>
+                    	<input type="submit" id="btn_submit" class="btn btn-success" value="Search" disabled/>
+                    }
+                     
                 </form>
-                
+                <br>
                 <div class="main-body">
            
                 </div>
             </div>
-        </main>
+        </main></center>
         <div class="search-body">
-            <p class="p-headline">Search Terms :</p> <div id="node-id"></div>
-        </div>
-        <table id="infoTable">
-			@if(searchResult!=null && searchResult.size()!=0){
-				@for(project<-searchResult){
-				<tr>
-			    <td>@project.owner_id </td>
-			    <td>@project.time_submitted</td>
-			    <td>@project.title</td>
-			    <td>type: @project.project_type</td>
-			    <td>skills: @for(skill<-project.skills){@skill} </td>
-			    <td>@project.educational_level</td>
-			    </tr>
+        @if(searchResult.isEmpty() && searchResult.size()==0) {
+        	<div class="search">
+        	<table id="infoTable" class="table">
+	        	<tr><h3><i>No Result to Show Please Search in box</i></h3></tr>
+	        </table>
+	        </div>
+        } else {
+        	@for((keyword, results) <- response){
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword </h5>	
+        	<div class="search">
+        	<table id="infoTable" class="table">
+			@if(results!=null && results.size()!=0){
+					<thead>
+      					<tr>
+      					<th>Sr.No</th>
+        				<th>Owner ID</th>
+        				<th>Time Submitted</th>
+        				<th>Project Title</th>
+        				<th>Project Type</th>
+        				<th>Project Skills</th>
+        				<th>Educational Level</th>
+      					</tr>
+    				</thead>
+					@for((project, index)<-results.zipWithIndex){
+					<tr>
+						<td>@(index+1)</td>
+			    		<td>@project.owner_id </td>
+			    		<td>@project.time_submitted</td>
+			    		<td>@project.title</td>
+			    		<td>@project.project_type</td>
+			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
+			    			@if(project.skills.size() == (index + 1)) {
+			    				@skill
+			    			} else {
+			    				@skill, 
+			    			}
+			    		}</td>
+			    		<td>@project.educational_level</td>
+			    	</tr>
+					}
+				} else{
+					<tr><h3><i>No Result to Show Please Search in box</i></h3></tr>
 				}
-			} else{
-				<tr><td><h3><i>No Result to Show Please Search in box</i></h3></td></tr>
-			}
-		</table>
+			</table>
+		</div>
+        }
+        }
+        </div>
+        </div>
+        
+		<br><br><br>
         <script src="@routes.Assets.versioned("javascripts/search.js")"></script>
     </body>
 </html>

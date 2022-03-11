@@ -10,8 +10,8 @@ public class ProjectResponse {
 	 public String title;
 	 public String project_type; 
 	 public List<String> skills;
-	 public String educational_level;		
-	
+	 public String educational_level;
+	 
 	public ProjectResponse(int owner_id, int time_submitted, String title, String project_type,
 			List<String> skills, String educational_level) {
 		super();

@@ -1,11 +1,13 @@
-2022-02-28 21:15:11 [34mINFO [0;39m [36mplay.api.http.EnabledFilters[0;39m [35m[0;39m Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2022-03-10 19:37:16 [31mWARN [0;39m [36mplay.api.Configuration[0;39m [35m[0;39m application.conf @ file:/Users/gurpreetsingh/Concordia/Winter%202022/SOEN%206441-%20Adv%20Prog%20Practices/GroupProject/SOEN-6441-Winter-22-Let-s-Play/play-freelancelot/target/scala-2.13/classes/application.conf: 7: session.cookieName is deprecated, use play.http.session.cookieName instead
+2022-03-10 19:37:16 [31mWARN [0;39m [36mplay.api.Configuration[0;39m [35m[0;39m application.conf @ file:/Users/gurpreetsingh/Concordia/Winter%202022/SOEN%206441-%20Adv%20Prog%20Practices/GroupProject/SOEN-6441-Winter-22-Let-s-Play/play-freelancelot/target/scala-2.13/classes/application.conf: 10: session.secure is deprecated, use play.http.session.secure instead
+2022-03-10 19:37:16 [31mWARN [0;39m [36mplay.api.Configuration[0;39m [35m[0;39m application.conf @ file:/Users/gurpreetsingh/Concordia/Winter%202022/SOEN%206441-%20Adv%20Prog%20Practices/GroupProject/SOEN-6441-Winter-22-Let-s-Play/play-freelancelot/target/scala-2.13/classes/application.conf: 18: session.httpOnly is deprecated, use play.http.session.httpOnly instead
+2022-03-10 19:37:16 [34mINFO [0;39m [36mplay.api.http.EnabledFilters[0;39m [35m[0;39m Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.csrf.CSRFFilter
     play.filters.headers.SecurityHeadersFilter
     play.filters.hosts.AllowedHostsFilter
 
-2022-02-28 21:15:12 [34mINFO [0;39m [36mplay.api.Play[0;39m [35m[0;39m Application started (Dev) (no global state)
-2022-02-28 21:15:17 [34mINFO [0;39m [36mp.a.i.l.c.CoordinatedShutdownSupport[0;39m [35m[0;39m Starting synchronous coordinated shutdown with ServerStoppedReason reason and 35000 milliseconds timeout
-2022-02-28 21:15:17 [34mINFO [0;39m [36mplay.core.server.AkkaHttpServer[0;39m [35m[0;39m Stopping Akka HTTP server...
-2022-02-28 21:15:17 [34mINFO [0;39m [36mplay.core.server.AkkaHttpServer[0;39m [35m[0;39m Terminating server binding for /0:0:0:0:0:0:0:0:9000
-2022-02-28 21:15:17 [34mINFO [0;39m [36mplay.core.server.AkkaHttpServer[0;39m [35m[0;39m Running provided shutdown stop hooks
+2022-03-10 19:37:16 [34mINFO [0;39m [36mplay.api.Play[0;39m [35m[0;39m Application started (Dev) (no global state)
+2022-03-11 05:51:14 [34mINFO [0;39m [36mplay.core.server.AkkaHttpServer[0;39m [35m[0;39m Stopping Akka HTTP server...
+2022-03-11 05:51:14 [34mINFO [0;39m [36mplay.core.server.AkkaHttpServer[0;39m [35m[0;39m Terminating server binding for /0:0:0:0:0:0:0:0:9000
+2022-03-11 05:51:14 [34mINFO [0;39m [36mplay.core.server.AkkaHttpServer[0;39m [35m[0;39m Running provided shutdown stop hooks
