@@ -11,7 +11,13 @@ public class Project{
 	 public String title;
 	 public String status;
 	 public String seo_url;
-	 public Currency currency;
+	 public String getSeo_url() {
+		return seo_url;
+	}
+	public void setSeo_url(String seo_url) {
+		this.seo_url = seo_url;
+	}
+	public Currency currency;
 	 public HourlyProjectInfo hourly_project_info;
 	 public int submitdate;
 	 public ArrayList<Job> getJobs() {

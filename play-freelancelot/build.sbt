@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += ehcache
+
+libraryDependencies += ws

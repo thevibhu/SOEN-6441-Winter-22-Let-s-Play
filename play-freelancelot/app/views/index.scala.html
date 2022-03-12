@@ -45,8 +45,53 @@
 	        </table>
 	        </div>
         } else {
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyWord  <a>Global Stats</a>&nbsp; &nbsp;  flesch index:@{searchResult.map(_.flesch_index).sum/searchResult.size()}&nbsp; &nbsp;  fkgl: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
+        	<div class="search">
+        	<table id="infoTable" class="table">
+			@if(searchResult!=null && searchResult.size()!=0){
+					<thead>
+      					<tr>
+      					<th>Sr.No</th>
+        				<th>Owner ID</th>
+        				<th>Time Submitted</th>
+        				<th>Project Title</th>
+        				<th>Project Type</th>
+        				<th>Project Skills</th>
+        				<th>Project Stats</th>
+        				<th>Flesch Index</th>
+        				<th>FKG Index</th>
+        				<th>Edu. Level</th>
+      					</tr>
+    				</thead>
+					@for((project, index)<-searchResult.zipWithIndex){
+					<tr>
+						<td>@(index+1)</td>
+			    		<td><a>@project.owner_id</a> </td>
+			    		<td>@project.time_submitted</td>
+			    		<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
+			    		<td>@project.project_type</td>
+			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
+			    			@if(project.skills.size() == (index + 1)) {
+			    				<a>@skill</a>
+			    			} else {
+			    				<a>@skill</a>, 
+			    			}
+			    		}</td>
+			    		<td><a>stats</a></td>
+			    		<td>@project.flesch_index</td>
+			    		<td>@project.fkgl</td>
+			    		<td>@project.edu_level</td>
+			    	</tr>
+					}
+				} else{
+					<tr><h3><i>No Result to Show Please Search in box</i></h3></tr>
+				}
+			</table>
+		</div>
         	@for((keyword, results) <- response){
-        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword </h5>	
+        	@if(keyword !=keyWord){ 
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  <a>Global Stats</a>&nbsp; &nbsp;  flesch index:@{results.map(_.flesch_index).sum/results.size()}&nbsp; &nbsp;  fkgl: @{results.map(_.fkgl).sum/results.size()}</h5>	
+
         	<div class="search">
         	<table id="infoTable" class="table">
 			@if(results!=null && results.size()!=0){
@@ -58,24 +103,30 @@
         				<th>Project Title</th>
         				<th>Project Type</th>
         				<th>Project Skills</th>
-        				<th>Educational Level</th>
+        				<th>Project Stats</th>
+        				<th>Flesch Index</th>
+        				<th>FKG Index</th>
+        				<th>Edu. Level</th>
       					</tr>
     				</thead>
 					@for((project, index)<-results.zipWithIndex){
 					<tr>
 						<td>@(index+1)</td>
-			    		<td>@project.owner_id </td>
+			    		<td><a>@project.owner_id</a> </td>
 			    		<td>@project.time_submitted</td>
-			    		<td>@project.title</td>
+			    		<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
 			    		<td>@project.project_type</td>
 			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
 			    			@if(project.skills.size() == (index + 1)) {
-			    				@skill
+			    				<a>@skill</a>
 			    			} else {
-			    				@skill, 
+			    				<a>@skill</a>, 
 			    			}
 			    		}</td>
-			    		<td>@project.educational_level</td>
+			    		<td><a>stats</a></td>
+			    		<td>@project.flesch_index</td>
+			    		<td>@project.fkgl</td>
+			    		<td>@project.edu_level</td>
 			    	</tr>
 					}
 				} else{
@@ -83,7 +134,8 @@
 				}
 			</table>
 		</div>
-        }
+        	}
+        	 }
         }
         </div>
         </div>

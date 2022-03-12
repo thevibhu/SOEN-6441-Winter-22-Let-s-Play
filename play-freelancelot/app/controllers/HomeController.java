@@ -48,19 +48,13 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public CompletionStage<Result> index(Http.Request request, String keyWord) throws IOException{
-    	System.out.println(request.session().data().size());
-    	System.out.println("Session :  "+request.session().data());
-        System.out.println("Hash Table:" + cache);
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
         
         if(request.session().get(keyWord).isPresent()){
             completableFuture.complete(request.session().get(keyWord).get());
-
             return completableFuture
                     .thenApplyAsync(response -> ok(views.html.index.render(cache.get(keyWord), request,keyWord,cache)));
         } else{
-            System.out.println("New Search == "+keyWord);
-            
             return FreeLancelotService.streamProjects(keyWord)
                     .thenApplyAsync(response->{
                         if(((List<ProjectResponse>)response).size() > 0) {
@@ -73,8 +67,4 @@ public class HomeController extends Controller {
         }
     }
   
-//       public void getActiveProjects(String keyword) throws InterruptedException, ExecutionException {
-//    	   freeLancerService.getActiveProjects();
-//   }
-
 }

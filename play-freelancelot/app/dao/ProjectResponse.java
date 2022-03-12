@@ -10,10 +10,13 @@ public class ProjectResponse {
 	 public String title;
 	 public String project_type; 
 	 public List<String> skills;
-	 public String educational_level;
+	 public String seo_url;
+	 public int flesch_index;
+	 public int fkgl;
+	 public String edu_level;
 	 
 	public ProjectResponse(int owner_id, int time_submitted, String title, String project_type,
-			List<String> skills, String educational_level) {
+			List<String> skills, String seo_url,double flesh_index,double fkgl, String edu_level) {
 		super();
 		this.owner_id = owner_id;
 		this.time_submitted = new SimpleDateFormat("MMMM d, yyyy")
@@ -21,6 +24,10 @@ public class ProjectResponse {
 		this.title = title;
 		this.project_type = project_type;
 		this.skills = skills;
-		this.educational_level = educational_level;
+		this.seo_url=seo_url;
+		this.fkgl=(int)fkgl;
+		this.flesch_index=(int)flesh_index;
+		this.edu_level=edu_level;
+		
 	}
 }
