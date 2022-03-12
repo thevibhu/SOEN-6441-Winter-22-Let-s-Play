@@ -15,6 +15,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,8 +53,7 @@ public class FreeLancelotService {
 	
 	private static double getfleschIndex(String preview_description) {
 		double wordcount = wordCount(preview_description);
-		//double syllable count = countSyllables(preview_description);
-		double syllablecount =0;
+		double syllablecount = syllablesCount(preview_description);
 		double sentencecount = sentenceCount(preview_description);
 		if (preview_description == "" || wordcount == 0 ) {
 			return 999;
@@ -62,8 +63,7 @@ public class FreeLancelotService {
 	
 	private static double getFKGL(String preview_description) {
 		double wordcount = wordCount(preview_description);
-		//double syllable count = countSyllables(preview_description);
-		double syllablecount =0;
+		double syllablecount = syllablesCount(preview_description);
 		double sentencecount = sentenceCount(preview_description);
 		if (preview_description == "" || wordcount == 0 ) {
 			return 999;
@@ -94,7 +94,6 @@ public class FreeLancelotService {
 		} else if (fleschIndex >100 ) {
 			return "Early";
 		}
-		
 		return "Unable to compute";
 		
 	}
@@ -102,17 +101,25 @@ public class FreeLancelotService {
 	public static double sentenceCount(String preview_description) {
 		int sentenceCount = 0;
 		String[] sentenceList = preview_description.split("[!?.:]+");
-		sentenceCount += sentenceList.length;
+		sentenceCount =sentenceCount + sentenceList.length;
 		return sentenceCount;
+	}
+	
+	public static double syllablesCount(String preview_description) {
+		Pattern p = Pattern.compile("[aeiouy]+[^$e(,.:;!?)]");
+		Matcher m = p.matcher(preview_description);
+		int syllables = 0;
+		while (m.find()){
+		    syllables++;
+		}
+		return syllables;
 	}
 	
 	public static double wordCount(String preview_description) {
 		int count=0;
-        char ch[]= new char[preview_description.length()];     
         for(int i=0;i<preview_description.length();i++)  
-        {  
-            ch[i]= preview_description.charAt(i);  
-            if( ((i>0)&&(ch[i]!=' ')&&(ch[i-1]==' ')) || ((ch[0]!=' ')&&(i==0)) )  
+        {   
+            if( ((i>0)&&(preview_description.charAt(i)!=' ')&&(preview_description.charAt(i-1)==' ')) || ((preview_description.charAt(0)!=' ')&&(i==0)) )  
                 count++;  
         } 
         return count;
