@@ -10,12 +10,16 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,12 +30,24 @@ import dao.ProjectResponse;
 
 public class FreeLancelotService {
 	
+	public static CompletableFuture<HashMap<String, Integer>> wordStats(String prevDescriptor) throws IOException {
+		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
+        List<String> wordList = Stream.of(prevDescriptor).map(x -> x.split("\\s+")).flatMap(Arrays::stream)
+            .collect(Collectors.toList());
+ 
+        Map<String, Integer > wordCounter = wordList.stream()
+            .collect(Collectors.toMap(x -> x.toLowerCase(), x -> 1, Integer::sum));
+ 
+        ((CompletableFuture<HashMap<String, Integer>>) future).complete((HashMap<String, Integer>) wordCounter);
+		return future;
+	}
+	
 	public static CompletableFuture<List<ProjectResponse>>  streamProjects(String keyWord) throws IOException {
 		return FreelancerAPIcallsService.getActiveProjects(keyWord).thenApplyAsync(
 				projects -> {
 					List<ProjectResponse> projRes = projects.stream()
-							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), getfleschIndex(p.getPreview_description()), getFKGL(p.getPreview_description()), getEducationalLevel(p.getPreview_description())))
-							.collect(Collectors.toList());					
+							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), getfleschIndex(p.getPreview_description()), getFKGL(p.getPreview_description()), getEducationalLevel(p.getPreview_description()), p.getPreview_description()))
+							.collect(Collectors.toList());	
 					return projRes;
 				}
 		);

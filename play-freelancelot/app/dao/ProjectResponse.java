@@ -14,9 +14,10 @@ public class ProjectResponse {
 	 public int flesch_index;
 	 public int fkgl;
 	 public String edu_level;
+	 public String prevDescriptor;
 	 
 	public ProjectResponse(int owner_id, int time_submitted, String title, String project_type,
-			List<String> skills, String seo_url,double flesh_index,double fkgl, String edu_level) {
+			List<String> skills, String seo_url,double flesh_index,double fkgl, String edu_level, String prevDescriptor) {
 		super();
 		this.owner_id = owner_id;
 		this.time_submitted = new SimpleDateFormat("MMMM d, yyyy")
@@ -28,6 +29,6 @@ public class ProjectResponse {
 		this.fkgl=(int)fkgl;
 		this.flesch_index=(int)flesh_index;
 		this.edu_level=edu_level;
-		
+		this.prevDescriptor = prevDescriptor;
 	}
 }
