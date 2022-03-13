@@ -50,7 +50,7 @@
 	        </table>
 	        </div>
         } else {
-        	<br><h5 class="pheadline" id="search_term">Search Term: @keyWord  |  Flesch Index:@{searchResult.map(_.flesch_index).sum/searchResult.size()}  |  FKGL: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyWord  |  Flesch Index: @{searchResult.map(_.flesch_index).sum/searchResult.size()}  |  FKGL: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
         	<div class="search">
         	<table id="infoTable" class="table">
 			@if(searchResult!=null && searchResult.size()!=0){
@@ -95,7 +95,7 @@
 		</div>
         	@for((keyword, results) <- response){
         	@if(keyword !=keyWord){ 
-        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  |  Flesch Index:@{results.map(_.flesch_index).sum/results.size()}  |  FKGL: @{results.map(_.fkgl).sum/results.size()}</h5>	
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  |  Flesch Index: @{results.map(_.flesch_index).sum/results.size()}  |  FKGL: @{results.map(_.fkgl).sum/results.size()}</h5>	
 
         	<div class="search">
         	<table id="infoTable" class="table">
