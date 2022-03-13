@@ -9,13 +9,18 @@
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="public/javascripts/main.js"></script>
+        <script>
+        function deleteCookie() {
+        	document.cookie = "PLAY_SESSION; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        </script>
         <link rel="stylesheet" href="public/stylesheets/main.css">
         
         <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
 		<![endif]-->
     </head>
-    <body class="FreeLance-soen">
+    <body class="FreeLance-soen" onunload="deleteCookie()">
     
     <div class="container">
    	<center><h3>Welcome to FreeLanceLot</h3>      
