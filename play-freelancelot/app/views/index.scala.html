@@ -9,13 +9,18 @@
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="public/javascripts/main.js"></script>
+        <script>
+        function deleteCookie() {
+        	document.cookie = "PLAY_SESSION; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        </script>
         <link rel="stylesheet" href="public/stylesheets/main.css">
         
         <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
 		<![endif]-->
     </head>
-    <body class="FreeLance-soen">
+    <body class="FreeLance-soen" onunload="deleteCookie()">
     
     <div class="container">
    	<center><h3>Welcome to FreeLanceLot</h3>      
@@ -45,7 +50,7 @@
 	        </table>
 	        </div>
         } else {
-        	<br><h5 class="pheadline" id="search_term">Search Term: @keyWord  |  Flesch Index:@{searchResult.map(_.flesch_index).sum/searchResult.size()}  |  FKGL: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyWord  |  Flesch Index: @{searchResult.map(_.flesch_index).sum/searchResult.size()}  |  FKGL: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
         	<div class="search">
         	<table id="infoTable" class="table">
 			@if(searchResult!=null && searchResult.size()!=0){
@@ -90,7 +95,7 @@
 		</div>
         	@for((keyword, results) <- response){
         	@if(keyword !=keyWord){ 
-        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  |  Flesch Index:@{results.map(_.flesch_index).sum/results.size()}  |  FKGL: @{results.map(_.fkgl).sum/results.size()}</h5>	
+        	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  |  Flesch Index: @{results.map(_.flesch_index).sum/results.size()}  |  FKGL: @{results.map(_.fkgl).sum/results.size()}</h5>	
 
         	<div class="search">
         	<table id="infoTable" class="table">
