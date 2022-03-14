@@ -34,11 +34,18 @@ public class FreeLancelotService {
 	
 	public static CompletableFuture<HashMap<String, Integer>> wordStats(String prevDescriptor) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
-        List<String> wordList = Stream.of(prevDescriptor).map(x -> x.split("\\s+")).flatMap(Arrays::stream)
-            .collect(Collectors.toList());
+		System.out.println(prevDescriptor);
+		prevDescriptor = prevDescriptor.replaceAll("[\\[\\](){}.,]"," ");
+        
+		List<String> wordList = Stream.of(prevDescriptor)
+        		.map(x -> x.split("\\s+"))
+        		.flatMap(Arrays::stream)
+        		.collect(Collectors.toList());
  
         Map<String, Integer > wordCounter = wordList.stream()
             .collect(Collectors.toMap(x -> x.toLowerCase(), x -> 1, Integer::sum));
+        
+        System.out.println("wordCounter ::: " + wordCounter);
  
         ((CompletableFuture<HashMap<String, Integer>>) future).complete((HashMap<String, Integer>) wordCounter);
 		return future;
