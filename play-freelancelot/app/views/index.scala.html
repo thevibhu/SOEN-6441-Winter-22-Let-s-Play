@@ -1,6 +1,6 @@
 @(searchResult:List[dao.ProjectResponse],request: play.mvc.Http.Request, keyWord: String, response: HashMap[String, List[dao.ProjectResponse]])
 
-@main("Freelancelot") {
+@main("Freelancelot"){
 <html lang="en" class="no-js">
     <head>
        	<meta charset="utf-8">
@@ -9,18 +9,13 @@
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="public/javascripts/main.js"></script>
-        <script>
-        function deleteCookie() {
-        	document.cookie = "PLAY_SESSION; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        }
-        </script>
         <link rel="stylesheet" href="public/stylesheets/main.css">
         
         <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
 		<![endif]-->
     </head>
-    <body class="FreeLance-soen" onunload="deleteCookie()">
+    <body class="FreeLance-soen">
     
     <div class="container">
    	<center><h3>Welcome to FreeLanceLot</h3>      
@@ -50,7 +45,8 @@
 	        </table>
 	        </div>
         } else {
-        	<br><h5 class="pheadline" id="search_term">Search Term: @keyWord  |  Flesch Index: @{searchResult.map(_.flesch_index).sum/searchResult.size()}  |  FKGL: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
+        	<center><h5><a href="/GlobalStats" target="_blank">Global Stats</a></h5></center>
+        	<h5 class="pheadline" id="search_term">Search Term: @keyWord  |  Flesch Index: @{searchResult.map(_.flesch_index).sum/searchResult.size()}  |  FKGL: @{searchResult.map(_.fkgl).sum/searchResult.size()}</h5>	
         	<div class="search">
         	<table id="infoTable" class="table">
 			@if(searchResult!=null && searchResult.size()!=0){
@@ -128,7 +124,7 @@
 			    				<a>@skill</a>, 
 			    			}
 			    		}</td>
-			    		<td><a href="/Stats/@project.prevDescriptor">Stats</a></td>
+			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
 			    		<td>@project.flesch_index</td>
 			    		<td>@project.fkgl</td>
 			    		<td>@project.edu_level</td>

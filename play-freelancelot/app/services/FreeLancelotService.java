@@ -12,8 +12,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
@@ -31,21 +35,55 @@ import dao.Project;
 import dao.ProjectResponse;
 
 public class FreeLancelotService {
+	public static String globalStr = "";
+	
+	public static CompletableFuture<HashMap<String, Integer>> globalWordStats(HashMap<String, List<ProjectResponse>> cache) throws IOException {
+		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
+	
+		for (Entry<String, List<ProjectResponse>> data : cache.entrySet()) {
+		    /*data.getValue().stream().forEach(x -> {
+		    	globalStr = globalStr + " " + x.getPrevDescriptor();
+		    });*/
+		    		//.reduce("", (a,b) -> a + b.getPrevDescriptor());
+			data.getValue().forEach(x -> {
+		    	globalStr = globalStr + " " + x.getPrevDescriptor();
+		    });
+		}
+		
+		//globalStr = globalStr.substring(0,globalStr.length());		
+		//Iterator<List<ProjectResponse>> globalValues = cache.values().iterator();
+		
+		/*while(globalValues.hasNext()) {
+			globalValues.forEachRemaining(x -> {
+				System.out.println(x);
+				//globalStr = globalStr + " " + ;
+			});
+			globalValues.next();
+		}*/
+		
+		future = FreeLancelotService.wordStats(globalStr);
+		globalStr = "";
+		return future;
+	}
 	
 	public static CompletableFuture<HashMap<String, Integer>> wordStats(String prevDescriptor) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
-		System.out.println(prevDescriptor);
-		prevDescriptor = prevDescriptor.replaceAll("[\\[\\](){}.,]"," ");
-        
+		
+		//prevDescriptor = prevDescriptor.replaceAll("[\\[\\](){},.]"," ");
+		//prevDescriptor = prevDescriptor.replaceAll("[^a-zA-Z]"," ");
+        //.map(x -> x.split("\\s+"))
 		List<String> wordList = Stream.of(prevDescriptor)
-        		.map(x -> x.split("\\s+"))
+        		.map(x->x.replaceAll("[^\\w]", " "))
+				.map(x -> x.split(" "))
         		.flatMap(Arrays::stream)
         		.collect(Collectors.toList());
- 
-        Map<String, Integer > wordCounter = wordList.stream()
+		
+		//System.out.println("wordList :: " + wordList);
+        
+		Map<String, Integer > wordCounter = wordList.stream()
             .collect(Collectors.toMap(x -> x.toLowerCase(), x -> 1, Integer::sum));
         
-        System.out.println("wordCounter ::: " + wordCounter);
+        //System.out.println("wordCounter ::: " + wordCounter);
  
         ((CompletableFuture<HashMap<String, Integer>>) future).complete((HashMap<String, Integer>) wordCounter);
 		return future;

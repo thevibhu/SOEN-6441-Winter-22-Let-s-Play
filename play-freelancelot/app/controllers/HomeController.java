@@ -46,11 +46,13 @@ public class HomeController extends Controller {
     	this.httpExecutionContext = httpExecutionContext;
     	cache = new HashMap<String, List<ProjectResponse>>();
     }
-    /** searchResult.result.projects.toString()
-     * An action that renders an HTML page with a welcome message.
-     * The configuration in the <code>routes</code> file means that
-     * this method will be called when the application receives a
-     * <code>GET</code> request with a path of <code>/</code>.
+    
+    /**
+     * This method/function, get the data from for the specific search keyword and transforms it to show required information on the page. 
+     * @param request Http Request from the browser. 
+     * @param keyWord Searched Term by the user for instant Java.
+     * @return The information to be displayed for the keyword is returned. 
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted. 
      */
     public CompletionStage<Result> index(Http.Request request, String keyWord) throws IOException{
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
@@ -62,29 +64,54 @@ public class HomeController extends Controller {
         
         
         
-        //if(request.session().get(keyWord+"_result").isPresent()){
-        if(request.session().data().containsKey(keyWord+"_result")){
+        if(request.session().get(keyWord).isPresent()){
+        //if(request.session().data().containsKey(keyWord+"_result")){
         	System.out.println("Inside ::: if ");
-            completableFuture.complete(request.session().get(keyWord+"_result").get());
+            completableFuture.complete(request.session().get(keyWord).get());
             return completableFuture
-                    .thenApplyAsync(response -> ok(views.html.index.render(cache.get(keyWord), request, keyWord, cache)));
-        } else{
-            return FreeLancelotService.streamProjects(keyWord)
-                    .thenApplyAsync(response->{
-                    	if(((List<ProjectResponse>)response).size() > 0) {
-                            cache.put(keyWord, ((List<ProjectResponse>) response));
-                            return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache)).addingToSession(request, keyWord+"_result", keyWord);
-                        }
-                        return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache));
-                    });
-            
+                    .thenApplyAsync(response -> ok(views.html.index.render(cache.get(keyWord),request,keyWord,cache)));
+        } else {
+        		return FreeLancelotService.streamProjects(keyWord)
+                        .thenApplyAsync(response->{
+                        	if(((List<ProjectResponse>)response).size() > 0) {
+                        		System.out.println("Response ::: " + response);
+                                cache.put(keyWord, ((List<ProjectResponse>) response));
+                                return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache)).addingToSession(request, keyWord, keyWord);
+                            }
+                            return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache));
+                       });
         }
     }
     
+    /**
+     * This method/function, gets the information for Preview Description for the selected project.  
+     * @param prevDescriptor This String contains Preview Description of the data
+     * @return The word count of each word in the Preview Description
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+     */
     public CompletionStage<Result> stats(String prevDescriptor) throws IOException{
     	return FreeLancelotService.wordStats(prevDescriptor).thenApplyAsync(
     			response -> ok(views.html.stats.render(response))
     	);
     } 
-  
+    
+    /**
+     * This method/function, gets the information of all the Preview Descriptions (For every Search).
+     * @return The word count of each word in the Preview Description of the entire Search.
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+     */
+    public CompletionStage<Result> globalStats() throws IOException{
+    	System.out.println("cache ::: " + cache);
+    	return FreeLancelotService.globalWordStats(cache).thenApplyAsync(
+    			response -> ok(views.html.stats.render(response))
+    			);
+    }
+    
+    /**
+     * This method/function, loads the initial 
+     */
+    public Result landingPage() {
+    	return ok(views.html.landingPage.render());
+    }
+    
 }
