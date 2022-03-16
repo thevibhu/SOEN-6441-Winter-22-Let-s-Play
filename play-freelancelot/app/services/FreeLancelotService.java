@@ -37,6 +37,12 @@ import dao.ProjectResponse;
 public class FreeLancelotService {
 	public static String globalStr = "";
 	
+	/**
+	 * This method transform the Cache Data to String format and returns the data for the Global Stats for every project.
+	 * @param cache It contains data of every search request that use had made.
+	 * @return The data is return in form of Map for the Global Stats.
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+	 */
 	public static CompletableFuture<HashMap<String, Integer>> globalWordStats(HashMap<String, List<ProjectResponse>> cache) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
 	
@@ -66,6 +72,12 @@ public class FreeLancelotService {
 		return future;
 	}
 	
+	/**
+	 * This method transform the String of searches and returns the data for the Word Stats as per specific project.
+	 * @param prevDescriptor This String contains Preview Description of the data.
+	 * @return The data is return in form of Map for the Global Stats.
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+	 */
 	public static CompletableFuture<HashMap<String, Integer>> wordStats(String prevDescriptor) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
 		

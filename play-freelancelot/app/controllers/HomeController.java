@@ -34,8 +34,11 @@ import play.libs.ws.*;
 
 /**
  * This controller contains an action to handle HTTP requests
- * to the application's home page.
+ * to the different pages of the application.
+ * @author Vaibhav, Gurpreet, Gagandeep, Felipe
+ * @version 1.0
  */
+
 public class HomeController extends Controller {
 	
 	private HttpExecutionContext httpExecutionContext;
@@ -85,8 +88,8 @@ public class HomeController extends Controller {
     
     /**
      * This method/function, gets the information for Preview Description for the selected project.  
-     * @param prevDescriptor This String contains Preview Description of the data
-     * @return The word count of each word in the Preview Description
+     * @param prevDescriptor This String contains Preview Description of the data.
+     * @return The word count of each word in the Preview Description.
      * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
      */
     public CompletionStage<Result> stats(String prevDescriptor) throws IOException{
@@ -108,7 +111,7 @@ public class HomeController extends Controller {
     }
     
     /**
-     * This method/function, loads the initial 
+     * This method/function, renders the initial landing page of the application.
      */
     public Result landingPage() {
     	return ok(views.html.landingPage.render());
