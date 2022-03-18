@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/** Represents every detail of a project.
+ * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+ * @version 1.0
+ * @since 1.0
+*/
 public class Project{
 	 public int id;
 	 public int owner_id;
@@ -99,9 +104,7 @@ public class Project{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Currency getCurrency() {
-		return currency;
-	}
+	
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
@@ -195,15 +198,11 @@ public class Project{
 	public void setFrontend_project_status(String frontend_project_status) {
 		this.frontend_project_status = frontend_project_status;
 	}
-	public Location getLocation() {
-		return location;
-	}
+	
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	public TrueLocation getTrue_location() {
-		return true_location;
-	}
+	
 	public void setTrue_location(TrueLocation true_location) {
 		this.true_location = true_location;
 	}
@@ -231,15 +230,11 @@ public class Project{
 	public void setPool_ids(ArrayList<String> pool_ids) {
 		this.pool_ids = pool_ids;
 	}
-	public ArrayList<Object> getEnterprise_ids() {
-		return enterprise_ids;
-	}
+	
 	public void setEnterprise_ids(ArrayList<Object> enterprise_ids) {
 		this.enterprise_ids = enterprise_ids;
 	}
-	public ArrayList<Object> getEnterprise_metadata_values() {
-		return enterprise_metadata_values;
-	}
+
 	public void setEnterprise_metadata_values(ArrayList<Object> enterprise_metadata_values) {
 		this.enterprise_metadata_values = enterprise_metadata_values;
 	}

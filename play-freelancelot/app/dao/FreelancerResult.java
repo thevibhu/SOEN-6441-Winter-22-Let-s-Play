@@ -2,6 +2,11 @@ package dao;
 
 import java.util.ArrayList;
 
+/** Represents the result of Freelancer API used to get latest active projects.
+ * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+ * @version 1.0
+ * @since 1.0
+*/
 public class FreelancerResult {
 	 public String status;
 	 public Result result;

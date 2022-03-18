@@ -66,6 +66,8 @@ public class ProjectTest {
 		u.setFeatured(false);
 		p.setUpgrades(u);
 		p.setUrgent(false);
+		p.setIs_seller_kyc_required(false);
+		
 		
 		
 		assertEquals(1, p.getBid_stats().getBid_avg());
@@ -89,6 +91,21 @@ public class ProjectTest {
 		assertEquals(0, p.getTime_updated());
 		assertEquals("title", p.getTitle());
 		assertEquals(false, p.getUpgrades().isFeatured());
+		assertEquals(false, p.isIs_buyer_kyc_required());
+		assertEquals(false, p.isIs_buyer_kyc_required());
+		assertEquals(false, p.isIs_escrow_project());
+		assertEquals(false, p.isNegotiated());
+		assertEquals(false, p.isLocal());
+		assertEquals(false, p.isHireme());
+		assertEquals(false, p.isUrgent());
+		assertEquals(false, p.isDeleted());
+		assertEquals(false, p.isNonpublic());
+		assertEquals(false, p.isFeatured());
+		assertEquals(false, p.isHidebids());
+		assertEquals(false, p.isIs_seller_kyc_required());
+
+		
+		
 		
 		
 	}
