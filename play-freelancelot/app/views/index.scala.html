@@ -91,6 +91,7 @@
 		</div>
         	@for((keyword, results) <- response){
         	@if(keyword !=keyWord){ 
+        	@if(request.session().get(keyword).isPresent()){
         	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  |  Flesch Index: @{results.map(_.flesch_index).sum/results.size()}  |  FKGL: @{results.map(_.fkgl).sum/results.size()}</h5>	
 
         	<div class="search">
@@ -135,8 +136,9 @@
 				}
 			</table>
 		</div>
+			}
         	}
-        	 }
+        	}
         }
         </div>
         </div>
