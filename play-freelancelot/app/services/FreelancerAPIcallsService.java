@@ -17,19 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.FreelancerResult;
 import dao.Project;
 
-/** This class holds all the external API calls to Freelancer
- * @author Vaibhav, Felipe, Gagandeep, Gurpreet
- * @version 1.0
- * @since 1.0
-*/
 public class FreelancerAPIcallsService {
-	
-	
-	/** This method is used to call the external Freelancer API to get the latest active projects
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static  CompletableFuture<List<Project>>  getActiveProjects(String keyWord) throws IOException {
         CompletableFuture<List<Project>> future = new CompletableFuture<>();
 

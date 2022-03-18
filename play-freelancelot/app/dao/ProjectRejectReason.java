@@ -1,10 +1,5 @@
 package dao;
 
-/** Represents the reason for rejection of a project.
- * @author Vaibhav, Felipe, Gagandeep, Gurpreet
- * @version 1.0
- * @since 1.0
-*/
 public class ProjectRejectReason {
 	public String description;
 	public String message;

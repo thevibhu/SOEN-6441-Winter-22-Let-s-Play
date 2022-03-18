@@ -34,15 +34,15 @@ import dao.Job;
 import dao.Project;
 import dao.ProjectResponse;
 
-/** This class holds all the business logic which is used by the controller in order to fetch useful data
- * @author Vaibhav, Felipe, Gagandeep, Gurpreet
- * @version 1.0
- * @since 1.0
-*/
 public class FreeLancelotService {
 	public static String globalStr = "";
 	
-	
+	/**
+	 * This method transform the Cache Data to String format and returns the data for the Global Stats for every project.
+	 * @param cache It contains data of every search request that use had made.
+	 * @return The data is return in form of Map for the Global Stats.
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+	 */
 	public static CompletableFuture<HashMap<String, Integer>> globalWordStats(HashMap<String, List<ProjectResponse>> cache) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
 	
@@ -72,6 +72,12 @@ public class FreeLancelotService {
 		return future;
 	}
 	
+	/**
+	 * This method transform the String of searches and returns the data for the Word Stats as per specific project.
+	 * @param prevDescriptor This String contains Preview Description of the data.
+	 * @return The data is return in form of Map for the Global Stats.
+     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+	 */
 	public static CompletableFuture<HashMap<String, Integer>> wordStats(String prevDescriptor) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
 		
@@ -95,12 +101,6 @@ public class FreeLancelotService {
 		return future;
 	}
 	
-	
-	/** This method is called by the controllet to fetch all the latest active projects where the data is processed by streams
-	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static CompletableFuture<List<ProjectResponse>>  streamProjects(String keyWord) throws IOException {
 		return FreelancerAPIcallsService.getActiveProjects(keyWord).thenApplyAsync(
 				projects -> {
@@ -112,11 +112,6 @@ public class FreeLancelotService {
 		);
 	}
 	
-	/** This method is used to convert the Job array into a list of skills(string)
-	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static  List<String>  convertJobDetails(ArrayList<Job> jobs){
 		List<String> skills = jobs.stream()
 				.map(p -> p.getName())
@@ -124,22 +119,11 @@ public class FreeLancelotService {
 		return skills;	
 	}
 	
-	/** This method uses the preview_description of the project and returns its educational level
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static String getEducationalLevel(String preview_description){
 		int fleshIndex = (int)getfleschIndex(preview_description);
 		return checkEducationalLevel(fleshIndex);
 	}
 	
-	
-	/** This method uses the preview_description of the project and returns its fleschIndex
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	private static double getfleschIndex(String preview_description) {
 		double wordcount = wordCount(preview_description);
 		double syllablecount = syllablesCount(preview_description);
@@ -150,12 +134,6 @@ public class FreeLancelotService {
 		return  206.835 - 84.6*(syllablecount/wordcount) - 1.015*(wordcount/sentencecount);
 	}
 	
-	
-	/** This method uses the preview_description of the project and returns its FKGL index
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	private static double getFKGL(String preview_description) {
 		double wordcount = wordCount(preview_description);
 		double syllablecount = syllablesCount(preview_description);
@@ -166,12 +144,6 @@ public class FreeLancelotService {
 		return  0.39*(wordcount/sentencecount) + 11.8*(syllablecount/wordcount);
 	}
 
-	
-	/** This method returns the educational level according to the fleschIndex
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static String checkEducationalLevel(double fleschIndex) {
 		
 		if (fleschIndex <= 0) {
@@ -199,12 +171,6 @@ public class FreeLancelotService {
 		
 	}
 	
-	
-	/** This method counts the number of sentences in the preview description to calculate flesch index
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static double sentenceCount(String preview_description) {
 		int sentenceCount = 0;
 		String[] sentenceList = preview_description.split("[!?.:]+");
@@ -212,11 +178,6 @@ public class FreeLancelotService {
 		return sentenceCount;
 	}
 	
-	/** This method counts the number of syllables in the preview description to calculate flesch index
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static double syllablesCount(String preview_description) {
 		Pattern p = Pattern.compile("[aeiouy]+[^$e(,.:;!?)]");
 		Matcher m = p.matcher(preview_description);
@@ -227,11 +188,6 @@ public class FreeLancelotService {
 		return syllables;
 	}
 	
-	/** This method counts the number of words in the preview description to calculate flesch index
-	 * @author Vaibhav
-	 * @version 1.0
-	 * @since 1.0
-	*/
 	public static double wordCount(String preview_description) {
 		int count=0;
         for(int i=0;i<preview_description.length();i++)  

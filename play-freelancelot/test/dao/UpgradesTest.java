@@ -37,7 +37,6 @@ public class UpgradesTest {
 		assertEquals(false, u.isProject_management());
 		assertEquals(false, u.isQualified());
 		assertEquals(false, u.isUrgent());
-		assertEquals(false, u.isNonpublic());
 		
 		
 	}

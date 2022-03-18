@@ -4,11 +4,6 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-/** Represents the result of a project which is used by the frontend.
- * @author Vaibhav, Felipe, Gagandeep, Gurpreet
- * @version 1.0
- * @since 1.0
-*/
 public class ProjectResponse {
 	 public int owner_id;
 	 public String time_submitted;
