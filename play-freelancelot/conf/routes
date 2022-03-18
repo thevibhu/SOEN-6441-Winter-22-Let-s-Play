@@ -5,6 +5,8 @@
 # An example controller showing a sample home page
 GET     /freelancelot            	controllers.HomeController.index(request:Request, keyWord:String = "")
 GET     /SearchPage       			controllers.HomeController.index(request:Request, keyWord:String)
+GET		/UserProfile				controllers.HomeController.profile(owner_id:Int)
+GET 	/UserProjects				controllers.HomeController.userProj(owner_id:Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

@@ -10,10 +10,12 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,9 +27,14 @@ import dao.FreelancerResult;
 import dao.Job;
 import dao.Project;
 import dao.ProjectResponse;
+import dao.UserDetails;
+import dao.UserProfile;
+import dao.UserProjectDisplay;
 
 public class FreeLancelotService {
 	
+	
+
 	public static CompletableFuture<List<ProjectResponse>>  streamProjects(String keyWord) throws IOException {
 		return FreelancerAPIcallsService.getActiveProjects(keyWord).thenApplyAsync(
 				projects -> {
@@ -38,6 +45,28 @@ public class FreeLancelotService {
 				}
 		);
 	}
+	
+	public static CompletableFuture<UserDetails> getUser(int owner_id) throws IOException{
+		return FreelancerAPIcallsService.getUserDetails(owner_id).thenApplyAsync(
+				owner -> {
+					UserDetails user_details = new UserDetails(owner.getUsername(), owner.getPublic_name(),owner.getId(),owner.getAvatar_large(),owner.getDisplay_name(), owner.getRole(),owner.getChosen_role());
+					return user_details;
+				}	
+		);
+		}
+	
+	
+	public static CompletableFuture<List<UserProjectDisplay>> getUserProjects(int owner_id) throws IOException{
+		return FreelancerAPIcallsService.getUserProjects(owner_id).thenApplyAsync(
+				projects -> {
+					List<UserProjectDisplay> user_proj_details = projects.stream()
+							.map(user_p->new UserProjectDisplay(user_p.getTitle(), user_p.getType(),user_p.getOwner_id()))
+									.collect(Collectors.toList());
+					return user_proj_details;
+				}	
+		);
+		}
+	
 	
 	public static  List<String>  convertJobDetails(ArrayList<Job> jobs){
 		List<String> skills = jobs.stream()

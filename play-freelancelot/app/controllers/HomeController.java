@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutionException;
 
 import dao.FreelancerResult;
 import dao.ProjectResponse;
+import dao.UserDetails;
+import dao.UserProjectDisplay;
 import play.mvc.*;
 import services.FreeLancelotService;
 
@@ -66,5 +68,15 @@ public class HomeController extends Controller {
             
         }
     }
+    
+   public CompletionStage<Result> profile(int owner_id) throws IOException{
+	  
+	   return FreeLancelotService.getUser(owner_id).thenApplyAsync((details->ok(views.html.profile.render((UserDetails)details))));
+   }
+
+   public CompletionStage<Result> userProj(int owner_id) throws IOException{
+		  
+	   return FreeLancelotService.getUserProjects(owner_id).thenApplyAsync((details->ok(views.html.userProj.render((List<UserProjectDisplay>)details))));
+}}
   
-}
+

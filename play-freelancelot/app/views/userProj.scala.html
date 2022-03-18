@@ -1,0 +1,47 @@
+@(details:List[dao.UserProjectDisplay])
+
+@main("User Projects"){
+<html>
+<head>
+<style>
+body {background: #ececec;}
+h1, h2, h3, h4, h5 {
+ 
+  color: #3F51B5;
+  padding-bottom: 8px
+}
+.container {
+  margin: auto;
+  width: 350px;
+  text-align: left;
+}
+.listFlex {display: flex; justify-content: Left;}
+</style>
+
+</head>
+<body>
+<div class="container">
+
+  <h1>Recent Projects</h1>
+  
+  <div class="listFlex">
+    <div>
+   
+     @if(!details.isEmpty){
+		@for(UserProjects <- details){
+		
+      					<ul>
+						<li>@UserProjects.title</li>
+			    		</ul>
+		}}
+    </div>
+  </div>
+    
+</div> 
+
+</body>
+
+</html>
+
+
+}

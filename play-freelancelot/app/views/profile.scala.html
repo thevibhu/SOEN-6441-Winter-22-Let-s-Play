@@ -1,0 +1,44 @@
+@(details:dao.UserDetails)
+
+@main("User Profile"){
+<html>
+<head>
+<title>User Profile</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {background: #ececec;}
+h1, h2, h3, h4, h5 {
+  
+  color: #3F51B5;
+  padding-bottom: 8px
+}
+.container {
+  margin: auto;
+  width: 350px;
+  text-align: left;
+}
+.listFlex {display: flex; justify-content: left;}
+
+img {
+  width: 20%;
+}
+</style>
+</head>
+<body class="w3-light-grey">
+<div class="container">
+  <h1>@details.public_name</h1>
+  <img src="https://www.freelancer.com/@details.avatar_large" alt="profile-picture" border="2" />
+  <h4>Details</h4> 
+  
+    <div>
+      <h4> Username-@details.username </h4>
+          <h4>User Id- @details.id</h4>
+          <h4>User Role- @details.role</h4>
+          <h4>User Chosen Role- @details.chosen_role</h4>
+     <h4><a href="@routes.HomeController.userProj(details.id)">Projects</a></h4>
+    </div>
+  </div>   
+</div> 
+</html>
+}
