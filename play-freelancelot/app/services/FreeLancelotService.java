@@ -185,4 +185,16 @@ public class FreeLancelotService {
         } 
         return count;
 	}
+
+	public static CompletableFuture<List<ProjectResponse>> skillsFilter(String skill) throws IOException{
+		return FreelancerAPIcallsService.getActiveProjects(skill).thenApplyAsync(
+				projects -> {
+					List<ProjectResponse> list = projects.stream()
+							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), getfleschIndex(p.getPreview_description()), getFKGL(p.getPreview_description()), getEducationalLevel(p.getPreview_description()), p.getPreview_description()))
+							.filter(p -> p.skills.contains(skill))
+							.collect(Collectors.toList());
+					return list;
+				}
+		);
+	}
 }
