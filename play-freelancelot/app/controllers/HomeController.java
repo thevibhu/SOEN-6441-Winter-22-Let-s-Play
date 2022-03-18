@@ -113,5 +113,10 @@ public class HomeController extends Controller {
     public Result landingPage() {
     	return ok(views.html.landingPage.render());
     }
-    
+
+    public CompletionStage<Result> skills(String skill) throws IOException{
+        return FreeLancelotService.skillsFilter(skill).thenApplyAsync(
+                response -> ok(views.html.skills.render(response))
+        );
+    }
 }
