@@ -1,0 +1,60 @@
+@(searchResult:List[dao.ProjectResponse])
+@main("Freelancelot"){
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="public/javascripts/main.js"></script>
+    <link rel="stylesheet" href="public/stylesheets/main.css">
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+    <![endif]-->
+</head>
+<body>
+<table id="infoTable" class="table">
+    @if(searchResult!=null && searchResult.size()!=0){
+    <thead>
+    <tr>
+        <th>Sr.No</th>
+        <th>Owner ID</th>
+        <th>Time Submitted</th>
+        <th>Project Title</th>
+        <th>Project Type</th>
+        <th>Project Skills</th>
+        <th>Project Stats</th>
+        <th>Flesch Index</th>
+        <th>FKG Index</th>
+        <th>Edu. Level</th>
+    </tr>
+    </thead>
+    @for((project, index)<-searchResult.zipWithIndex){
+    <tr>
+        <td>@(index+1)</td>
+        <td><a>@project.owner_id</a> </td>
+        <td>@project.time_submitted</td>
+        <td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
+        <td>@project.project_type</td>
+        <td>@for((skill, index)<-project.skills.zipWithIndex){
+            @if(project.skills.size() == (index + 1)) {
+            <a href="/Skills?skill=@skill" target="_blank">@skill</a>
+            } else {
+            <a href="/Skills?skill=@skill" target="_blank">@skill</a>,
+            }
+            }</td>
+        <td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
+        <td>@project.flesch_index</td>
+        <td>@project.fkgl</td>
+        <td>@project.edu_level</td>
+    </tr>
+    }
+    } else{
+    <tr><h3><i>No Result to Show Please Search in box</i></h3></tr>
+    }
+</table>
+</body>
+</html>
+}
