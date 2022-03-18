@@ -30,11 +30,14 @@ import scala.compat.java8.FutureConverters;
 import akka.actor.*;
 import static akka.pattern.Patterns.ask;
 import akka.stream.*;
-import play.libs.ws.*;
+
 
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
+ * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+ * @version 1.0
+ * @since 1.0
  */
 public class HomeController extends Controller {
 	
@@ -42,18 +45,20 @@ public class HomeController extends Controller {
 	private final HashMap<String, List<ProjectResponse>> cache;
     
     @Inject
-	public HomeController(HttpExecutionContext httpExecutionContext, WSClient ws) {
+	public HomeController(HttpExecutionContext httpExecutionContext) {
     	this.httpExecutionContext = httpExecutionContext;
     	cache = new HashMap<String, List<ProjectResponse>>();
     }
     
-    /**
-     * This method/function, get the data from for the specific search keyword and transforms it to show required information on the page. 
-     * @param request Http Request from the browser. 
-     * @param keyWord Searched Term by the user for instant Java.
-     * @return The information to be displayed for the keyword is returned. 
-     * @throws IOException If any error occurs during reading data or data in the stream is corrupted. 
-     */
+/**
+* This method is used to handle the main page as well as all the searches for the active projects depending upon the search string entered by the user 
+* @author Vaibhav, Felipe, Gagandeep, Gurpreet
+* @param request consist of string to be passed to the GitHub API.
+* @param keyWord consist of string to be passed to the GitHub API.
+* @return Json object wrap in completable future containing 20 issues.
+* @version 1.0
+* @since 1.0. 
+*/
     public CompletionStage<Result> index(Http.Request request, String keyWord) throws IOException{
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
         

@@ -8,7 +8,10 @@ public class TrueLocationTest {
 
 	@Test
 	public void test() {
-		assertEquals("emptyClass", "emptyClass");
+		Country c = new Country();
+		TrueLocation l = new TrueLocation();
+		l.setCountry(c);
+		assertNotNull(l.getCountry());
 	}
 
 }

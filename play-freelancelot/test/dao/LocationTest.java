@@ -8,7 +8,10 @@ public class LocationTest {
 
 	@Test
 	public void test() {
-		assertEquals("emptyClassVariable", "emptyClassVariable");
+		Country c = new Country();
+		Location l = new Location();
+		l.setCountry(c);
+		assertNotNull(l.getCountry());
 	}
 
 }
