@@ -3,7 +3,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/** Represents Shows reults of the classes and fields returned from API user to get User Information
+ * @author  Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+*/
 public class UserProfile{
 	  public int id;
 	    public String username;

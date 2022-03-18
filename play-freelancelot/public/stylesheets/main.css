@@ -17,6 +17,13 @@
 	padding: 10px;
 }
 
+.stats {
+	margin: auto;
+	width: 50%;
+	border: 1px solid #73AD21;
+	padding: 50px;
+}
+
 /*body {
 	counter-reset: Serial;
 }

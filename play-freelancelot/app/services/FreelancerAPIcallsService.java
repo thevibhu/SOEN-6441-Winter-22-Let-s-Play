@@ -16,15 +16,30 @@ import dao.FreelancerResult;
 
 import dao.Project;
 
+
 import dao.User;
 import dao.UserProfile;
 import dao.UserProjectDetails;
 import dao.UserProjects;
 
+
+/** This class holds all the external API calls to Freelancer
+ * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+ * @version 1.0
+ * @since 1.0
+*/
+
 public class FreelancerAPIcallsService {
+	
+	
+	/** This method is used to call the external Freelancer API to get the latest active projects
+	 * @author Vaibhav
+	 * @version 1.0
+	 * @since 1.0
+	*/
 	public static  CompletableFuture<List<Project>>  getActiveProjects(String keyWord) throws IOException {
         CompletableFuture<List<Project>> future = new CompletableFuture<>();
-	
+
         StringBuilder stringBuilder = new StringBuilder("https://www.freelancer.com/api/projects/0.1/projects/active/");
         stringBuilder.append("?query=");
         stringBuilder.append(URLEncoder.encode(keyWord, "UTF-8"));
@@ -45,6 +60,12 @@ public class FreelancerAPIcallsService {
 		((CompletableFuture<List<Project>>) future).complete(res.result.projects);
 		return future;
     }
+	
+	/** This method is used to call the external Freelancer API to get User information from the owner_id
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	*/
 	public static  CompletableFuture<UserProfile>  getUserDetails(int owner_id) throws IOException {
     CompletableFuture<UserProfile> user = new CompletableFuture();
      StringBuilder stringBuilder = new StringBuilder("https://www.freelancer.com/api/users/0.1/users/");
@@ -66,6 +87,12 @@ public class FreelancerAPIcallsService {
 		((CompletableFuture<UserProfile>)user).complete( root.result);
 		return user;
 	}
+	
+	/** This method is used to call the external Freelancer API to get Projects by user/owner from the owner_id
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	*/
 	
 	public static  CompletableFuture<List<UserProjectDetails>>  getUserProjects(int owner_id) throws IOException {
 	    CompletableFuture<List<UserProjectDetails>> userProjects = new CompletableFuture();

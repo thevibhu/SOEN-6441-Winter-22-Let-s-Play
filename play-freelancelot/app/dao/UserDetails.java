@@ -1,5 +1,12 @@
 package dao;
 
+
+/** Contains constructor and variable that are used to show the User Inforrmation on HTML page
+ * @author  Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+*/
+
 public class UserDetails {
 	
 	public String username;
