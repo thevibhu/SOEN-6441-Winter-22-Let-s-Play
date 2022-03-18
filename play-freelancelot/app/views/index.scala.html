@@ -73,9 +73,9 @@
 			    		<td>@project.project_type</td>
 			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
 			    			@if(project.skills.size() == (index + 1)) {
-			    				<a>@skill</a>
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>
 			    			} else {
-			    				<a>@skill</a>, 
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
 			    			}
 			    		}</td>
 			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
@@ -119,9 +119,9 @@
 			    		<td>@project.project_type</td>
 			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
 			    			@if(project.skills.size() == (index + 1)) {
-			    				<a>@skill</a>
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>
 			    			} else {
-			    				<a>@skill</a>, 
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
 			    			}
 			    		}</td>
 			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
