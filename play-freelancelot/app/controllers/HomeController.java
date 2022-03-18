@@ -115,7 +115,7 @@ public class HomeController extends Controller {
     }
 
     public CompletionStage<Result> skills(String skill) throws IOException{
-        return FreeLancelotService.skillsFilter(skill).thenApplyAsync(
+        return FreeLancelotService.skillsFilter(skill.replace("%20"," ")).thenApplyAsync(
                 response -> ok(views.html.skills.render(response))
         );
     }
