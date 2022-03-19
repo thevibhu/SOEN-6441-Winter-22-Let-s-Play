@@ -1,0 +1,38 @@
+.search {
+	margin: auto;
+	width: 90%;
+	border: 1px solid #73AD21;
+	padding: 10px;
+}
+
+.pheadline {
+	margin: auto;
+	width: 90%;
+	padding: 10px;
+}
+
+.container {
+	margin: auto;
+	width: 91% !important;
+	padding: 10px;
+}
+
+.stats {
+	margin: auto;
+	width: 50%;
+	border: 1px solid #73AD21;
+	padding: 50px;
+}
+
+/*body {
+	counter-reset: Serial;
+}
+
+table {
+	border-collapse: separate;
+}
+
+tr td:first-child:before {
+	counter-increment: Serial; 
+	content: counter(Serial); 
+}*/

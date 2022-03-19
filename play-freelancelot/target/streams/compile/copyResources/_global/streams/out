@@ -1,4 +1,4 @@
-[debug] Copy resource mappings: 
-[debug] 	(S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\conf\application.conf,S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes\application.conf)
-[debug] 	(S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\conf\logback.xml,S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes\logback.xml)
-[debug] 	(S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\conf\routes,S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes\routes)
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\conf\application.conf,C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes\application.conf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\conf\logback.xml,C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes\logback.xml)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\conf\routes,C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes\routes)[0m

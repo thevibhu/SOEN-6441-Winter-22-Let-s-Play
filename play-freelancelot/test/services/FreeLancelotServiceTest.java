@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import dao.Job;
@@ -71,4 +72,14 @@ public class FreeLancelotServiceTest {
 		assertEquals("scala", x.get(1));	
 	}
 
+	/**
+	 * A test to check if the skill filter service filters projects according to the skill passed.
+	 * @author Felipe Kosin Jorge
+	 */
+	@Test
+	public void skillsFilterTest() throws IOException, ExecutionException, InterruptedException {
+		List<ProjectResponse> result = FreeLancelotService.skillsFilter("Java").get();
+
+		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
+	}
 }

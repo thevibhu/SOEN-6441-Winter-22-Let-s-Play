@@ -65,6 +65,18 @@ public class HomeControllerTest extends WithApplication {
 //        
 //
 //    }
-    
-    
+
+    /**
+     * Test for the skill controller page in order to make sure the requested result returns OK.
+     * @author Felipe Kosin Jorge
+     * @throws IOException
+     */
+    @Test
+    public void testSkillPage() throws IOException{
+        Http.RequestBuilder req = new Http.RequestBuilder().method(GET).uri("/Skills?skill=Java");
+        Result res = route(app,req);
+        assertEquals(OK,res.status());
+
+
+    }
 }
