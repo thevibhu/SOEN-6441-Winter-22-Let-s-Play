@@ -261,10 +261,11 @@ public class FreeLancelotService {
 
 	/**
 	 * This method receives a specific skill as a parameter and returns 10 project which include this skill.
+	 * @author Felipe Kosin Jorge
+	 * @version 1.0
 	 * @param skill is the project skill which will be present on the 10 next projects.
 	 * @return A completableFuture of a Project Response, which contains at most 10 projects that include the specific skill passed
 	 * @throws IOException
-	 * @author Felipe Kosin Jorge
 	 */
 	public static CompletableFuture<List<ProjectResponse>> skillsFilter(String skill) throws IOException{
 		return FreelancerAPIcallsService.getActiveProjects(skill).thenApplyAsync(

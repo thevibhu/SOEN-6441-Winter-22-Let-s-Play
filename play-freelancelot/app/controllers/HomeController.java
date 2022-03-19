@@ -135,10 +135,10 @@ public class HomeController extends Controller {
 
     /**
      * A controller which is called when the skills route is accessed and calls the specified service to query projects.
+     * @author Felipe Kosin Jorge
      * @param skill is the specific skill to be searched.
      * @return A CompletionStage of a Result which will render the skill.html page
      * @throws IOException
-     * @author Felipe Kosin Jorge
      */
     public CompletionStage<Result> skills(String skill) throws IOException{
         return FreeLancelotService.skillsFilter(skill.replace("%20"," ")).thenApplyAsync(
