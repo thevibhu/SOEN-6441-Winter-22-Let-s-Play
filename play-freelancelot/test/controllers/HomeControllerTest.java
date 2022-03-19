@@ -5,6 +5,7 @@ import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http;
+import play.mvc.Http.RequestImpl;
 import play.mvc.Result;
 import play.test.WithApplication;
 
@@ -23,8 +24,9 @@ public class HomeControllerTest extends WithApplication {
         return new GuiceApplicationBuilder().build();
     }
 
+    
     @Test
-    public void testIndex() {
+    public void testLandingPage() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
                 .uri("/freelancelot");
@@ -34,16 +36,35 @@ public class HomeControllerTest extends WithApplication {
     }
     
     @Test
-    public void testIndex2() throws IOException {
+    public void testLandingPageContent() {
+      Result result = new HomeController(null).landingPage();
+      assertEquals(OK, result.status());
+      assertEquals("text/html", result.contentType().get());
+      assertEquals("utf-8", result.charset().get());
+    }
+    
+    @Test
+    public void testSearchPage() throws IOException {
     	 Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/SearchPage?keyWord=scala");
          Result result = route(app, request);
          assertEquals(OK, result.status());
          
-         Http.RequestBuilder request2 = new Http.RequestBuilder().method(GET).uri("/SearchPage?keyWord=scala");
-         Result result2 = route(app, request2);
+         Result result2 = route(app, request);
          assertEquals(OK, result2.status());
 
     }
+    
+//    @Test
+//    public void testSearchPageWithSession() throws IOException {
+//    	HttpExecutionContext httpExecutionContext = new HttpExecutionContext(null);
+//    	Http.Request = new Http.RequestBuilder()
+//    	Result result = (Result) new HomeController(httpExecutionContext).index(null, "key");
+//        assertEquals(OK, result.status());
+//        assertEquals("text/html", result.contentType().get());
+//        assertEquals("utf-8", result.charset().get());
+//        
+//
+//    }
     
     
 }

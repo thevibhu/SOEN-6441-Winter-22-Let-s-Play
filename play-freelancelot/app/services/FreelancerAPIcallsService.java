@@ -27,7 +27,10 @@ public class FreelancerAPIcallsService {
 	
 	/** This method is used to call the external Freelancer API to get the latest active projects
 	 * @author Vaibhav
+	 * @param keyWord is used by the Freelancer API to fetch projects according to it.
+	 * @return it returns the list of projects returned by Freelancer API as a completable future.
 	 * @version 1.0
+	 * @throws IOException it throes IOException
 	 * @since 1.0
 	*/
 	public static  CompletableFuture<List<Project>>  getActiveProjects(String keyWord) throws IOException {

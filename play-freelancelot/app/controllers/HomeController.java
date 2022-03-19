@@ -53,9 +53,10 @@ public class HomeController extends Controller {
 /**
 * This method is used to handle the main page as well as all the searches for the active projects depending upon the search string entered by the user 
 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
-* @param request consist of string to be passed to the GitHub API.
-* @param keyWord consist of string to be passed to the GitHub API.
-* @return Json object wrap in completable future containing 20 issues.
+* @param request is the http request which contains session.
+* @param keyWord consist of string to be passed to the Freelancer API which then displays the projects.
+* @return returns MVC result when the future is completed.
+* @throws IOException it throes IOException
 * @version 1.0
 * @since 1.0. 
 */
@@ -88,6 +89,15 @@ public class HomeController extends Controller {
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method/function, gets the information for Preview Description for the selected project.  
      * @param prevDescriptor This String contains Preview Description of the data
@@ -113,8 +123,12 @@ public class HomeController extends Controller {
     }
     
     /**
-     * This method/function, loads the initial 
-     */
+    * This method is used to handle the main page.
+    * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+    * @return It returns mvc result.
+    * @version 1.0
+    * @since 1.0. 
+    */
     public Result landingPage() {
     	return ok(views.html.landingPage.render());
     }
