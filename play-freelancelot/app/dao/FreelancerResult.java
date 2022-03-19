@@ -8,7 +8,16 @@ import java.util.ArrayList;
  * @since 1.0
 */
 public class FreelancerResult {
-	 public String status;
+	 public FreelancerResult() {
+		super();
+	}
+	public FreelancerResult(String status, Result result, String request_id) {
+		super();
+		this.status = status;
+		this.result = result;
+		this.request_id = request_id;
+	}
+	public String status;
 	 public Result result;
 	 public String request_id;
 	 

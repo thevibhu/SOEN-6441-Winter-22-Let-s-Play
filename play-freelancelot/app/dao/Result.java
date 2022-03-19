@@ -8,6 +8,14 @@ import java.util.ArrayList;
  * @since 1.0
 */
 public class Result {
+	public Result() {
+		super();
+	}
+	public Result(ArrayList<Project> projects, int total_count) {
+		super();
+		this.projects = projects;
+		this.total_count = total_count;
+	}
 	public ArrayList<Project> projects;
 	public int total_count;
 	

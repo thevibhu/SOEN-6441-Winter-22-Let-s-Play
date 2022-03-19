@@ -11,7 +11,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 1.0
 */
 public class Project{
-	 public int id;
+	 public Project(int id, int owner_id, String title, String status) {
+		super();
+		this.id = id;
+		this.owner_id = owner_id;
+		this.title = title;
+		this.status = status;
+	}
+	public Project() {
+		super();
+	}
+	public int id;
 	 public int owner_id;
 	 public String title;
 	 public String status;
