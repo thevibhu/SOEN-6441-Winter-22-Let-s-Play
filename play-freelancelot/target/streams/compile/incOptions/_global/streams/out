@@ -1,2 +1,2 @@
-[debug] Created transactional ClassFileManager with tempDir = S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes.bak
-[debug] Removing the temporary directory used for backing up class files: S:\Concordia\Courses (Winter 22)\SOEN 6441\PROJECT\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes.bak
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: C:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\target\scala-2.13\classes.bak[0m

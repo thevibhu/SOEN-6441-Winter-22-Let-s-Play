@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="public/stylesheets/main.css">
         
         <!--[if IE]>
-  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
     </head>
     <body class="FreeLance-soen">
@@ -72,9 +72,9 @@
 			    		<td>@project.project_type</td>
 			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
 			    			@if(project.skills.size() == (index + 1)) {
-			    				<a>@skill</a>
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>
 			    			} else {
-			    				<a>@skill</a>, 
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
 			    			}
 			    		}</td>
 			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
@@ -119,9 +119,9 @@
 			    		<td>@project.project_type</td>
 			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
 			    			@if(project.skills.size() == (index + 1)) {
-			    				<a>@skill</a>
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>
 			    			} else {
-			    				<a>@skill</a>, 
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
 			    			}
 			    		}</td>
 			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
@@ -139,9 +139,8 @@
         	}
         	}
         	 }
-        }
         </div>
-        </div>
+	</div>
         
 		<br><br><br>
         <script src="@routes.Assets.versioned("javascripts/search.js")"></script>
