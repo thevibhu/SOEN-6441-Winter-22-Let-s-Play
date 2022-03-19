@@ -12,7 +12,16 @@ libraryDependencies += guice
 libraryDependencies ++= Seq(
   javaWs
 )
+libraryDependencies += "org.mockito" % "mockito-core" % "4.1.0" % "test"
 
 libraryDependencies += ehcache
 
 libraryDependencies += ws
+
+jacocoExcludes := Seq(
+  "controllers.Reverse*",
+  "controllers.javascript.*",
+  "Module",
+  "router.Routes*",
+  "*.routes*"
+)

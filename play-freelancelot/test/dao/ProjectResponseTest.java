@@ -36,5 +36,20 @@ public class ProjectResponseTest {
 		assertEquals("December 31, 1969", p.getTime_submitted());
 		assertEquals("title", p.getTitle());
 	}
+	
+	@Test
+	public void testConstructor() {
+		ProjectResponse p = new ProjectResponse(1, 0, "title", "fixed", null, "seo", 10, 10, "early", "desc");
+	
+		assertEquals("early", p.getEdu_level());
+		assertEquals(10, p.getFkgl());
+		assertEquals(10, p.getFlesch_index());
+		assertEquals(1, p.getOwner_id());
+		assertEquals("desc", p.getPrevDescriptor());
+		assertEquals("fixed", p.getProject_type());
+		assertEquals("seo", p.getSeo_url());
+		assertEquals("December 31, 1969", p.getTime_submitted());
+		assertEquals("title", p.getTitle());
+	}
 
 }
