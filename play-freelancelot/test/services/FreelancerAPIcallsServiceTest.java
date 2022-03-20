@@ -41,15 +41,15 @@ public class FreelancerAPIcallsServiceTest {
 //		projects.add(p);
 //		when(s.getActiveProjects("key")).thenReturn(CompletableFuture.completedFuture(projects));
 //
-		Project p = new Project(0, 0, "title", "active");
-		ArrayList<Project> projects = new ArrayList<Project>();
-		projects.add(p);
-		try (MockedStatic<FreelancerAPIcallsService> theMock = Mockito.mockStatic(FreelancerAPIcallsService.class)) {
-            theMock.when(() -> FreelancerAPIcallsService.getActiveProjects("key"))
-                   .thenReturn(CompletableFuture.completedFuture(projects));
-
-            assertEquals("title", FreelancerAPIcallsService.getActiveProjects("key").get().get(0).getTitle());
-        }
+//		Project p = new Project(0, 0, "title", "active");
+//		ArrayList<Project> projects = new ArrayList<Project>();
+//		projects.add(p);
+//		try (MockedStatic<FreelancerAPIcallsService> theMock = Mockito.mockStatic(FreelancerAPIcallsService.class)) {
+//            theMock.when(() -> FreelancerAPIcallsService.getActiveProjects("key"))
+//                   .thenReturn(CompletableFuture.completedFuture(projects));
+//
+//            assertEquals("title", FreelancerAPIcallsService.getActiveProjects("key").get().get(0).getTitle());
+//        }
 //	    assertEquals(s.getActiveProjects("key").get().get(0).getTitle(),"title");
 	    
 	   // verify(s).getActiveProjects("key").get().get(0).getTitle();

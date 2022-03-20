@@ -10,6 +10,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +35,9 @@ import dao.FreelancerResult;
 import dao.Job;
 import dao.Project;
 import dao.ProjectResponse;
+import dao.UserDetails;
+import dao.UserProfile;
+import dao.UserProjectDisplay;
 
 /** This class holds all the business logic which is used by the controller in order to fetch useful data
  * @author Vaibhav, Felipe, Gagandeep, Gurpreet
@@ -107,14 +112,25 @@ public class FreeLancelotService {
 	public static CompletableFuture<List<ProjectResponse>>  streamProjects(String keyWord) throws IOException {
 		return FreelancerAPIcallsService.getActiveProjects(keyWord).thenApplyAsync(
 				projects -> {
-					List<ProjectResponse> projRes = projects.stream()
-							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), getfleschIndex(p.getPreview_description()), getFKGL(p.getPreview_description()), getEducationalLevel(p.getPreview_description()), p.getPreview_description()))
-							.collect(Collectors.toList());	
-					return projRes;
+					Stream<ProjectResponse> projRes = projects.stream()
+							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), p.getPreview_description()));
+							//.collect(Collectors.toList());	
+					return calculateFlesch(projRes);
 				}
 		);
 	}
 	
+	private static List<ProjectResponse> calculateFlesch(Stream<ProjectResponse> projRes) {
+		return projRes.map(proj -> {
+	        proj.setEdu_level(getEducationalLevel(proj.getPrevDescriptor()));
+	        proj.setFlesch_index((int)getfleschIndex(proj.getPrevDescriptor()));
+	        proj.setFkgl((int)getFKGL(proj.getPrevDescriptor()));
+	        return proj;
+	    })
+		.collect(Collectors.toList());
+				
+	}
+
 	/** This method is used to convert the Job array into a list of skills(string)
 	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
 	 * @param jobs is the arraylist of jobs fetched from Freelancer API.
@@ -269,10 +285,48 @@ public class FreeLancelotService {
 	 */
 	public static CompletableFuture<List<ProjectResponse>> skillsFilter(String skill) throws IOException{
 		return FreelancerAPIcallsService.getActiveProjects(skill).thenApplyAsync(
-				projects -> projects.stream()
-						.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), getfleschIndex(p.getPreview_description()), getFKGL(p.getPreview_description()), getEducationalLevel(p.getPreview_description()), p.getPreview_description()))
-						.filter(p -> p.skills.contains(skill))
-						.collect(Collectors.toList())
+				projects -> {
+					Stream<ProjectResponse> projRes = projects.stream()
+							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), p.getPreview_description()))
+							.filter(p -> p.skills.contains(skill));
+							//.collect(Collectors.toList())
+							return calculateFlesch(projRes);
+				}
+						
 		);
 	}
+	
+	
+	/** This method is used to display the user information
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	*/
+
+	public static CompletableFuture<UserDetails> getUser(int owner_id) throws IOException{
+		return FreelancerAPIcallsService.getUserDetails(owner_id).thenApplyAsync(
+				owner -> {
+					UserDetails user_details = new UserDetails(owner.getUsername(), owner.getPublic_name(),owner.getId(),owner.getAvatar_large(),owner.getDisplay_name(), owner.getRole(),owner.getChosen_role());
+					return user_details;
+				}	
+		);
+		}
+	
+	
+	/** This method is used to Display the latest projects title using its owner_id
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	*/
+	public static CompletableFuture<List<UserProjectDisplay>> getUserProjects(int owner_id) throws IOException{
+		return FreelancerAPIcallsService.getUserProjects(owner_id).thenApplyAsync(
+				projects -> {
+					List<UserProjectDisplay> user_proj_details = projects.stream()
+							.map(user_p->new UserProjectDisplay(user_p.getTitle(), user_p.getType(),user_p.getOwner_id()))
+									.collect(Collectors.toList());
+					return user_proj_details;
+				}	
+		);
+		}
+	
 }

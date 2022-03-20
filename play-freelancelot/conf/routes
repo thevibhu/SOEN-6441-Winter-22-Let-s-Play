@@ -3,6 +3,9 @@
 # ~~~~
 
 # An example controller showing a sample home page
+GET     /SearchPage       			controllers.HomeController.index(request:Request, keyWord:String)
+GET		/UserProfile				controllers.HomeController.profile(owner_id:Int)
+GET 	/UserProjects				controllers.HomeController.userProj(owner_id:Int)
 GET     /freelancelot            	controllers.HomeController.landingPage()
 GET     /SearchPage			    	controllers.HomeController.index(request:Request, keyWord:String)
 GET     /Stats/:descriptor			controllers.HomeController.stats(descriptor:String)

@@ -14,6 +14,8 @@ import java.util.stream.StreamSupport;
 
 import dao.FreelancerResult;
 import dao.ProjectResponse;
+import dao.UserDetails;
+import dao.UserProjectDisplay;
 import play.mvc.*;
 import services.FreeLancelotService;
 
@@ -89,15 +91,17 @@ public class HomeController extends Controller {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   public CompletionStage<Result> profile(int owner_id) throws IOException{
+	  
+	   return FreeLancelotService.getUser(owner_id).thenApplyAsync((details->ok(views.html.profile.render((UserDetails)details))));
+   }
+
+   public CompletionStage<Result> userProj(int owner_id) throws IOException{
+		  
+	   return FreeLancelotService.getUserProjects(owner_id).thenApplyAsync((details->ok(views.html.userProj.render((List<UserProjectDisplay>)details))));
+}
+  
+
     /**
      * This method/function, gets the information for Preview Description for the selected project.  
      * @param prevDescriptor This String contains Preview Description of the data

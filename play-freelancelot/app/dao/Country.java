@@ -6,5 +6,6 @@ package dao;
  * @since 1.0
 */
 public class Country {
+	public String name;
 
 }

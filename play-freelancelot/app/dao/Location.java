@@ -7,6 +7,7 @@ package dao;
 */
 public class Location{
 	 public Country country;
+	 public String city;
 
 	public Country getCountry() {
 		return country;

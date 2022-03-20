@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -81,5 +82,27 @@ public class FreeLancelotServiceTest {
 		List<ProjectResponse> result = FreeLancelotService.skillsFilter("Java").get();
 
 		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
+	}
+	
+	/**
+	 * A test to check if the skill filter service filters projects according to the skill passed.
+	 * @author Vaibhav
+	 */
+//	@Test
+//	public void streamProjectsTest() throws IOException, ExecutionException, InterruptedException {
+//		List<ProjectResponse> result = FreeLancelotService.streamProjects("Java").get();
+//
+//		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
+//	}
+	
+	
+	/**
+	 * A test to check if the skill filter service filters projects according to the skill passed.
+	 * @author Gurpreet
+	 */
+	@Test
+	public void wordStatsTest() throws IOException, ExecutionException, InterruptedException {
+		 HashMap<String, Integer> result = FreeLancelotService.wordStats("preview").get();
+		assertEquals(1,(int)result.get("preview"));
 	}
 }
