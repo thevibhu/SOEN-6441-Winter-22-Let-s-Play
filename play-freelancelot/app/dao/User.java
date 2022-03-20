@@ -1,5 +1,11 @@
 package dao;
 
+
+/** Represents user details
+ * @author Gagandeep
+ * @version 1.0
+ * @since 1.0
+*/
 public class User{
 	 public String status;
 	 public UserProfile result;

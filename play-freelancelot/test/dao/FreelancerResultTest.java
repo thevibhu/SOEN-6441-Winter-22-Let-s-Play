@@ -18,5 +18,15 @@ public class FreelancerResultTest {
 		assertEquals(1, f.getResult().getTotal_count());
 		assertEquals("status", f.getStatus());
 	}
+	
+	@Test
+	public void testConstructor() {
+		Result r = new Result();
+		r.setTotal_count(1);
+		FreelancerResult f = new FreelancerResult("status", r, "req");
+		assertEquals("req", f.getRequest_id());
+		assertEquals(1, f.getResult().getTotal_count());
+		assertEquals("status", f.getStatus());
+	}
 
 }

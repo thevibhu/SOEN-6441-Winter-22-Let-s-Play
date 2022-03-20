@@ -103,10 +103,16 @@ public class ProjectTest {
 		assertEquals(false, p.isFeatured());
 		assertEquals(false, p.isHidebids());
 		assertEquals(false, p.isIs_seller_kyc_required());
-
+	}
+	
+	@Test
+	public void testConstructor() {
+		Project p = new Project(1, 0, "title", "status");
 		
-		
-		
+		assertEquals(1, p.getId());
+		assertEquals(0, p.getOwner_id());
+		assertEquals("title",p.getTitle());
+		assertEquals("status", p.getStatus());
 		
 	}
 

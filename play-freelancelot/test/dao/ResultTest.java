@@ -22,5 +22,16 @@ public class ResultTest {
 		assertEquals(21, r.getTotal_count());
 		assertEquals(1, r.getProjects().get(0).getBidperiod());
 	}
+	
+	@Test
+	public void testConstructor() {
+		ArrayList<Project> projects= new ArrayList<Project>();
+		Project p = new Project();
+		p.setBidperiod(1);
+		projects.add(p);
+		Result r = new Result(projects, 21);
+		assertEquals(21, r.getTotal_count());
+		assertEquals(1, r.getProjects().get(0).getBidperiod());
+	}
 
 }

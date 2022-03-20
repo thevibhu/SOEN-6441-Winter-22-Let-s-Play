@@ -49,6 +49,19 @@ public class FreeLancelotServiceTest {
 	}
 	
 	@Test
+	public void getcalculateFlesch() {
+		ProjectResponse p = new ProjectResponse();
+		p.setOwner_id(1);
+		p.setPrevDescriptor("hello this is a test that is obviously not perfect");
+		List<ProjectResponse> list = new ArrayList<ProjectResponse>();
+		list.add(p);
+		
+		List<ProjectResponse> x = FreeLancelotService.calculateFlesch(list.stream());
+		
+		assertEquals("7th grade", x.get(0).getEdu_level());	
+	}
+	
+	@Test
 	public void getFleschIndexTest() {
 		assertEquals((int)999, (int)FreeLancelotService.getfleschIndex(""));	
 	}

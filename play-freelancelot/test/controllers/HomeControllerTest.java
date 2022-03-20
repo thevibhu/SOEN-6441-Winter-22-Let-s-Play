@@ -44,7 +44,7 @@ public class HomeControllerTest extends WithApplication {
     
     @Test
     public void testLandingPageContent() {
-      Result result = new HomeController(null).landingPage();
+      Result result = new HomeController().landingPage();
       assertEquals(OK, result.status());
       assertEquals("text/html", result.contentType().get());
       assertEquals("utf-8", result.charset().get());

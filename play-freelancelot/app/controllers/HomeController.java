@@ -42,13 +42,18 @@ import akka.stream.*;
  * @since 1.0
  */
 public class HomeController extends Controller {
-	
-	private HttpExecutionContext httpExecutionContext;
+
 	private final HashMap<String, List<ProjectResponse>> cache;
     
+	
+	/**
+	 * This method is used to initialize the cache
+	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+	 * @version 1.0
+	 * @since 1.0
+	 */
     @Inject
-	public HomeController(HttpExecutionContext httpExecutionContext) {
-    	this.httpExecutionContext = httpExecutionContext;
+	public HomeController() {
     	cache = new HashMap<String, List<ProjectResponse>>();
     }
     
@@ -57,7 +62,7 @@ public class HomeController extends Controller {
 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
 * @param request is the http request which contains session.
 * @param keyWord consist of string to be passed to the Freelancer API which then displays the projects.
-* @return returns MVC result when the future is completed.
+* @return This returns the HTML to the frontend.
 * @throws IOException it throes IOException
 * @version 1.0
 * @since 1.0. 
@@ -91,11 +96,31 @@ public class HomeController extends Controller {
         }
     }
     
+    
+    /**
+	 * This method is used to get the user profile
+	 * @author Gagandeep Kaur
+	 * @param owner_id of the user
+	 * @version 1.0
+	 * @since 1.0
+	 * @return This returns the HTML to the frontend.
+	 * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+	 */
    public CompletionStage<Result> profile(int owner_id) throws IOException{
 	  
 	   return FreeLancelotService.getUser(owner_id).thenApplyAsync((details->ok(views.html.profile.render((UserDetails)details))));
    }
 
+   
+   /**
+  	 * This method is used to get the user's projects
+  	 * @author Gagandeep Kaur
+  	 * @param owner_id is the id of project owner
+  	 * @version 1.0
+  	 * @since 1.0
+  	 * @return This returns the HTML to the frontend.
+  	 * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+  	 */
    public CompletionStage<Result> userProj(int owner_id) throws IOException{
 		  
 	   return FreeLancelotService.getUserProjects(owner_id).thenApplyAsync((details->ok(views.html.userProj.render((List<UserProjectDisplay>)details))));
@@ -103,6 +128,7 @@ public class HomeController extends Controller {
   
 
     /**
+     * @author Gurpreet Singh
      * This method/function, gets the information for Preview Description for the selected project.  
      * @param prevDescriptor This String contains Preview Description of the data
      * @return The word count of each word in the Preview Description
@@ -116,8 +142,9 @@ public class HomeController extends Controller {
     
     /**
      * This method/function, gets the information of all the Preview Descriptions (For every Search).
+     * @author Gurpreet Singh
      * @return The word count of each word in the Preview Description of the entire Search.
-     * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
+     * @throws IOException  If any error occurs during reading data or data in the stream is corrupted.
      */
     public CompletionStage<Result> globalStats() throws IOException{
     	System.out.println("cache ::: " + cache);
@@ -129,7 +156,7 @@ public class HomeController extends Controller {
     /**
     * This method is used to handle the main page.
     * @author Vaibhav, Felipe, Gagandeep, Gurpreet
-    * @return It returns mvc result.
+    * @return This returns the HTML to the frontend.
     * @version 1.0
     * @since 1.0. 
     */
@@ -142,7 +169,7 @@ public class HomeController extends Controller {
      * @author Felipe Kosin Jorge
      * @param skill is the specific skill to be searched.
      * @return A CompletionStage of a Result which will render the skill.html page
-     * @throws IOException
+     * @throws IOException if it occurs
      */
     public CompletionStage<Result> skills(String skill) throws IOException{
         return FreeLancelotService.skillsFilter(skill.replace("%20"," ")).thenApplyAsync(
