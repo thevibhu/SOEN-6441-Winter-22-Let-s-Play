@@ -11,4 +11,12 @@ import java.util.List;
 
 public class Result2 {
 	public UserProfile users;
+
+	public UserProfile getUsers() {
+		return users;
+	}
+
+	public void setUsers(UserProfile users) {
+		this.users = users;
+	}
 }

@@ -47,7 +47,6 @@ import dao.UserProjectDisplay;
 public class FreeLancelotService {
 	public static String globalStr = "";
 	
-	
 
 	public static CompletableFuture<HashMap<String, Integer>> globalWordStats(HashMap<String, List<ProjectResponse>> cache) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
@@ -107,6 +106,7 @@ public class FreeLancelotService {
 	 * @version 1.0
 	 * @since 1.0
 	*/
+
 	public static CompletableFuture<List<ProjectResponse>>  streamProjects(String keyWord) throws IOException {
 		return FreelancerAPIcallsService.getActiveProjects(keyWord).thenApplyAsync(
 				projects -> {
@@ -118,6 +118,12 @@ public class FreeLancelotService {
 		);
 	}
 	
+	/** This method is used to display the user information
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	*/
+
 	public static CompletableFuture<UserDetails> getUser(int owner_id) throws IOException{
 		return FreelancerAPIcallsService.getUserDetails(owner_id).thenApplyAsync(
 				owner -> {
@@ -127,7 +133,11 @@ public class FreeLancelotService {
 		);
 		}
 	
-	
+	/** This method is used to Display the latest projects title using its owner_id
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	*/
 	public static CompletableFuture<List<UserProjectDisplay>> getUserProjects(int owner_id) throws IOException{
 		return FreelancerAPIcallsService.getUserProjects(owner_id).thenApplyAsync(
 				projects -> {
@@ -140,11 +150,13 @@ public class FreeLancelotService {
 		}
 	
 	
+
 	/** This method is used to convert the Job array into a list of skills(string)
 	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
 	 * @version 1.0
 	 * @since 1.0
 	*/
+
 	public static  List<String>  convertJobDetails(ArrayList<Job> jobs){
 		List<String> skills = jobs.stream()
 				.map(p -> p.getName())
