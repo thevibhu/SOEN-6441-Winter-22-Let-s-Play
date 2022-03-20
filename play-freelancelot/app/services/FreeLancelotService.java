@@ -12,13 +12,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
@@ -26,6 +30,7 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,32 +55,33 @@ public class FreeLancelotService {
 	
 	public static CompletableFuture<HashMap<String, Integer>> globalWordStats(HashMap<String, List<ProjectResponse>> cache) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
-	
-		for (Entry<String, List<ProjectResponse>> data : cache.entrySet()) {
-		    /*data.getValue().stream().forEach(x -> {
-		    	globalStr = globalStr + " " + x.getPrevDescriptor();
-		    });*/
-		    		//.reduce("", (a,b) -> a + b.getPrevDescriptor());
-			data.getValue().forEach(x -> {
+		
+		System.out.println("Global Inital :::  " + globalStr);
+		
+		List<String> globalStatsResponse = cache.entrySet().stream()
+				.map(x -> x.getValue().stream()
+						.map(y -> y.getPrevDescriptor())
+						.collect(Collectors.toList()))
+				.map(x -> x.toString())
+				.collect(Collectors.toList());
+		
+		globalStr = globalStatsResponse.toString();
+		
+		System.out.println("globalStr ::: GP " + globalStr);
+		
+		/*for (Entry<String, List<ProjectResponse>> data : cache.entrySet()) {
+		    data.getValue().forEach(x -> {
 		    	globalStr = globalStr + " " + x.getPrevDescriptor();
 		    });
-		}
-		
-		//globalStr = globalStr.substring(0,globalStr.length());		
-		//Iterator<List<ProjectResponse>> globalValues = cache.values().iterator();
-		
-		/*while(globalValues.hasNext()) {
-			globalValues.forEachRemaining(x -> {
-				System.out.println(x);
-				//globalStr = globalStr + " " + ;
-			});
-			globalValues.next();
 		}*/
 		
 		future = FreeLancelotService.wordStats(globalStr);
 		globalStr = "";
+		
+		System.out.println("Global END :::  " + globalStr);
 		return future;
-	}
+	}	
+	
 	
 	public static CompletableFuture<HashMap<String, Integer>> wordStats(String prevDescriptor) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
@@ -93,13 +99,17 @@ public class FreeLancelotService {
         
 		Map<String, Integer > wordCounter = wordList.stream()
             .collect(Collectors.toMap(x -> x.toLowerCase(), x -> 1, Integer::sum));
-        
-        //System.out.println("wordCounter ::: " + wordCounter);
+		
+		final LinkedHashMap<String, Integer> wordInDec = wordCounter.entrySet().stream()
+				.sorted(Comparator.comparing(x -> x.getValue()))
+				.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+				.collect(Collectors.toMap(x -> x.getKey(), y -> y.getValue(), (a, b) -> a, LinkedHashMap::new));
+				
+        System.out.println("wordCounter ::: " + wordInDec);
  
-        ((CompletableFuture<HashMap<String, Integer>>) future).complete((HashMap<String, Integer>) wordCounter);
+        ((CompletableFuture<HashMap<String, Integer>>) future).complete((HashMap<String, Integer>) wordInDec);
 		return future;
-	}
-	
+	}	
 	
 	/** This method is called by the controllet to fetch all the latest active projects where the data is processed by streams
 	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
