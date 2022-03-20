@@ -115,6 +115,12 @@ public class UserDetails {
 	}
 
 
+
+	public UserDetails() {
+		
+	}
+
+
 	
 		
 }
