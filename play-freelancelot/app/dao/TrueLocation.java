@@ -6,12 +6,26 @@ package dao;
  * @since 1.0
 */
 public class TrueLocation{
-	 public Country country;
+	
+	/**
+	 * @param country Country for the Location
+	 */
+	public Country country;
 
+	/** gets the country for the Location.
+   	 * @version 1.0
+   	 * @return the country for the Location
+   	 * @since 1.0
+     */
 	public Country getCountry() {
 		return country;
 	}
 
+	/** sets the country for the Location.
+   	 * @version 1.0
+   	 * @param country the country for the Location
+   	 * @since 1.0
+     */
 	public void setCountry(Country country) {
 		this.country = country;
 	}
