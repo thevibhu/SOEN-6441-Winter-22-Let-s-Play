@@ -151,12 +151,11 @@ public class FreeLancelotServiceTest {
 	 * @version 1.0
 	 * @since 1.0
 	 */
-//	@Test
-//	public void streamProjectsTest() throws IOException, ExecutionException, InterruptedException {
-//		List<ProjectResponse> result = FreeLancelotService.streamProjects("Java").get();
-//
-//		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
-//	}
+	@Test
+	public void streamProjectsTest() throws IOException, ExecutionException, InterruptedException {
+		List<ProjectResponse> result = FreeLancelotService.streamProjects("Java").get();
+		assertEquals(true,result.get(0).skills.contains("Java"));
+	}
 	
 	
 	/**
@@ -172,5 +171,27 @@ public class FreeLancelotServiceTest {
 	public void wordStatsTest() throws IOException, ExecutionException, InterruptedException {
 		 HashMap<String, Integer> result = FreeLancelotService.wordStats("preview").get();
 		assertEquals(1,(int)result.get("preview"));
+	}
+	
+	/**
+	 * A test to check global word stats of a string.
+	 * @author Gurpreet Singh
+	 * @throws IOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @version 1.0
+	 * @since 1.0
+	 */
+	@Test
+	public void globalWordStatsTest() throws IOException, ExecutionException, InterruptedException {
+		List<ProjectResponse> l = new ArrayList<ProjectResponse>();
+		ProjectResponse p = new ProjectResponse();
+		p.setPrevDescriptor("preview descriptor");
+		l.add(p);
+		HashMap<String,List<ProjectResponse>> hm = new HashMap<String,List<ProjectResponse>>();
+		hm.put("key", l);
+		
+		 HashMap<String, Integer> result = FreeLancelotService.globalWordStats(hm).get();
+		 assertEquals(1,(int)result.get("preview"));
 	}
 }

@@ -8,6 +8,10 @@ import java.util.ArrayList;
  * @since 1.0
 */
 public class UserProjectDetails {
+	public int getBidperiod() {
+		return bidperiod;
+	}
+
 	/**
 	 * @param true_location Location of the User Project
 	 */
@@ -183,14 +187,14 @@ public class UserProjectDetails {
      */
     public Object hourly_project_info;
 
-	/** gets Location of the project.
-   	 * @version 1.0
-   	 * @return Location of the project.
-   	 * @since 1.0
-   	*/
-    public TrueLocation getTrue_location() {
-		return true_location;
-	}
+//	/** gets Location of the project.
+//   	 * @version 1.0
+//   	 * @return Location of the project.
+//   	 * @since 1.0
+//   	*/
+//    public TrueLocation getTrue_location() {
+//		return true_location;
+//	}
 
 	/** sets the Location of the project.
    	 * @version 1.0
@@ -255,14 +259,14 @@ public class UserProjectDetails {
 		this.seo_url = seo_url;
 	}
 	
-	/** gets Currency of the project.
-   	 * @version 1.0
-   	 * @return Currency of the project.
-   	 * @since 1.0
-   	*/
-	public Currency getCurrency() {
-		return currency;
-	}
+//	/** gets Currency of the project.
+//   	 * @version 1.0
+//   	 * @return Currency of the project.
+//   	 * @since 1.0
+//   	*/
+//	public Currency getCurrency() {
+//		return currency;
+//	}
 	
 	/** sets Currency of the project.
    	 * @version 1.0
@@ -363,14 +367,6 @@ public class UserProjectDetails {
 		this.hidebids = hidebids;
 	}
 	
-	/** gets Bid Period of the Project.
-   	 * @version 1.0
-   	 * @return Bid Period of the project.
-   	 * @since 1.0
-   	*/
-	public int getBidperiod() {
-		return bidperiod;
-	}
 	
 	/** sets Bid Period of the Project.
    	 * @version 1.0
@@ -398,9 +394,9 @@ public class UserProjectDetails {
 	public void setUrgent(boolean urgent) {
 		this.urgent = urgent;
 	}
-	public BidStats getBid_stats() {
-		return bid_stats;
-	}
+//	public BidStats getBid_stats() {
+//		return bid_stats;
+//	}
 	public void setBid_stats(BidStats bid_stats) {
 		this.bid_stats = bid_stats;
 	}
@@ -434,9 +430,6 @@ public class UserProjectDetails {
 	public void setFrontend_project_status(String frontend_project_status) {
 		this.frontend_project_status = frontend_project_status;
 	}
-	public Location getLocation() {
-		return location;
-	}
 	public void setLocation(Location location) {
 		this.location = location;
 	}
@@ -464,9 +457,9 @@ public class UserProjectDetails {
 	public void setPool_ids(ArrayList<String> pool_ids) {
 		this.pool_ids = pool_ids;
 	}
-	public ArrayList<Object> getEnterprise_ids() {
-		return enterprise_ids;
-	}
+//	public ArrayList<Object> getEnterprise_ids() {
+//		return enterprise_ids;
+//	}
 	public void setEnterprise_ids(ArrayList<Object> enterprise_ids) {
 		this.enterprise_ids = enterprise_ids;
 	}
@@ -543,14 +536,14 @@ public class UserProjectDetails {
 		this.project_reject_reason = project_reject_reason;
 	}
 	
-	/** gets Status of the Project.
-   	 * @version 1.0
-   	 * @return Status of the project.
-   	 * @since 1.0
-   	*/
-	public String getSub_status() {
-		return sub_status;
-	}
+//	/** gets Status of the Project.
+//   	 * @version 1.0
+//   	 * @return Status of the project.
+//   	 * @since 1.0
+//   	*/
+//	public String getSub_status() {
+//		return sub_status;
+//	}
 	
 	/** sets Status of the Project.
    	 * @version 1.0
@@ -561,14 +554,14 @@ public class UserProjectDetails {
 		this.sub_status = sub_status;
 	}
 	
-	/** gets Hourly Project Information.
-   	 * @version 1.0
-   	 * @return Hourly Project Information of the project.
-   	 * @since 1.0
-   	*/
-	public Object getHourly_project_info() {
-		return hourly_project_info;
-	}
+//	/** gets Hourly Project Information.
+//   	 * @version 1.0
+//   	 * @return Hourly Project Information of the project.
+//   	 * @since 1.0
+//   	*/
+//	public Object getHourly_project_info() {
+//		return hourly_project_info;
+//	}
 	
 	/** sets Hourly Project Information.
    	 * @version 1.0

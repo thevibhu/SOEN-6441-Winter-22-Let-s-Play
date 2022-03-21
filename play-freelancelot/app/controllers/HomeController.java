@@ -72,8 +72,6 @@ public class HomeController extends Controller {
         
  
         if(request.session().get(keyWord).isPresent()){
-        //if(request.session().data().containsKey(keyWord+"_result")){
-        	System.out.println("Inside ::: if ");
             completableFuture.complete(request.session().get(keyWord).get());
             return completableFuture
                     .thenApplyAsync(response -> ok(views.html.index.render(cache.get(keyWord),request,keyWord,cache)));
@@ -81,7 +79,6 @@ public class HomeController extends Controller {
         		return FreeLancelotService.streamProjects(keyWord)
                         .thenApplyAsync(response->{
                         	if(((List<ProjectResponse>)response).size() > 0) {
-                        		System.out.println("Response ::: " + response);
                                 cache.put(keyWord, ((List<ProjectResponse>) response));
                                 return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache)).addingToSession(request, keyWord, keyWord);
                             }

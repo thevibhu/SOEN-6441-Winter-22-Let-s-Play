@@ -25,7 +25,7 @@ public class CountryTest {
 	public void test() {
 		Country c = new Country( );
 		c.setName("name");
-		assertEquals("name", c.name);
+		assertEquals("name", c.getName());
 	}
 
 }
