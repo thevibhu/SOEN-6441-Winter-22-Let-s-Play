@@ -4,8 +4,23 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+
+
+/**
+ * This class is used to test FreelancerResult
+ * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+ * @version 1.0
+ * @since 1.0
+ */
 public class FreelancerResultTest {
 
+	
+	/**
+	 * This class is used to test FreelancerResult getters and setters
+	 * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test() {
 		FreelancerResult f = new FreelancerResult();
@@ -19,6 +34,10 @@ public class FreelancerResultTest {
 		assertEquals("status", f.getStatus());
 	}
 	
+	/**
+	 * This class is used to test FreelancerResult constructor
+	 * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+	 */
 	@Test
 	public void testConstructor() {
 		Result r = new Result();

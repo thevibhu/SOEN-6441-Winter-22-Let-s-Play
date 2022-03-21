@@ -5,9 +5,22 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+
+/**
+ * This class is used to test TimeZone
+ * @author Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+ */
 public class TimeZoneTest {
 	
-	@SuppressWarnings("deprecation")
+	
+	/**
+	 * This method is used to test TimeZone
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test() {
 		TimeZone tz= new TimeZone();

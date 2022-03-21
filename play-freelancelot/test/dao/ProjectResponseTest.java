@@ -7,8 +7,22 @@ import java.util.List;
 
 import org.junit.Test;
 
+
+/**
+ * This class is used to test ProjectResponse
+ * @author Vaibhav
+ * @version 1.0
+ * @since 1.0
+ */
 public class ProjectResponseTest {
 
+	
+	/**
+	 * This method is used to test ProjectResponse
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test() {
 		ProjectResponse p = new ProjectResponse();
@@ -37,6 +51,10 @@ public class ProjectResponseTest {
 		assertEquals("title", p.getTitle());
 	}
 	
+	/**
+	 * This method is used to test ProjectResponse constructor
+	 * @author Vaibhav Verma
+	 */
 	@Test
 	public void testConstructor() {
 		ProjectResponse p = new ProjectResponse(1, 0, "title", "fixed", null, "seo", "desc");

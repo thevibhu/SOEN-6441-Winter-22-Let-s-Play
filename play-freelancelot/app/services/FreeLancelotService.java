@@ -50,6 +50,7 @@ import dao.UserProjectDisplay;
  * @since 1.0
 */
 public class FreeLancelotService {
+	
 /** global stats string
  * @author Gurpreet Singh
  * @version 1.0
@@ -69,9 +70,6 @@ public class FreeLancelotService {
 	*/
 	public static CompletableFuture<HashMap<String, Integer>> globalWordStats(HashMap<String, List<ProjectResponse>> cache) throws IOException {
 		CompletableFuture<HashMap<String, Integer>> future = new CompletableFuture<>();
-		
-		System.out.println("Global Inital :::  " + globalStr);
-		
 		List<String> globalStatsResponse = cache.entrySet().stream()
 				.map(x -> x.getValue().stream()
 						.map(y -> y.getPrevDescriptor())
@@ -80,9 +78,6 @@ public class FreeLancelotService {
 				.collect(Collectors.toList());
 		
 		globalStr = globalStatsResponse.toString();
-		
-		System.out.println("globalStr ::: GP " + globalStr);
-		
 		/*for (Entry<String, List<ProjectResponse>> data : cache.entrySet()) {
 		    data.getValue().forEach(x -> {
 		    	globalStr = globalStr + " " + x.getPrevDescriptor();
@@ -91,8 +86,6 @@ public class FreeLancelotService {
 		
 		future = FreeLancelotService.wordStats(globalStr);
 		globalStr = "";
-		
-		System.out.println("Global END :::  " + globalStr);
 		return future;
 	}	
 	
@@ -125,9 +118,6 @@ public class FreeLancelotService {
 				.sorted(Comparator.comparing(x -> x.getValue()))
 				.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
 				.collect(Collectors.toMap(x -> x.getKey(), y -> y.getValue(), (a, b) -> a, LinkedHashMap::new));
-				
-        System.out.println("wordCounter ::: " + wordInDec);
- 
         ((CompletableFuture<HashMap<String, Integer>>) future).complete((HashMap<String, Integer>) wordInDec);
 		return future;
 	}	
@@ -165,7 +155,6 @@ public class FreeLancelotService {
 	        return proj;
 	    }).limit(10)
 		.collect(Collectors.toList());
-				
 	}
 
 	/** This method is used to convert the Job array into a list of skills(string)

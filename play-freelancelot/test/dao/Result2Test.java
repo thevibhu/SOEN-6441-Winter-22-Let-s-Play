@@ -6,8 +6,21 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+/**
+ * This class is used to test Result2
+ * @author Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+ */
 public class Result2Test {
 	
+	
+	/**
+	 * This method is used to test Result2
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test(){
 		

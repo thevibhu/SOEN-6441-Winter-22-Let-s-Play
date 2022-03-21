@@ -7,8 +7,22 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**
+ * This class is used to test UserProjectDisplay
+ * @author Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+ */
 public class UserProjectDisplayTest {
 	
+	
+
+/**
+ * This method is used to test UserProjectDisplay
+ * @author Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+ */
 	@Test
 	public void test() {
 		UserProjectDisplay proj = new UserProjectDisplay();
@@ -20,6 +34,10 @@ public class UserProjectDisplayTest {
 		assertEquals("title", proj.getTitle());
 	}
 	
+	/**
+	 * This method is used to test UserProjectDisplay constructor
+	 * @author Gagandeep Kaur
+	 */
 	@Test
 	public void testConstructor() {
 		UserProjectDisplay p = new UserProjectDisplay("title", "SomeType", 1);

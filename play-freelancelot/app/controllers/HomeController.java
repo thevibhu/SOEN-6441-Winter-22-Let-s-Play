@@ -70,13 +70,7 @@ public class HomeController extends Controller {
     public CompletionStage<Result> index(Http.Request request, String keyWord) throws IOException{
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
         
-        System.out.println(" GET KEY ::: " + request.session().get(keyWord).isPresent());
-        
-        System.out.println("Session :  "+ request.session().data());
-        System.out.println("Hash Table:" + cache);
-        
-        
-        
+ 
         if(request.session().get(keyWord).isPresent()){
         //if(request.session().data().containsKey(keyWord+"_result")){
         	System.out.println("Inside ::: if ");

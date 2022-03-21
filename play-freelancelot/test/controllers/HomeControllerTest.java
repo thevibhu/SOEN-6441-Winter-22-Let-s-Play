@@ -24,6 +24,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * Test file to test controller actions.
+ * @author Vaibhav, Gurpreet, Gagandeep, Felipe
+ * @version 1.0
+ * @since 1.0
+ */
 public class HomeControllerTest extends WithApplication {
 
     @Override
@@ -32,6 +38,12 @@ public class HomeControllerTest extends WithApplication {
     }
 
     
+    /**
+     * This method is used to test the landing page.
+     * @author Vaibhav, Gurpreet, Gagandeep, Felipe
+     * @version 1.0
+     * @since 1.0
+     */
     @Test
     public void testLandingPage() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -42,6 +54,13 @@ public class HomeControllerTest extends WithApplication {
         assertEquals(OK, result.status());
     }
     
+    
+    /**
+     * This method is used to test the landing page content.
+     * @author Vaibhav, Gurpreet, Gagandeep, Felipe
+     * @version 1.0
+     * @since 1.0
+     */
     @Test
     public void testLandingPageContent() {
       Result result = new HomeController().landingPage();
@@ -50,6 +69,13 @@ public class HomeControllerTest extends WithApplication {
       assertEquals("utf-8", result.charset().get());
     }
     
+    /**
+     * This method is used to test the search page content.
+     * @author Vaibhav, Gurpreet, Gagandeep, Felipe
+     * @version 1.0
+     * @since 1.0
+     * @throws IOException when it occurs
+     */
     @Test
     public void testSearchPage() throws IOException {
     	 Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/SearchPage?keyWord=scala");
@@ -76,7 +102,9 @@ public class HomeControllerTest extends WithApplication {
     /**
      * Test for the skill controller page in order to make sure the requested result returns OK.
      * @author Felipe Kosin Jorge
-     * @throws IOException
+     * @version 1.0
+     * @since 1.0
+     * @throws IOException when it occurs
      */
     @Test
     public void testSkillPage() throws IOException{
@@ -87,7 +115,13 @@ public class HomeControllerTest extends WithApplication {
 
     }
     
-    
+    /**
+     * This method is used to test the globalStats page.
+     * @author Gurpreet Singh
+     * @throws IOException when it occurs
+     * @version 1.0
+     * @since 1.0
+     */
     @Test
     public void testglobal() throws IOException{
         Http.RequestBuilder req = new Http.RequestBuilder().method(GET).uri("/GlobalStats");
@@ -98,7 +132,13 @@ public class HomeControllerTest extends WithApplication {
     }
     
     
-    
+    /**
+     * This method is used to test user profile.
+     * @author Gagandeep Kaur
+     * @throws IOException when it occurs
+     * @version 1.0
+     * @since 1.0
+     */
     @Test
     public void testprofile() throws IOException{
     	Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/UserProfile?owner_id=1");
@@ -106,6 +146,13 @@ public class HomeControllerTest extends WithApplication {
     	assertEquals(OK,rest.status());
     }
     
+    /**
+     * This method is used to test user projects.
+     * @author Gagandeep Kaur
+     * @version 1.0
+     * @since 1.0
+     * @throws IOException when it occurs
+     */
     @Test
     public void testuserProj() throws IOException {
       Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/UserProjects?owner_id=1");

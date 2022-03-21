@@ -8,8 +8,19 @@ import org.junit.Test;
 
 import dao.ProjectResponse;
 
+/**
+ * This class is used to test Index View
+ * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+ * @version 1.0
+ * @since 1.0
+ */
 public class IndexTest {
-
+	/**
+	 * This method is used to test Index View
+	 * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void renderTemplate() {
 	  assertEquals("text/html", views.html.landingPage.render().contentType());

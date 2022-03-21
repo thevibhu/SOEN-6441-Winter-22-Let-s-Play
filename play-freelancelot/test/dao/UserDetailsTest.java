@@ -6,8 +6,20 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**
+ * This class is used to test UserDetails
+ * @author Gagandeep Kaur
+ * @version 1.0
+ * @since 1.0
+ */
 public class UserDetailsTest {
 	
+	/**
+	 * This method is used to test UserDetails
+	 * @author Gagandeep Kaur
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test(){
 		UserDetails userdet = new UserDetails();
@@ -22,7 +34,10 @@ public class UserDetailsTest {
 	}
 	
 	
-	
+	/**
+	 * This method is used to test UserDetails constructor
+	 * @author Gagandeep Kaur 
+	 */
 	@Test
 	public void testContructor() {
 	

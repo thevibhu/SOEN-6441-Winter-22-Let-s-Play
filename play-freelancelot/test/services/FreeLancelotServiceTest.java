@@ -1,6 +1,8 @@
 package services;
 
 import static org.junit.Assert.assertEquals;
+
+
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -18,16 +20,19 @@ import dao.Job;
 import dao.Project;
 import dao.ProjectResponse;
 
+/**
+ * This class is used to test service functionality
+ * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+ * @version 1.0
+ * @since 1.0
+ */
 public class FreeLancelotServiceTest {
 
-//	@Test
-//	public void streamProjectsTest() throws IOException, InterruptedException, ExecutionException {
-//		CompletableFuture<List<ProjectResponse>> future = new CompletableFuture<>();
-//		future.complete(FreeLancelotService.streamProjects(""));
-//		assertNotNull(future.get().get(0));
-//		
-//	}
 	
+	/**
+	 * A test to check readability level of the string depending upon it flesch index
+	 * @author Vaibhav Verma
+	 */
 	@Test
 	public void checkEducationalLevelTest() {
 		assertEquals("College Graduate", FreeLancelotService.checkEducationalLevel(10));
@@ -43,11 +48,25 @@ public class FreeLancelotServiceTest {
 		
 	}
 	
+	
+	/**
+	 * A test to check readability level of a string
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void getEducationalLevelTest() {
 		assertEquals("7th grade", FreeLancelotService.getEducationalLevel("hello this is a test that is obviously not perfect"));	
 	}
 	
+	
+	/**
+	 * A test to check the method that calculates flesh index, fkgl index and edu level of a stream of projects
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void getcalculateFlesch() {
 		ProjectResponse p = new ProjectResponse();
@@ -61,17 +80,37 @@ public class FreeLancelotServiceTest {
 		assertEquals("7th grade", x.get(0).getEdu_level());	
 	}
 	
+	
+	/**
+	 * A test to check flesch index of a string
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void getFleschIndexTest() {
 		assertEquals((int)999, (int)FreeLancelotService.getfleschIndex(""));	
 	}
 	
+	/**
+	 * A test to check fkgl index of a string
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void getFkglTest() {
 		assertEquals((int)999, (int)FreeLancelotService.getFKGL(""));	
 		assertEquals((int)20, (int)FreeLancelotService.getFKGL("Hello this is another test"));	
 	}
 	
+	
+	/**
+	 * A test to check the jobs can be converted to an array list of strings
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void convertJobDetailsTest() {
 		Job j = new Job();
@@ -89,6 +128,11 @@ public class FreeLancelotServiceTest {
 	/**
 	 * A test to check if the skill filter service filters projects according to the skill passed.
 	 * @author Felipe Kosin Jorge
+	 * @throws IOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @version 1.0
+	 * @since 1.0
 	 */
 	@Test
 	public void skillsFilterTest() throws IOException, ExecutionException, InterruptedException {
@@ -97,9 +141,15 @@ public class FreeLancelotServiceTest {
 		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
 	}
 	
+	
 	/**
-	 * A test to check if the skill filter service filters projects according to the skill passed.
-	 * @author Vaibhav
+	 * A test to check the latest active projects.
+	 * @author Vaibhav Verma
+	 * @throws IOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @version 1.0
+	 * @since 1.0
 	 */
 //	@Test
 //	public void streamProjectsTest() throws IOException, ExecutionException, InterruptedException {
@@ -110,8 +160,13 @@ public class FreeLancelotServiceTest {
 	
 	
 	/**
-	 * A test to check if the skill filter service filters projects according to the skill passed.
-	 * @author Gurpreet
+	 * A test to check word stats of a string.
+	 * @author Gurpreet Singh
+	 * @throws IOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @version 1.0
+	 * @since 1.0
 	 */
 	@Test
 	public void wordStatsTest() throws IOException, ExecutionException, InterruptedException {
