@@ -14,6 +14,26 @@
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
     </head>
+	<script>
+        init()
+                var webSocket;
+                function init() {
+                    initWebSocket(); // want to do it on button click of form rather than on body load
+
+            }
+            async function initWebSocket() {
+                @for( (keyword, searchResult:List[dao.ProjectResponse]) <- response ){
+                @if(request.session().get(keyword+ "-result").isPresent() || keyword==keyWord){
+                    webSocket = new WebSocket("@routes.HomeController.socket(keyWord:String).webSocketURL(request)");
+                    console.log("===== ",webSocket)
+                    webSocket.onopen = onOpen;
+                    webSocket.onclose = onClose;
+                    webSocket.onmessage = onMessage;
+                    webSocket.onerror = onError;
+                }}
+            }
+   
+    </script>
     <body class="FreeLance-soen">
     
     <div class="container">
