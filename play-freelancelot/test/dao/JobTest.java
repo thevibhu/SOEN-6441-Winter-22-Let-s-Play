@@ -4,8 +4,24 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+
+
+/**
+ * This class is used to test Job
+ * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+ * @version 1.0
+ * @since 1.0
+ */
 public class JobTest {
 
+	
+
+/**
+ * This method is used to test Job
+ * @author Vaibhav, Gagandeep, Gurpreet, Felipe
+ * @version 1.0
+ * @since 1.0	
+ */
 	@Test
 	public void test() {
 		Job j = new Job();

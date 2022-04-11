@@ -3,7 +3,6 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /freelancelot            	controllers.HomeController.index(request:Request, keyWord:String = "")
 GET     /SearchPage       			controllers.HomeController.index(request:Request, keyWord:String)
 GET		/UserProfile				controllers.HomeController.profile(owner_id:Int)
 GET 	/UserProjects				controllers.HomeController.userProj(owner_id:Int)
@@ -11,6 +10,8 @@ GET     /freelancelot            	controllers.HomeController.landingPage()
 GET     /SearchPage			    	controllers.HomeController.index(request:Request, keyWord:String)
 GET     /Stats/:descriptor			controllers.HomeController.stats(descriptor:String)
 GET     /GlobalStats				controllers.HomeController.globalStats()
+GET     /Skills                     controllers.HomeController.skills(skill:String)
+GET     /socket                     controllers.HomeController.socket(keyWord:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

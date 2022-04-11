@@ -10,10 +10,23 @@ import java.util.ArrayList;
 public class ResultProjects {
 	    public ArrayList<UserProjectDetails> projects;
 
+	    
+	    /** gets the projects
+		 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+		 * @version 1.0
+		 * @return projects list
+		 * @since 1.0
+		*/
 		public ArrayList<UserProjectDetails> getProjects() {
 			return projects;
 		}
 
+		  /** sets the projects
+				 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+				 * @version 1.0
+				 * @param projects list
+				 * @since 1.0
+				*/
 		public void setProjects(ArrayList<UserProjectDetails> projects) {
 			this.projects = projects;
 		}

@@ -9,8 +9,22 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+/**
+ * This class is used to test Upgrades
+ * @author Vaibhav Verma
+ * @version 1.0
+ * @since 1.0
+ */
 public class UpgradesTest {
 
+	
+	/**
+	 * This method is used to test Upgrades
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test() {
 		

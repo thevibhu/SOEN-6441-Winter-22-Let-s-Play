@@ -108,7 +108,7 @@ public class ProjectResponse {
 	}
 	 
 	public ProjectResponse(int owner_id, int time_submitted, String title, String project_type,
-			List<String> skills, String seo_url,double flesh_index,double fkgl, String edu_level, String prevDescriptor) {
+			List<String> skills, String seo_url, String prevDescriptor) {
 		super();
 		this.owner_id = owner_id;
 		this.time_submitted = new SimpleDateFormat("MMMM d, yyyy")
@@ -117,9 +117,6 @@ public class ProjectResponse {
 		this.project_type = project_type;
 		this.skills = skills;
 		this.seo_url=seo_url;
-		this.fkgl=(int)fkgl;
-		this.flesch_index=(int)flesh_index;
-		this.edu_level=edu_level;
 		this.prevDescriptor = prevDescriptor;
 	}
 }

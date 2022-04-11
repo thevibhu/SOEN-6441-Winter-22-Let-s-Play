@@ -6,8 +6,20 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+/**
+ * This class is used to test Project
+ * @author Vaibhav Verma
+ * @version 1.0
+ * @since 1.0
+ */
 public class ProjectTest {
 
+	/**
+	 * This method is used to test Project
+	 * @author Vaibhav Verma
+	 * @version 1.0
+	 * @since 1.0
+	 */
 	@Test
 	public void test() {
 		Project p = new Project();
@@ -103,10 +115,20 @@ public class ProjectTest {
 		assertEquals(false, p.isFeatured());
 		assertEquals(false, p.isHidebids());
 		assertEquals(false, p.isIs_seller_kyc_required());
-
+	}
+	
+	/**
+	 * This method is used to test Project constructor
+	 * @author Vaibhav Verma
+	 */
+	@Test
+	public void testConstructor() {
+		Project p = new Project(1, 0, "title", "status");
 		
-		
-		
+		assertEquals(1, p.getId());
+		assertEquals(0, p.getOwner_id());
+		assertEquals("title",p.getTitle());
+		assertEquals("status", p.getStatus());
 		
 	}
 
