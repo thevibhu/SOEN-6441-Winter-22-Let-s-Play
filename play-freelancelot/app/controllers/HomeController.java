@@ -54,7 +54,6 @@ public class HomeController extends Controller {
 	private HttpExecutionContext httpExecutionContext;
 	final ActorRef superActor;
     public static WSClient ws;
-    public  List<ProjectResponse> results;
 	
 	/**
 	 * This method is used to initialize the cache
@@ -68,7 +67,6 @@ public class HomeController extends Controller {
     	  this.ws = ws;
     	  this.httpExecutionContext = httpExecutionContext;
     	  this.superActor = system.actorOf(SuperVisor.props(ws));
-    	 // this.results = results;
     }
     
 /**
@@ -92,8 +90,7 @@ public class HomeController extends Controller {
         }  else {
                 return FutureConverters
                                 .toJava(ask(superActor,// call stream projects method here
-                                                new FreeLancelotActorService.projectSearchActorClass(keyWord,
-                                                                results),
+                                                new FreeLancelotActorService.projectSearchActorClass(keyWord),
                                                 5000))
                                 .thenApplyAsync(response -> {
                                     if(((List<ProjectResponse>)response).size() > 0) {
@@ -200,7 +197,7 @@ public class HomeController extends Controller {
                                                 Duration.ofSeconds(4),
                                                 FutureConverters.toJava(ask(superActor,
                                                                 new FreeLancelotActorService.projectSearchActorClass(
-                                                                                keyWord, results),
+                                                                                keyWord),
                                                                 5000))
                                                                 .thenApplyAsync(response -> {
                                                                        // if (response.size() > 0) {

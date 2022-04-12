@@ -141,12 +141,6 @@ public class FreeLancelotService {
 		);
 	}
 	
-	public static List<ProjectResponse> convertProjects(ArrayList<Project> x) {
-					Stream<ProjectResponse> projRes = x.stream()
-							.map(p -> new ProjectResponse(p.getOwner_id(), p.getTime_submitted(),p.getTitle(), p.getProject_type(), convertJobDetails(p.getJobs()),p.getSeo_url(), p.getPreview_description()));
-					return calculateFlesch(projRes);
-				
-	}
 	
 	/** This method is used to calculate edu level, flesh index and fkgl of latest active projects where the data is processed by streams
 	 * @author Vaibhav Verma
