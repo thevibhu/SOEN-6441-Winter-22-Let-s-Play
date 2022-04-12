@@ -23,7 +23,7 @@
             }
             async function initWebSocket() {
                 @for( (keyword, searchResult:List[dao.ProjectResponse]) <- response ){
-                @if(request.session().get(keyword+ "-result").isPresent() || keyword==keyWord){
+                @if(request.session().get(keyword).isPresent() || keyword==keyWord){
                     webSocket = new WebSocket("@routes.HomeController.socket(keyWord:String).webSocketURL(request)");
                     console.log("WebSocket -> ",webSocket)
                     webSocket.onopen = onOpen;
@@ -44,6 +44,46 @@
 
             async function onError(evt) {
                 writeToScreen("ERROR: " + JSON.stringify(evt));
+            }
+            
+            async function onMessage(evt) {
+            	var webSocketData = JSON.parse(evt.data);
+            	console.log("Data from Web Socket call :: " + JSON.stringify(webSocketData));
+                
+                let headline = "";
+                let tableContent = "";
+                
+                headline += "Search Term: " + "@keyWord" + "  |  Flesch Index: " + "@{searchResult.map(_.flesch_index).sum/searchResult.size()}" + "  |  FKGL: " + "@{searchResult.map(_.fkgl).sum/searchResult.size()}";
+                document.getElementById("search_term").innerHTML = headline;
+                
+                if (webSocketData.length!=0) {
+                	for (let i = 0; i < webSocketData.length; i++) {
+                		let asyncData = webSocketData[i];
+                		tableContent +=
+                		"<tr><td>" + (i+1) + "</td>" +
+			    		"<td>" + asyncData.owner_id + "</td>" +
+			    		"<td>" + asyncData.time_submitted + "</td>" +
+			    		"<td><a href=\"https://www.freelancer.com/projects/" + asyncData.seo_url + "?w=f&ngsw-bypass=\" target=\"_blank\">" + asyncData.title + "</a></td>" +
+			    		"<td>" + asyncData.project_type + "</td><td>";
+			    		
+			    		if (asyncData.skills.length > 0) {
+                            if (asyncData.skills.length == 1) {
+                            	tableContent += "<a href=\"/Skills?skill="+ asyncData.skills[0]+ "\" target=\"_blank\">" + asyncData.skills[0] + "</a>";
+                            } else {
+                            	for (let j = 0; j < asyncData.skills.length; j++) {
+                                   	let skill = asyncData.skills[j];
+                                   	tableContent += "<a href=\"/Skills?skill=" + skill + "\" target=\"_blank\">" + skill + ", " + "</a>";                            
+    			    			}	
+                            }
+			    		}
+			    		
+			    		tableContent += "</td><td><a href=\"/Stats/" + asyncData.prevDescriptor+ "\" target=\"_blank\">" + "Stats" + "</a></td>" +
+			    		"<td>" + asyncData.flesch_index + "</td>" + 
+			    		"<td>" + asyncData.fkgl + "</td>" +
+			    		"<td>" + asyncData.edu_level + "</td></tr>";
+                	}
+                }
+                document.getElementById("row_content").innerHTML = tableContent;
             }
    
     </script>
@@ -96,25 +136,27 @@
         				<th>Edu. Level</th>
       					</tr>
     				</thead>
-					@for((project, index)<-searchResult.zipWithIndex){
-					<tr>
-						<td>@(index+1)</td>
-			    		<td><a href="@routes.HomeController.profile(project.owner_id)"  target="_blank">@project.owner_id</a> </td>
-			    		<td>@project.time_submitted</td>
-			    		<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
-			    		<td>@project.project_type</td>
-			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
-			    			@if(project.skills.size() == (index + 1)) {
-			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>
-			    			} else {
-			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
-			    			}
-			    		}</td>
-			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
-			    		<td>@project.flesch_index</td>
-			    		<td>@project.fkgl</td>
-			    		<td>@project.edu_level</td>
-			    	</tr>
+    				<thead id ="row_content">
+    					@for((project, index)<-searchResult.zipWithIndex){
+						<tr>
+							<td>@(index+1)</td>
+			    			<td><a href="@routes.HomeController.profile(project.owner_id)"  target="_blank">@project.owner_id</a> </td>
+			    			<td>@project.time_submitted</td>
+			    			<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
+			    			<td>@project.project_type</td>
+			    			<td>@for((skill, index)<-project.skills.zipWithIndex){
+			    				@if(project.skills.size() == (index + 1)) {
+			    					<a href="/Skills?skill=@skill" target="_blank">@skill</a>
+			    				} else {
+			    					<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
+			    				}
+			    			}</td>
+			    			<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
+			    			<td>@project.flesch_index</td>
+			    			<td>@project.fkgl</td>
+			    			<td>@project.edu_level</td>
+			    		</tr>
+    				</thead>
 					}
 				} else{
 					<tr><h3><i>No Result to Show Please Search in box</i></h3></tr>
@@ -125,7 +167,7 @@
         	@if(keyword !=keyWord){ 
         	@if(request.session().get(keyword).isPresent()){
         	<br><h5 class="pheadline" id="search_term">Search Term: @keyword  |  Flesch Index: @{results.map(_.flesch_index).sum/results.size()}  |  FKGL: @{results.map(_.fkgl).sum/results.size()}</h5>	
-
+        	
         	<div class="search">
         	<table id="infoTable" class="table">
 			@if(results!=null && results.size()!=0){
@@ -144,7 +186,7 @@
       					</tr>
     				</thead>
 					@for((project, index)<-results.zipWithIndex){
-					<tr>
+					<tr id="row_content">
 						<td>@(index+1)</td>
 			    		<td><a href="@routes.HomeController.profile(project.owner_id)"  target="_blank">@project.owner_id</a> </td>
 			    		<td>@project.time_submitted</td>
