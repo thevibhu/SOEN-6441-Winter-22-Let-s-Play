@@ -56,6 +56,8 @@
                 headline += "Search Term: " + "@keyWord" + "  |  Flesch Index: " + "@{searchResult.map(_.flesch_index).sum/searchResult.size()}" + "  |  FKGL: " + "@{searchResult.map(_.fkgl).sum/searchResult.size()}";
                 document.getElementById("search_term").innerHTML = headline;
                 
+                tableContent += "<thead><tr><th>Sr.No</th><th>Owner ID</th><th>Time Submitted</th><th>Project Title</th><th>Project Type</th><th>Project Skills</th><th>Project Stats</th><th>Flesch Index</th><th>FKG Index</th><th>Edu. Level</th></tr></thead>";
+                
                 if (webSocketData.length!=0) {
                 	for (let i = 0; i < webSocketData.length; i++) {
                 		let asyncData = webSocketData[i];
@@ -83,7 +85,8 @@
 			    		"<td>" + asyncData.edu_level + "</td></tr>";
                 	}
                 }
-                document.getElementById("row_content").innerHTML = tableContent;
+                
+                document.getElementById("infoTable").innerHTML = tableContent;
             }
    
     </script>
@@ -136,27 +139,25 @@
         				<th>Edu. Level</th>
       					</tr>
     				</thead>
-    				<thead id ="row_content">
-    					@for((project, index)<-searchResult.zipWithIndex){
-						<tr>
-							<td>@(index+1)</td>
-			    			<td><a href="@routes.HomeController.profile(project.owner_id)"  target="_blank">@project.owner_id</a> </td>
-			    			<td>@project.time_submitted</td>
-			    			<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
-			    			<td>@project.project_type</td>
-			    			<td>@for((skill, index)<-project.skills.zipWithIndex){
-			    				@if(project.skills.size() == (index + 1)) {
-			    					<a href="/Skills?skill=@skill" target="_blank">@skill</a>
-			    				} else {
-			    					<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
-			    				}
-			    			}</td>
-			    			<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
-			    			<td>@project.flesch_index</td>
-			    			<td>@project.fkgl</td>
-			    			<td>@project.edu_level</td>
-			    		</tr>
-    				</thead>
+    				@for((project, index)<-searchResult.zipWithIndex){
+					<tr>
+						<td>@(index+1)</td>
+			    		<td><a href="@routes.HomeController.profile(project.owner_id)"  target="_blank">@project.owner_id</a> </td>
+		    			<td>@project.time_submitted</td>
+		    			<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
+		    			<td>@project.project_type</td>
+			   			<td>@for((skill, index)<-project.skills.zipWithIndex){
+			   				@if(project.skills.size() == (index + 1)) {
+			   					<a href="/Skills?skill=@skill" target="_blank">@skill</a>
+			   				} else {
+			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
+			    			}
+			    		}</td>
+			   			<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
+			    		<td>@project.flesch_index</td>
+			    		<td>@project.fkgl</td>
+			    		<td>@project.edu_level</td>
+			    	</tr>
 					}
 				} else{
 					<tr><h3><i>No Result to Show Please Search in box</i></h3></tr>
@@ -184,24 +185,24 @@
         				<th>FKG Index</th>
         				<th>Edu. Level</th>
       					</tr>
-    				</thead>
+    				</thead>				
 					@for((project, index)<-results.zipWithIndex){
-					<tr id="row_content">
+					<tr>
 						<td>@(index+1)</td>
 			    		<td><a href="@routes.HomeController.profile(project.owner_id)"  target="_blank">@project.owner_id</a> </td>
 			    		<td>@project.time_submitted</td>
 			    		<td><a href="https://www.freelancer.com/projects/@project.seo_url?w=f&ngsw-bypass=" target="_blank">@project.title</a></td>
-			    		<td>@project.project_type</td>
-			    		<td>@for((skill, index)<-project.skills.zipWithIndex){
-			    			@if(project.skills.size() == (index + 1)) {
+			   			<td>@project.project_type</td>
+			   			<td>@for((skill, index)<-project.skills.zipWithIndex){
+			   				@if(project.skills.size() == (index + 1)) {
 			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>
 			    			} else {
 			    				<a href="/Skills?skill=@skill" target="_blank">@skill</a>,
 			    			}
 			    		}</td>
-			    		<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
-			    		<td>@project.flesch_index</td>
-			    		<td>@project.fkgl</td>
+			   			<td><a href="/Stats/@project.prevDescriptor" target="_blank">Stats</a></td>
+			   			<td>@project.flesch_index</td>
+			   			<td>@project.fkgl</td>
 			    		<td>@project.edu_level</td>
 			    	</tr>
 					}
