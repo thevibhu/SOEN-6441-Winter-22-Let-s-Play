@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
  * @since 1.0
 */
 
-
+ 
 public class UserProfileDisplayActor extends AbstractLoggingActor{
 	
 	ObjectMapper mapper;
