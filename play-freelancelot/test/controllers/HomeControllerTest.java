@@ -1,7 +1,8 @@
 package controllers;
 
 import org.junit.Test;
-
+import play.libs.concurrent.HttpExecutionContext;
+import akka.actor.ActorRef;
 import dao.UserDetails;
 import dao.UserProjectDetails;
 import dao.UserProjectDisplay;
@@ -13,13 +14,13 @@ import play.mvc.Http.RequestImpl;
 import play.mvc.Result;
 import play.test.WithApplication;
 import services.FreeLancelotService;
-
+import play.libs.ws.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.GET;
 import static play.test.Helpers.route;
-
+import akka.actor.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -31,7 +32,9 @@ import java.util.concurrent.CompletionStage;
  * @since 1.0
  */
 public class HomeControllerTest extends WithApplication {
-
+	public HttpExecutionContext httpExecutionContext;
+	public ActorSystem system;
+    public static WSClient ws;
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder().build();
@@ -63,7 +66,7 @@ public class HomeControllerTest extends WithApplication {
      */
     @Test
     public void testLandingPageContent() {
-      Result result = new HomeController().landingPage();
+      Result result = new HomeController(httpExecutionContext,system,ws).landingPage();
       assertEquals(OK, result.status());
       assertEquals("text/html", result.contentType().get());
       assertEquals("utf-8", result.charset().get());
