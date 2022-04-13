@@ -1,8 +1,6 @@
 package controllers;
-import services.FreeLancelotActorService;
+import services.*;
 
-import services.FreelanceLotGlobalStats;
-import services.FreeLancelotWordStatsActor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.Timestamp;
@@ -22,10 +20,6 @@ import dao.User;
 import dao.UserDetails;
 import dao.UserProjectDisplay;
 import play.mvc.*;
-import services.FreeLancelotService;
-import services.FreelancerAPIcallsService;
-import services.UserProfileDisplayActor;
-import services.UserProjectDisplayActor;
 import scala.compat.java8.FutureConverters;
 import scala.util.parsing.json.JSONObject;
 import play.mvc.Http.Session;
@@ -214,8 +208,10 @@ public class HomeController extends Controller {
      * @throws IOException if it occurs
      */
     public CompletionStage<Result> skills(String skill) throws IOException{
-        return FreeLancelotService.skillsFilter(skill.replace("%20"," ")).thenApplyAsync(
-                response -> ok(views.html.skills.render(response))
+        return FutureConverters.toJava(
+                ask(superActor,new SkillsActorService.SkillSearchActor(skill),5000))
+        .thenApplyAsync(
+                response -> ok(views.html.skills.render((List<ProjectResponse>) response))
         );
     }
     
