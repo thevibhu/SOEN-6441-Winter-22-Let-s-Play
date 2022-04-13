@@ -1,5 +1,8 @@
 package dao;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 /** Contains constructor and variable that are used to show the information on HTML page
  * @author  Gagandeep Kaur
  * @version 1.0
@@ -83,15 +86,27 @@ public class UserProjectDisplay {
 		public void setType(String type) {
 			this.type = type;
 		}
-		
+	    public String time_submitted;
+
+	    public String getTime_submitted() {
+			return time_submitted;
+		}
+
+		public void setTime_submitted(int time_submitted) {
+			this.time_submitted = new SimpleDateFormat("MMMM d, yyyy")
+					.format(new Date(time_submitted * 1000L));
+		}
+	    
 		/**
 		 * Constructor sets the value for the Title, Type and Id
 		 * @param title Title of the project
 		 * @param type Type of the project
 		 * @param owner_id Owner ID of the project
 		 */
-		public UserProjectDisplay(String title, String type,int owner_id) {
+		public UserProjectDisplay(String title,int time_submitted, String type,int owner_id) {
 			super();
+			this.time_submitted = new SimpleDateFormat("MMMM d, yyyy")
+					.format(new Date(time_submitted * 1000L));
 			this.title = title;
 			this.type = type;
 			this.owner_id=owner_id;
