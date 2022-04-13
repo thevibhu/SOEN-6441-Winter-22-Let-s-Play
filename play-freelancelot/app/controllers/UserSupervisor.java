@@ -22,22 +22,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 
 import services.FreeLancelotActorService;
+import services.UserProfileService;
 
-public class SuperVisor extends AbstractLoggingActor {
+public class UserSupervisor extends AbstractLoggingActor {
     private final WSClient ws;
 
     @Inject
-    public SuperVisor(WSClient ws) {
+    public UserSupervisor(WSClient ws) {
         this.ws = ws;
     }
 
     @Override
     public Receive createReceive() {
 
-        final ActorRef projectSearchChild = getContext().actorOf(FreeLancelotActorService.props(ws));
+        final ActorRef projectSearchChild = getContext().actorOf(UserProfileService.props(ws));
         
         return receiveBuilder()
-                .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
+                .match(UserProfileService.UserProfileActorClass.class, any -> {
                     projectSearchChild.forward(any, getContext());
                 })
                 .build();
@@ -61,6 +62,6 @@ public class SuperVisor extends AbstractLoggingActor {
     }
 
     public static Props props(WSClient ws) {
-        return Props.create(SuperVisor.class, ws);
+        return Props.create(UserSupervisor.class, ws);
     }
 }
