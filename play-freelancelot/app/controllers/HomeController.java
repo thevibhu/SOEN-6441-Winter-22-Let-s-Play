@@ -24,8 +24,8 @@ import dao.UserProjectDisplay;
 import play.mvc.*;
 import services.FreeLancelotService;
 import services.FreelancerAPIcallsService;
-import services.UserProfileAPICallService;
-import services.UserProfileService;
+import services.UserProfileDisplayActor;
+import services.UserProjectDisplayActor;
 import scala.compat.java8.FutureConverters;
 import scala.util.parsing.json.JSONObject;
 import play.mvc.Http.Session;
@@ -68,11 +68,6 @@ public class HomeController extends Controller {
 	final ActorRef superActor;
     public static WSClient ws;
 
-   // final ActorRef userActorRef;
-
-	final ActorRef userActor; 
-   // private final ActorSystem actorSystem;
-    //private final Materializer materializer;
 	
 	/**
 	 * This method is used to initialize the cache
@@ -86,7 +81,7 @@ public class HomeController extends Controller {
     	  this.ws = ws;
     	  this.httpExecutionContext = httpExecutionContext;
     	  this.superActor = system.actorOf(SuperVisor.props(ws));
-    	  this.userActor=system.actorOf(UserSupervisor.props(ws));
+    	  
     }
     
 /**
@@ -134,20 +129,13 @@ public class HomeController extends Controller {
 	 */
    public CompletionStage<Result> profile(int owner_id) throws IOException{
 	   //CompletableFuture<String>completableFuture= new CompletableFuture<>();
-	  return FutureConverters.toJava(ask(userActor,new UserProfileService.UserProfileActorClass(owner_id)
+	  return FutureConverters.toJava(ask(superActor,
+			  new UserProfileDisplayActor.UserProfileActorClass(owner_id)
 			  ,5000))
 			  .thenApplyAsync(
-					  res->{ 
-					  return(ok(views.html.profile.render((UserDetails)res)));
-					  });
+					  res->ok(views.html.profile.render((UserDetails)res)));
+					  
 					  }
-			  
-   
-					  //return resultCompletionStage;}
-  
-	   
-	   //return FreeLancelotService.getUser(owner_id).thenApplyAsync((details->ok(views.html.profile.render((UserDetails)details))));
-   
 
    
    /**
@@ -160,8 +148,11 @@ public class HomeController extends Controller {
   	 * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
   	 */
    public CompletionStage<Result> userProj(int owner_id) throws IOException{
+	   return FutureConverters.toJava(ask(superActor,
+			   new UserProjectDisplayActor.UserProjectActorClass(owner_id),
+			   5000 )).thenApplyAsync(res->ok(views.html.userProj.render((List<UserProjectDisplay>)res)));
+	   
 		  
-	   return FreeLancelotService.getUserProjects(owner_id).thenApplyAsync((details->ok(views.html.userProj.render((List<UserProjectDisplay>)details))));
 }
   
 

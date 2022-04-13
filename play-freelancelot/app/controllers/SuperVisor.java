@@ -23,6 +23,8 @@ import javax.inject.Inject;
 
 import services.FreeLancelotActorService;
 import services.FreelanceLotGlobalStats;
+import services.UserProfileDisplayActor;
+import services.UserProjectDisplayActor;
 import services.FreeLancelotWordStatsActor;
 
 public class SuperVisor extends AbstractLoggingActor {
@@ -40,7 +42,9 @@ public class SuperVisor extends AbstractLoggingActor {
         
         final ActorRef projectWordStats = getContext().actorOf(FreeLancelotWordStatsActor.props(ws));
         final ActorRef projectGlobalStats = getContext().actorOf(FreelanceLotGlobalStats.props(ws));
-
+        final ActorRef userDetail = getContext().actorOf(UserProfileDisplayActor.props(ws));
+        final ActorRef userProj = getContext().actorOf(UserProjectDisplayActor.props(ws));
+        
         return receiveBuilder()
                 .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
                     projectSearchChild.forward(any, getContext());
@@ -50,6 +54,12 @@ public class SuperVisor extends AbstractLoggingActor {
                 })
                 .match(FreelanceLotGlobalStats.globalStatsActorClass.class, any -> {
                 	projectGlobalStats.forward(any, getContext());
+                })
+                .match(UserProfileDisplayActor.UserProfileActorClass.class, any->{
+                	userDetail.forward(any, getContext());
+                })
+                .match(UserProjectDisplayActor.UserProjectActorClass.class, any->{
+                	userProj.forward(any, getContext());
                 })
                 .build();
     }

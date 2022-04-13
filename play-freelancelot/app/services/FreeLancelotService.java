@@ -355,7 +355,7 @@ public class FreeLancelotService {
 		return FreelancerAPIcallsService.getUserProjects(owner_id).thenApplyAsync(
 				projects -> {
 					List<UserProjectDisplay> user_proj_details = projects.stream()
-							.map(user_p->new UserProjectDisplay(user_p.getTitle(), user_p.getType(),user_p.getOwner_id()))
+							.map(user_p->new UserProjectDisplay(user_p.getTitle(),user_p.getTime_submitted(), user_p.getType(),user_p.getOwner_id()))
 									.collect(Collectors.toList());
 					return user_proj_details;
 				}	
