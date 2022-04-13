@@ -39,19 +39,19 @@ public class FreeLancelotActorService extends AbstractLoggingActor  {
 	 public interface Command {}
 	 ObjectMapper mapper;
 	 private final WSClient ws;
-	 private final String groupId;
-	 private final String deviceId;
+//	 private final String groupId;
+//	 private final String deviceId;
 	 
 	    @Inject
-	    public FreeLancelotActorService(WSClient ws,ActorContext<Command> context, String groupId, String deviceId) {
+	    public FreeLancelotActorService(WSClient ws) {
 	        this.ws = ws;
 	        mapper = new ObjectMapper();
 	        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	        super(context);
-	        this.groupId = groupId;
-	        this.deviceId = deviceId;
+	       // super(context);
+//	        this.groupId = groupId;
+//	        this.deviceId = deviceId;
 
-	        context.getLog().info("Device actor {}-{} started", groupId, deviceId);
+	       // context.getLog().info("Device actor {}-{} started", groupId, deviceId);
 	    }
 	    
 //	    public static Behavior<Command> create(String groupId, String deviceId, WSClient ws) {
