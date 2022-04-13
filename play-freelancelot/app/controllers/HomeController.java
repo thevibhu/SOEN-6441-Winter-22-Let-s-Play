@@ -1,6 +1,8 @@
 package controllers;
 import services.FreeLancelotActorService;
 
+import services.FreelanceLotGlobalStats;
+import services.FreeLancelotWordStatsActor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.Timestamp;
@@ -170,11 +172,17 @@ public class HomeController extends Controller {
      * @return The word count of each word in the Preview Description
      * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
      */
-    public CompletionStage<Result> stats(String prevDescriptor) throws IOException{
+   public CompletionStage<Result> stats(String prevDescriptor) throws IOException{
+       return FutureConverters
+    		    .toJava(ask(superActor,// call stream projects method here
+    		        new FreeLancelotWordStatsActor.wordStatsActorClass(prevDescriptor),10000))
+    		            .thenApplyAsync(response -> ok(views.html.stats.render((HashMap<String, Integer>) response))).toCompletableFuture();
+   }
+    /*public CompletionStage<Result> stats(String prevDescriptor) throws IOException{
     	return FreeLancelotService.wordStats(prevDescriptor).thenApplyAsync(
     			response -> ok(views.html.stats.render(response))
     	);
-    } 
+    }*/ 
     
     /**
      * This method/function, gets the information of all the Preview Descriptions (For every Search).
@@ -182,12 +190,19 @@ public class HomeController extends Controller {
      * @return The word count of each word in the Preview Description of the entire Search.
      * @throws IOException  If any error occurs during reading data or data in the stream is corrupted.
      */
-    public CompletionStage<Result> globalStats() throws IOException{
+   	public CompletionStage<Result> globalStats() throws IOException{
+       return FutureConverters
+    		    .toJava(ask(superActor,// call stream projects method here
+    		        new FreelanceLotGlobalStats.globalStatsActorClass(cache),10000))
+    		            .thenApplyAsync(response -> ok(views.html.stats.render((HashMap<String, Integer>) response))).toCompletableFuture();
+   	}
+    
+   	/*public CompletionStage<Result> globalStats() throws IOException{
     	System.out.println("cache ::: " + cache);
     	return FreeLancelotService.globalWordStats(cache).thenApplyAsync(
     			response -> ok(views.html.stats.render(response))
     			);
-    }
+    }*/
     
     /**
     * This method is used to handle the main page.
