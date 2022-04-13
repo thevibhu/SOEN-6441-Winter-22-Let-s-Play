@@ -106,7 +106,7 @@ public class HomeController extends Controller {
                 return FutureConverters
                                 .toJava(ask(superActor,// call stream projects method here
                                                 new FreeLancelotActorService.projectSearchActorClass(keyWord),
-                                                5000))
+                                                10000))
                                 .thenApplyAsync(response -> {
                                     if(((List<ProjectResponse>)response).size() > 0) {
                                         cache.put(keyWord, ((List<ProjectResponse>) response));
