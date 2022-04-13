@@ -36,17 +36,27 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
  * @since 1.0
 */
 public class FreeLancelotActorService extends AbstractLoggingActor  {
-	
+	 public interface Command {}
 	 ObjectMapper mapper;
 	 private final WSClient ws;
-
+	 private final String groupId;
+	 private final String deviceId;
+	 
 	    @Inject
-	    public FreeLancelotActorService(WSClient ws) {
+	    public FreeLancelotActorService(WSClient ws,ActorContext<Command> context, String groupId, String deviceId) {
 	        this.ws = ws;
 	        mapper = new ObjectMapper();
 	        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	        //context.getLog().info("Device actor {}-{} started");
+	        super(context);
+	        this.groupId = groupId;
+	        this.deviceId = deviceId;
+
+	        context.getLog().info("Device actor {}-{} started", groupId, deviceId);
 	    }
+	    
+//	    public static Behavior<Command> create(String groupId, String deviceId, WSClient ws) {
+//	        return Behaviors.setup(context -> new FreeLancelotActorService(ws, context, groupId, deviceId));
+//	      }
 	    
 	    public static class projectSearchActorClass {
 	        final private String keyWord;

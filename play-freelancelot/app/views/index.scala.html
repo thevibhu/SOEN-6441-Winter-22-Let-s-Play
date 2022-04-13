@@ -48,7 +48,8 @@
             
             async function onMessage(evt) {
             	var webSocketData = JSON.parse(evt.data);
-            	console.log("Data from Web Socket call :: " + JSON.stringify(webSocketData));
+            	console.log("Data from Web Socket call ↓");
+				console.log(webSocketData);
                 
                 let headline = "";
                 let tableContent = "";
