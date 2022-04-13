@@ -1,19 +1,23 @@
 package services;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.URI;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
+
+//import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.FreelancerResult;
-import dao.Project;
 
+import dao.Project;
 
 import dao.User;
 import dao.UserProfile;
@@ -26,6 +30,7 @@ import dao.UserProjects;
  * @version 1.0
  * @since 1.0
 */
+
 public class FreelancerAPIcallsService {
 	
 	
@@ -69,6 +74,33 @@ public class FreelancerAPIcallsService {
 	 * @return returns user profile
 	 * @throws IOException if it occurs
 	*/
+	
+	/*public static Object getUserDetails(int owner_id) {
+	    
+		JSONObject json=null;
+
+	        try {
+	            String temp="";
+	            URL url = new URL("https://www.freelancer.com/api/users/0.1/users/"+ owner_id + "&compact=true&avatar=true");
+	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	            conn.setRequestMethod("GET");
+	            conn.connect();
+	            if (conn.getResponseCode() == 200) {
+	                Scanner scan = new Scanner(url.openStream());
+	                while (scan.hasNext()) {
+	                    temp = temp + scan.nextLine();
+	                }
+	            }
+	            json = new JSONObject(temp);
+	        } catch (Exception e) {
+
+	            System.out.println("Error is " + e);
+	            e.printStackTrace();
+	        }
+
+	        return json;
+
+	    }*/
 	public static  CompletableFuture<UserProfile>  getUserDetails(int owner_id) throws IOException {
     CompletableFuture<UserProfile> user = new CompletableFuture();
      StringBuilder stringBuilder = new StringBuilder("https://www.freelancer.com/api/users/0.1/users/");

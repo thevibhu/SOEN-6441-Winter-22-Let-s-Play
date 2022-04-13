@@ -26,14 +26,24 @@ h1, h2, h3, h4, h5 {
   
   <div class="listFlex">
     <div>
-   
+    <table>
+   <thead>
+   	<tr>
+      					
+        				<th>Title</th>
+        				<th>Time Submitted</th>
+    </tr>
+   </thead>
      @if(!details.isEmpty){
 		@for(UserProjects <- details){
-		
-      					<ul>
-						<li>@UserProjects.title</li>
-			    		</ul>
+		<tr>
+			<td>@UserProjects.title</td>
+			<td>@UserProjects.time_submitted</td>
+			
+		</tr>
+      					
 		}}
+		</table>
     </div>
   </div>
     

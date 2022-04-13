@@ -16,18 +16,18 @@ import akka.japi.pf.DeciderBuilder;
 import play.libs.ws.*;
 import javax.inject.Inject;
 
-public class ServiceActorSupervisor extends AbstractLoggingActor{
+public class UserProfileSupervisor extends AbstractLoggingActor{
 	private final WSClient ws;
 
     @Inject
-    public ServiceActorSupervisor(WSClient ws) {
+    public UserProfileSupervisor(WSClient ws) {
         this.ws = ws;
     }
 	@Override
 	public Receive createReceive() {
-		 final ActorRef child = context().actorOf(FreelancerAPIcallsActorService.props(ws));
+		 final ActorRef child = context().actorOf(UserProfileAPICallService.props(ws));
 	        return receiveBuilder()
-	                .match(FreelancerAPIcallsActorService.SearchProjectsApi.class, any -> {
+	                .match(UserProfileAPICallService.UserProfileApi.class, any -> {
 	                    child.forward(any, getContext());
 	                })
 	                .build();
@@ -50,7 +50,7 @@ public class ServiceActorSupervisor extends AbstractLoggingActor{
     }
 
     public static Props props(WSClient ws) {
-        return Props.create(ServiceActorSupervisor.class, ws);
+        return Props.create(UserProfileSupervisor.class, ws);
     }
 
 }

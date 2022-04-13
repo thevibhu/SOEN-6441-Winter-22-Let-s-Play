@@ -1,5 +1,6 @@
 package controllers;
 import services.FreeLancelotActorService;
+
 import services.FreelanceLotGlobalStats;
 import services.FreeLancelotWordStatsActor;
 import java.io.BufferedReader;
@@ -17,11 +18,16 @@ import java.util.stream.Collector;
 import java.time.Duration;
 import dao.FreelancerResult;
 import dao.ProjectResponse;
+import dao.User;
 import dao.UserDetails;
 import dao.UserProjectDisplay;
 import play.mvc.*;
 import services.FreeLancelotService;
+import services.FreelancerAPIcallsService;
+import services.UserProfileDisplayActor;
+import services.UserProjectDisplayActor;
 import scala.compat.java8.FutureConverters;
+import scala.util.parsing.json.JSONObject;
 import play.mvc.Http.Session;
 import play.mvc.Http;
 import play.libs.concurrent.HttpExecutionContext;
@@ -30,6 +36,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+
 import javax.inject.*;
 import scala.compat.java8.FutureConverters;
 import akka.actor.*;
@@ -50,12 +59,15 @@ import akka.stream.javadsl.Flow;
  * @version 1.0
  * @since 1.0
  */
+
 public class HomeController extends Controller {
+	//static UserDetails userDetails;
 
 	private final HashMap<String, List<ProjectResponse>> cache;
 	private HttpExecutionContext httpExecutionContext;
 	final ActorRef superActor;
     public static WSClient ws;
+
 	
 	/**
 	 * This method is used to initialize the cache
@@ -69,6 +81,7 @@ public class HomeController extends Controller {
     	  this.ws = ws;
     	  this.httpExecutionContext = httpExecutionContext;
     	  this.superActor = system.actorOf(SuperVisor.props(ws));
+    	  
     }
     
 /**
@@ -81,6 +94,7 @@ public class HomeController extends Controller {
 * @version 1.0
 * @since 1.0. 
 */
+    
     public CompletionStage<Result> index(Http.Request request, String keyWord) throws IOException{
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
      
@@ -99,7 +113,7 @@ public class HomeController extends Controller {
                                         return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache)).addingToSession(request, keyWord, keyWord);
                                     }
                                     return ok(views.html.index.render((List<ProjectResponse>)response,request,keyWord,cache));
-                                }).toCompletableFuture();
+                                });
         }
     }
     
@@ -114,9 +128,14 @@ public class HomeController extends Controller {
 	 * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
 	 */
    public CompletionStage<Result> profile(int owner_id) throws IOException{
-	  
-	   return FreeLancelotService.getUser(owner_id).thenApplyAsync((details->ok(views.html.profile.render((UserDetails)details))));
-   }
+	   //CompletableFuture<String>completableFuture= new CompletableFuture<>();
+	  return FutureConverters.toJava(ask(superActor,
+			  new UserProfileDisplayActor.UserProfileActorClass(owner_id)
+			  ,5000))
+			  .thenApplyAsync(
+					  res->ok(views.html.profile.render((UserDetails)res)));
+					  
+					  }
 
    
    /**
@@ -129,8 +148,11 @@ public class HomeController extends Controller {
   	 * @throws IOException If any error occurs during reading data or data in the stream is corrupted.
   	 */
    public CompletionStage<Result> userProj(int owner_id) throws IOException{
+	   return FutureConverters.toJava(ask(superActor,
+			   new UserProjectDisplayActor.UserProjectActorClass(owner_id),
+			   5000 )).thenApplyAsync(res->ok(views.html.userProj.render((List<UserProjectDisplay>)res)));
+	   
 		  
-	   return FreeLancelotService.getUserProjects(owner_id).thenApplyAsync((details->ok(views.html.userProj.render((List<UserProjectDisplay>)details))));
 }
   
 

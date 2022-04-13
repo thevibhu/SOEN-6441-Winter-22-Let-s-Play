@@ -22,44 +22,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 
 import services.FreeLancelotActorService;
-import services.FreelanceLotGlobalStats;
-import services.UserProfileDisplayActor;
-import services.UserProjectDisplayActor;
-import services.FreeLancelotWordStatsActor;
+import services.UserProfileService;
 
-public class SuperVisor extends AbstractLoggingActor {
+public class UserSupervisor extends AbstractLoggingActor {
     private final WSClient ws;
 
     @Inject
-    public SuperVisor(WSClient ws) {
+    public UserSupervisor(WSClient ws) {
         this.ws = ws;
     }
 
     @Override
     public Receive createReceive() {
 
-        final ActorRef projectSearchChild = getContext().actorOf(FreeLancelotActorService.props(ws));
-        
-        final ActorRef projectWordStats = getContext().actorOf(FreeLancelotWordStatsActor.props(ws));
-        final ActorRef projectGlobalStats = getContext().actorOf(FreelanceLotGlobalStats.props(ws));
-        final ActorRef userDetail = getContext().actorOf(UserProfileDisplayActor.props(ws));
-        final ActorRef userProj = getContext().actorOf(UserProjectDisplayActor.props(ws));
+        final ActorRef projectSearchChild = getContext().actorOf(UserProfileService.props(ws));
         
         return receiveBuilder()
-                .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
+                .match(UserProfileService.UserProfileActorClass.class, any -> {
                     projectSearchChild.forward(any, getContext());
-                })
-                .match(FreeLancelotWordStatsActor.wordStatsActorClass.class, any -> {
-                	projectWordStats.forward(any, getContext());
-                })
-                .match(FreelanceLotGlobalStats.globalStatsActorClass.class, any -> {
-                	projectGlobalStats.forward(any, getContext());
-                })
-                .match(UserProfileDisplayActor.UserProfileActorClass.class, any->{
-                	userDetail.forward(any, getContext());
-                })
-                .match(UserProjectDisplayActor.UserProjectActorClass.class, any->{
-                	userProj.forward(any, getContext());
                 })
                 .build();
     }
@@ -82,6 +62,6 @@ public class SuperVisor extends AbstractLoggingActor {
     }
 
     public static Props props(WSClient ws) {
-        return Props.create(SuperVisor.class, ws);
+        return Props.create(UserSupervisor.class, ws);
     }
 }
