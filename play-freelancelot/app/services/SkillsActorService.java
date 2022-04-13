@@ -3,6 +3,8 @@ package services;
 import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import akka.actor.typed.Behavior;
+import akka.actor.typed.javadsl.Behaviors;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.FreelancerResult;
@@ -59,6 +61,10 @@ public class SkillsActorService extends AbstractLoggingActor {
     public static Props props(WSClient ws){
         return Props.create(SkillsActorService.class,ws);
     }
+
+    /*public static Behavior<SkillsActorService> create(WSClient ws){
+        return Behaviors.setup(context -> new SkillsActorService(ws));
+    }*/
 
     /**
      * This function queries the API for active projects and only returns the projects with the specific skill the user has searched for.
