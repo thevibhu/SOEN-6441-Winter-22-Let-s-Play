@@ -2,22 +2,15 @@ package controllers;
 
 import akka.actor.*;
 import akka.japi.pf.DeciderBuilder;
-import akka.japi.pf.ReceiveBuilder;
 import akka.actor.ActorInterruptedException;
 import java.io.InterruptedIOException;
 import java.util.concurrent.*;
 import scala.concurrent.duration.Duration;
-import java.util.*;
 import play.libs.ws.*;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import static akka.actor.SupervisorStrategy.*;
-import java.util.concurrent.CompletableFuture;
 
 import akka.actor.Props;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.inject.Inject;
 
@@ -59,7 +52,7 @@ public class SuperVisor extends AbstractLoggingActor {
                 .match(UserProjectDisplayActor.UserProjectActorClass.class, any->{
                 	userProj.forward(any, getContext());
                 })
-                .match(SkillsActorService.SkillSearchActor.class, any ->
+                .match(SkillsActorService.SkillSearchActorClass.class, any ->
                         skills.forward(any, getContext()))
                 .build();
     }

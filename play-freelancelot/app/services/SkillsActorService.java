@@ -3,7 +3,6 @@ package services;
 import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import akka.actor.typed.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.FreelancerResult;
@@ -12,10 +11,14 @@ import play.libs.ws.WSClient;
 import scala.compat.java8.FutureConverters;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 import static akka.pattern.Patterns.ask;
 
+/**
+ * This is an actor for searching projects with a specific Skill. This actor extends AbstractLoggingActor. This actor has a WSCLient and uses it to communicate with the Supervisor actor.
+ * It has an inner class called SkillSearchActorClass which contains a string keyword for searching. It also contains a prop method for instance creation
+ * @author Felipe Kosin Jorge
+ */
 public class SkillsActorService extends AbstractLoggingActor {
     private final WSClient ws;
 
@@ -23,27 +26,47 @@ public class SkillsActorService extends AbstractLoggingActor {
         this.ws = ws;
     }
 
-    public static class SkillSearchActor{
+    /**
+     * Inner class inside SkillsActorService. This class contains a String key which is used in searching active projects.
+     * @author Felipe Kosin Jorge
+     */
+    public static class SkillSearchActorClass {
         final private String key;
 
-        public SkillSearchActor(String key) {
+        public SkillSearchActorClass(String key) {
             this.key = key;
         }
     }
 
+    /**
+     * Akka Method to receive a message and create a response.
+     * @return
+     * @author Felipe Kosin Jorge
+     */
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match(SkillsActorService.SkillSearchActor.class,this::skills)
+                .match(SkillSearchActorClass.class,this::skills)
                 .build();
     }
 
+    /**
+     * Creates an instance of this class with the given ws.
+     * @param ws given WSClient for instance creation
+     * @return an instance of this actor class.
+     * @author Felipe Kosin Jorge
+     */
     public static Props props(WSClient ws){
         return Props.create(SkillsActorService.class,ws);
     }
 
+    /**
+     * This function queries the API for active projects and only returns the projects with the specific skill the user has searched for.
+     * @param skill is a SkillSearchActorClass which contains a String keyword which is to be used in the search parameter.
+     * @author Felipe Kosin Jorge
+     */
     @SuppressWarnings("unchecked")
-    public void skills(SkillSearchActor skill){
+    public void skills(SkillSearchActorClass skill) {
         final ActorRef sender = getSender();
         final ActorRef supervisor = getContext().actorOf(ServiceActorSupervisor.props(ws));
 

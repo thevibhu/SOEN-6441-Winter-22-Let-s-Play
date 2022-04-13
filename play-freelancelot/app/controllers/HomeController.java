@@ -1,48 +1,31 @@
 package controllers;
 import services.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-import java.util.stream.Collector;
 import java.time.Duration;
-import dao.FreelancerResult;
+
 import dao.ProjectResponse;
-import dao.User;
 import dao.UserDetails;
 import dao.UserProjectDisplay;
 import play.mvc.*;
 import scala.compat.java8.FutureConverters;
-import scala.util.parsing.json.JSONObject;
-import play.mvc.Http.Session;
 import play.mvc.Http;
 import play.libs.concurrent.HttpExecutionContext;
-import play.libs.Json;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
 import javax.inject.*;
-import scala.compat.java8.FutureConverters;
+
 import akka.actor.*;
 import static akka.pattern.Patterns.ask;
-import akka.stream.*;
+
 import play.libs.ws.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import javax.xml.*;
-import java.util.*;
 import akka.stream.javadsl.*;
 import akka.stream.javadsl.Flow;
 
@@ -201,7 +184,7 @@ public class HomeController extends Controller {
     }
 
     /**
-     * A controller which is called when the skills route is accessed and calls the specified service to query projects.
+     * A controller which is called when the skills route is accessed and calls the specified actor service to query projects.
      * @author Felipe Kosin Jorge
      * @param skill is the specific skill to be searched.
      * @return A CompletionStage of a Result which will render the skill.html page
@@ -209,7 +192,7 @@ public class HomeController extends Controller {
      */
     public CompletionStage<Result> skills(String skill) throws IOException{
         return FutureConverters.toJava(
-                ask(superActor,new SkillsActorService.SkillSearchActor(skill),5000))
+                ask(superActor,new SkillsActorService.SkillSearchActorClass(skill),5000))
         .thenApplyAsync(
                 response -> ok(views.html.skills.render((List<ProjectResponse>) response))
         );
