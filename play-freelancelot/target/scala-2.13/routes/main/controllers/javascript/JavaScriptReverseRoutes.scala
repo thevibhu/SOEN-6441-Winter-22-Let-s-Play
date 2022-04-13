@@ -18,7 +18,17 @@ package controllers.javascript {
     }
 
   
-    // @LINE:10
+    // @LINE:8
+    def userProj: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.userProj",
+      """
+        function(owner_id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "UserProjects" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[Int]].javascriptUnbind + """)("owner_id", owner_id0)])})
+        }
+      """
+    )
+  
+    // @LINE:13
     def skills: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.skills",
       """
@@ -28,7 +38,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:9
+    // @LINE:12
     def globalStats: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.globalStats",
       """
@@ -38,7 +48,17 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:6
+    // @LINE:7
+    def profile: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.profile",
+      """
+        function(owner_id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "UserProfile" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[Int]].javascriptUnbind + """)("owner_id", owner_id0)])})
+        }
+      """
+    )
+  
+    // @LINE:9
     def landingPage: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.landingPage",
       """
@@ -48,17 +68,21 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:7
+    // @LINE:6
     def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.index",
       """
         function(keyWord0) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "SearchPage" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[String]].javascriptUnbind + """)("keyWord", keyWord0)])})
+        
+          if (true) {
+            return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "SearchPage" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[String]].javascriptUnbind + """)("keyWord", keyWord0)])})
+          }
+        
         }
       """
     )
   
-    // @LINE:8
+    // @LINE:11
     def stats: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.stats",
       """
@@ -68,9 +92,19 @@ package controllers.javascript {
       """
     )
   
+    // @LINE:14
+    def socket: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.socket",
+      """
+        function(keyWord0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "socket" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[String]].javascriptUnbind + """)("keyWord", keyWord0)])})
+        }
+      """
+    )
+  
   }
 
-  // @LINE:13
+  // @LINE:17
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -78,7 +112,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:13
+    // @LINE:17
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """

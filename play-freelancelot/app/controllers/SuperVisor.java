@@ -21,11 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.inject.Inject;
 
-import services.FreeLancelotActorService;
-import services.FreelanceLotGlobalStats;
-import services.UserProfileDisplayActor;
-import services.UserProjectDisplayActor;
-import services.FreeLancelotWordStatsActor;
+import services.*;
 
 public class SuperVisor extends AbstractLoggingActor {
     private final WSClient ws;
@@ -44,7 +40,9 @@ public class SuperVisor extends AbstractLoggingActor {
         final ActorRef projectGlobalStats = getContext().actorOf(FreelanceLotGlobalStats.props(ws));
         final ActorRef userDetail = getContext().actorOf(UserProfileDisplayActor.props(ws));
         final ActorRef userProj = getContext().actorOf(UserProjectDisplayActor.props(ws));
-        
+
+        final ActorRef skills = getContext().actorOf(SkillsActorService.props(ws));
+
         return receiveBuilder()
                 .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
                     projectSearchChild.forward(any, getContext());
@@ -61,6 +59,8 @@ public class SuperVisor extends AbstractLoggingActor {
                 .match(UserProjectDisplayActor.UserProjectActorClass.class, any->{
                 	userProj.forward(any, getContext());
                 })
+                .match(SkillsActorService.SkillSearchActor.class, any ->
+                        skills.forward(any, getContext()))
                 .build();
     }
 

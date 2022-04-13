@@ -1,6 +1,2 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\app\controllers\HomeController.java:118:1: no suitable method found for replace(java.lang.String)[0m
-[0m[[0m[31merror[0m] [0m[0m    method java.lang.String.replace(char,char) is not applicable[0m
-[0m[[0m[31merror[0m] [0m[0m      (actual and formal argument lists differ in length)[0m
-[0m[[0m[31merror[0m] [0m[0m    method java.lang.String.replace(java.lang.CharSequence,java.lang.CharSequence) is not applicable[0m
-[0m[[0m[31merror[0m] [0m[0m      (actual and formal argument lists differ in length)[0m
-[0m[[0m[31merror[0m] [0m[0mskill.replace[0m
+[0m[[0m[0minfo[0m] [0m[0mC:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\app\controllers\HomeController.java: Some input files use unchecked or unsafe operations.[0m
+[0m[[0m[0minfo[0m] [0m[0mC:\Users\Intel\Documents\Computer Science\SOEN-6441-Winter-22-Let-s-Play\play-freelancelot\app\controllers\HomeController.java: Recompile with -Xlint:unchecked for details.[0m
