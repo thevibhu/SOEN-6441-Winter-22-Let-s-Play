@@ -2,8 +2,9 @@ package services;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-import org.junit.Before;
+import akka.actor.testkit.typed.javadsl.TestKitJunitResource;
+import akka.actor.testkit.typed.javadsl.TestProbe;
+import org.junit.*;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+//import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import play.libs.ws.*;
 import akka.actor.ActorSystem;
@@ -27,6 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +42,15 @@ import play.libs.ws.WSClient;
 
 
 public class FreelancelotActorTest {
+
     @Mock
     private WSClient ws;
 
     @Mock
     static ActorSystem systemMock;
+
+    @ClassRule
+    public static final TestKitJunitResource testKit = new TestKitJunitResource();
 
     // @InjectMocks private StatisticsHelper help;
 
@@ -87,6 +93,22 @@ public class FreelancelotActorTest {
                 final ActorRef tar = systemMock.actorOf(FreelanceLotGlobalStats.props(ws));
                 tar.tell(new FreelanceLotGlobalStats.globalStatsActorClass(hm), getRef());
 
+            }
+        };
+    }
+
+    @Test
+    public void testSkillActor(){
+        TestProbe<SkillsActorService> probe = testKit.createTestProbe(SkillsActorService.class);
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock){
+            {
+            List<ProjectResponse> result;
+            final ActorRef skillActor = systemMock.actorOf((SkillsActorService.props(ws)));
+            skillActor.tell(new SkillsActorService.SkillSearchActorClass("java"), getRef());
+            /*SkillsActorService.SkillSearchResponse obj = probe.receiveMessage(Duration.ofSeconds(120));
+            result = obj.result;
+            result.forEach(project -> Assert.assertTrue(project.skills.contains("java")));*/
             }
         };
     }
