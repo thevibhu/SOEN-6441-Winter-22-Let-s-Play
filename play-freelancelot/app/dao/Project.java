@@ -21,6 +21,7 @@ public class Project{
 	public Project() {
 		super();
 	}
+	public String sub_status;
 	public int id;
 	 public int owner_id;
 	 public String title;
