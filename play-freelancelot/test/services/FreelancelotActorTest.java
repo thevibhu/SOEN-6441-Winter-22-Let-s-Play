@@ -133,5 +133,55 @@ public class FreelancelotActorTest {
             }
         };
     }
+    
+    /**
+	 * A test to check User Profile using Owner Id
+	 * @author Gurpreet Singh
+	 * @throws InterruptedIOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @throws JsonProcessingException when it occurs
+	 * @version 2.0
+	 * @since 1.0
+	 */
+    
+    @Test
+    public void testUserProfile() throws InterruptedException, ExecutionException, JsonProcessingException,
+            InterruptedIOException, IOException {
+        
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock) {
+            {
+                final ActorRef tar = systemMock.actorOf(UserProfileDisplayActor.props(ws));
+                tar.tell(new UserProfileDisplayActor.UserProfileActorClass(12345) , getRef());
+
+            }
+        };
+    }
+    
+    /**
+	 * A test to check User Latest projects using owner id
+	 * @author Gagandeep Kaur
+	 * @throws InterruptedIOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @throws JsonProcessingException when it occurs
+	 * @version 2.0
+	 * @since 1.0
+	 */
+    
+    @Test
+    public void testUserProject() throws InterruptedException, ExecutionException, JsonProcessingException,
+            InterruptedIOException, IOException {
+        
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock) {
+            {
+                final ActorRef tar = systemMock.actorOf(UserProjectDisplayActor.props(ws));
+                tar.tell(new UserProjectDisplayActor.UserProjectActorClass(12345) , getRef());
+
+            }
+        };
+    }
 }
 
