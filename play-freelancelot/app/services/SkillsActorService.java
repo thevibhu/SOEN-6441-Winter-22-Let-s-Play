@@ -4,7 +4,9 @@ import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.typed.Behavior;
+import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.Behaviors;
+import akka.actor.typed.javadsl.Receive;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.FreelancerResult;
@@ -25,6 +27,7 @@ public class SkillsActorService extends AbstractLoggingActor {
     private final WSClient ws;
 
     public SkillsActorService(WSClient ws) {
+        super();
         this.ws = ws;
     }
 
@@ -37,6 +40,9 @@ public class SkillsActorService extends AbstractLoggingActor {
 
         public SkillSearchActorClass(String key) {
             this.key = key;
+        }
+        public static Behavior<SkillSearchActorClass> create(){
+            return Behaviors.setup(context -> Behaviors.empty());
         }
     }
 
@@ -62,9 +68,9 @@ public class SkillsActorService extends AbstractLoggingActor {
         return Props.create(SkillsActorService.class,ws);
     }
 
-    /*public static Behavior<SkillsActorService> create(WSClient ws){
-        return Behaviors.setup(context -> new SkillsActorService(ws));
-    }*/
+    public static Behavior<SkillsActorService> create(){
+        return Behaviors.setup(context -> Behaviors.empty());
+    }
 
     /**
      * This function queries the API for active projects and only returns the projects with the specific skill the user has searched for.

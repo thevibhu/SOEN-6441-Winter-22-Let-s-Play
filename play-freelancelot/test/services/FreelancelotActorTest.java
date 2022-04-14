@@ -1,34 +1,29 @@
 package services;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.actor.testkit.typed.javadsl.TestKitJunitResource;
 import akka.actor.testkit.typed.javadsl.TestProbe;
-import akka.actor.typed.ActorRef;
-import dao.Project;
-
+import akka.testkit.javadsl.TestKit;
 import dao.ProjectResponse;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-import play.api.test.WsTestClient;
-import play.libs.ws.WSClient;
-import play.test.WSTestClient;
+
+import java.util.List;
 
 public class FreelancelotActorTest {
 	 @ClassRule public static final TestKitJunitResource testKit = new TestKitJunitResource();
 	 
-	@Test
+	/*@Test
 	public void test() {
 		 TestProbe<FreeLancelotActorService.projectSearchActorClass> probe =
 				    testKit.createTestProbe(FreeLancelotActorService.projectSearchActorClass.class);
 		 ActorRef<FreeLancelotActorService.Command> actor = testKit.spawn(FreeLancelotActorService.create("group", "device"));
 		 actor.tell(new FreeLancelotActorService.streamProjects(new FreeLancelotActorService.projectSearchActorClass("java")));
 		 ArrayList<Project> response = probe.receiveMessage();
-	}
+	}*/
 
 
 	/**
@@ -36,23 +31,32 @@ public class FreelancelotActorTest {
 	 * Tested single word, multiple words (spaces) and empty values.
 	 */
 	@Test
-	public void SkillsActorTest(){
-		TestProbe<SkillsActorService.SkillSearchActorClass> probe = testKit.createTestProbe(SkillsActorService.SkillSearchActorClass.class);
-		ActorRef<SkillsActorService.SkillSearchActorClass> skillActor = testKit.spawn(SkillsActorService.create((WSClient) new WSTestClient()));
+	public void testIt(){
+		ActorSystem system = ActorSystem.create();
+		new TestKit(system){
+			{
+			TestProbe<SkillsActorService.SkillSearchActorClass> probe = testKit.createTestProbe(SkillsActorService.SkillSearchActorClass.class);
+			//ActorRef<SkillsActorService.SkillSearchActorClass> skillActor = testKit.spawn(SkillsActorService.SkillSearchActorClass.create());
+			List<ProjectResponse> result;
 
-		List<ProjectResponse> result;
+			final Props props = Props.create(SkillsActorService.SkillSearchActorClass.class);
+			final ActorRef skillActor = system.actorOf(props);
+			//final TestKit probe = new TestKit(system);
 
-		skillActor.tell(new SkillsActorService.SkillSearchActorClass("Java"));
-		result = probe.receiveMessage();
-		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
+			skillActor.tell("Java", getRef());
+			result = (List<ProjectResponse>) probe.receiveMessage();
+			result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Java")));
 
-		skillActor.tell(new SkillsActorService.SkillSearchActorClass("Graphic Design"));
-		result = probe.receiveMessage();
-		result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Graphic Design")));
+			skillActor.tell("Graphic Design", getRef());
+			result = (List<ProjectResponse>) probe.receiveMessage();
+			result.forEach(projectResponse -> Assert.assertTrue(projectResponse.skills.contains("Graphic Design")));
 
-		skillActor.tell(new SkillsActorService.SkillSearchActorClass(""));
-		result = probe.receiveMessage();
-		Assert.assertEquals(10,result.size());
+			skillActor.tell("", getRef());
+			result = (List<ProjectResponse>) probe.receiveMessage();
+			Assert.assertEquals(10,result.size());
 
+			}
+		};
 	}
+
 }

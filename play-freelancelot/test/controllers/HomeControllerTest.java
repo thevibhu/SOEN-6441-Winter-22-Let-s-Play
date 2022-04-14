@@ -61,13 +61,13 @@ public class HomeControllerTest extends WithApplication {
      * @version 1.0
      * @since 1.0
      */
-    @Test
+    /*@Test
     public void testLandingPageContent() {
       Result result = new HomeController().landingPage();
       assertEquals(OK, result.status());
       assertEquals("text/html", result.contentType().get());
       assertEquals("utf-8", result.charset().get());
-    }
+    }*/
     
     /**
      * This method is used to test the search page content.

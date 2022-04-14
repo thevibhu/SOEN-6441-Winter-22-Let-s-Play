@@ -40,7 +40,7 @@ public class UserProjectDisplayTest {
 	 */
 	@Test
 	public void testConstructor() {
-		UserProjectDisplay p = new UserProjectDisplay("title", "SomeType", 1);
+		UserProjectDisplay p = new UserProjectDisplay("title",1, "SomeType", 1);
 		assertEquals(1, p.getOwner_id());
 		assertEquals("SomeType", p.getType());
 		assertEquals("title", p.getTitle());
