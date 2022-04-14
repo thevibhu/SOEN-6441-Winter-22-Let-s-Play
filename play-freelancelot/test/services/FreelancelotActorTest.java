@@ -54,7 +54,6 @@ public class FreelancelotActorTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    
     /**
 	 * A test to check Search Helper Actor of a string.
 	 * @author Vaibhav Verma
@@ -78,7 +77,7 @@ public class FreelancelotActorTest {
             }
         };
     }
-    
+
     /**
 	 * A test to check word stats of a string.
 	 * @author Gurpreet Singh
@@ -102,7 +101,7 @@ public class FreelancelotActorTest {
             }
         };
     }
-    
+
     /**
 	 * A test to check global word stats of a string.
 	 * @author Gurpreet Singh
@@ -133,7 +132,27 @@ public class FreelancelotActorTest {
             }
         };
     }
-    
+
+    /**
+     * A test for the Skill Search Actor.
+     * @author Felipe Kosin Jorge
+     */
+    @Test
+    public void testSkillActor(){
+        //TestProbe<SkillsActorService> probe = testKit.createTestProbe(SkillsActorService.class);
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock){
+            {
+            List<ProjectResponse> result;
+            final ActorRef skillActor = systemMock.actorOf((SkillsActorService.props(ws)));
+            skillActor.tell(new SkillsActorService.SkillSearchActorClass("java"), getRef());
+            /*SkillsActorService.SkillSearchResponse obj = probe.receiveMessage(Duration.ofSeconds(120));
+            result = obj.result;
+            result.forEach(project -> Assert.assertTrue(project.skills.contains("java")));*/
+            }
+        };
+    }
+
     /**
 	 * A test to check User Profile using Owner Id
 	 * @author Gurpreet Singh
@@ -144,11 +163,11 @@ public class FreelancelotActorTest {
 	 * @version 2.0
 	 * @since 1.0
 	 */
-    
+
     @Test
     public void testUserProfile() throws InterruptedException, ExecutionException, JsonProcessingException,
             InterruptedIOException, IOException {
-        
+
         systemMock = ActorSystem.create();
         new TestKit(systemMock) {
             {
@@ -158,7 +177,7 @@ public class FreelancelotActorTest {
             }
         };
     }
-    
+
     /**
 	 * A test to check User Latest projects using owner id
 	 * @author Gagandeep Kaur
@@ -169,11 +188,11 @@ public class FreelancelotActorTest {
 	 * @version 2.0
 	 * @since 1.0
 	 */
-    
+
     @Test
     public void testUserProject() throws InterruptedException, ExecutionException, JsonProcessingException,
             InterruptedIOException, IOException {
-        
+
         systemMock = ActorSystem.create();
         new TestKit(systemMock) {
             {

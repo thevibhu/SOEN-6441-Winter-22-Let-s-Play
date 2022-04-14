@@ -2,30 +2,19 @@ package controllers;
 
 import akka.actor.*;
 import akka.japi.pf.DeciderBuilder;
-import akka.japi.pf.ReceiveBuilder;
 import akka.actor.ActorInterruptedException;
 import java.io.InterruptedIOException;
 import java.util.concurrent.*;
 import scala.concurrent.duration.Duration;
-import java.util.*;
 import play.libs.ws.*;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import static akka.actor.SupervisorStrategy.*;
-import java.util.concurrent.CompletableFuture;
 
 import akka.actor.Props;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.inject.Inject;
 
-import services.FreeLancelotActorService;
-import services.FreelanceLotGlobalStats;
-import services.UserProfileDisplayActor;
-import services.UserProjectDisplayActor;
-import services.FreeLancelotWordStatsActor;
+import services.*;
 
 public class SuperVisor extends AbstractLoggingActor {
     private final WSClient ws;
@@ -44,7 +33,9 @@ public class SuperVisor extends AbstractLoggingActor {
         final ActorRef projectGlobalStats = getContext().actorOf(FreelanceLotGlobalStats.props(ws));
         final ActorRef userDetail = getContext().actorOf(UserProfileDisplayActor.props(ws));
         final ActorRef userProj = getContext().actorOf(UserProjectDisplayActor.props(ws));
-        
+
+        final ActorRef skills = getContext().actorOf(SkillsActorService.props(ws));
+
         return receiveBuilder()
                 .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
                     projectSearchChild.forward(any, getContext());
@@ -61,6 +52,8 @@ public class SuperVisor extends AbstractLoggingActor {
                 .match(UserProjectDisplayActor.UserProjectActorClass.class, any->{
                 	userProj.forward(any, getContext());
                 })
+                .match(SkillsActorService.SkillSearchActorClass.class, any ->
+                        skills.forward(any, getContext()))
                 .build();
     }
 

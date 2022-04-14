@@ -13,10 +13,12 @@ libraryDependencies += guice
 
 libraryDependencies ++= Seq(
   javaWs,
- "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
- "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion,
- "ch.qos.logback" % "logback-classic" % "1.2.3"
+  "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
+  "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion,
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 )
+
 libraryDependencies += "org.mockito" % "mockito-core" % "4.1.0" % "test"
 
 libraryDependencies += ehcache
