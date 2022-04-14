@@ -31,6 +31,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 
+/** This Actor class holds is used to fetch data for Word Stats 
+ * @author  Gurpreet Singh
+ * @version 2.0
+ * @since 1.0
+*/
 public class FreeLancelotWordStatsActor extends AbstractLoggingActor{
 	
 	ObjectMapper mapper;
@@ -63,6 +68,11 @@ public class FreeLancelotWordStatsActor extends AbstractLoggingActor{
                 .build();
 	}
 	
+	/** This method is used to get the data from API for word Stats
+	 * @author  Gurpreet Singh
+	 * @version 2.0
+	 * @since 1.0
+	*/
 	public void wordStatistics(wordStatsActorClass obj) {
 	    final ActorRef senderRef = sender();
 	    

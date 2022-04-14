@@ -36,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 
 import services.FreeLancelotWordStatsActor.*;
 import services.FreelanceLotGlobalStats.*;
+import services.FreeLancelotActorService.*;
 import play.libs.ws.WSClient;
 
 
@@ -53,9 +54,41 @@ public class FreelancelotActorTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    
     /**
-     * This is a unit test method for the test SearchHelperActor 
-     */
+	 * A test to check Search Helper Actor of a string.
+	 * @author Vaibhav Verma
+	 * @throws InterruptedIOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @throws JsonProcessingException when it occurs
+	 * @version 2.0
+	 * @since 1.0
+	 */
+    @Test
+    public void testSearchActor() throws InterruptedException, ExecutionException, JsonProcessingException,
+            InterruptedIOException, IOException {
+        String data = "I java java";
+        ProjectResponse projectResults = new ProjectResponse();
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock) {
+            {
+                final ActorRef tar = systemMock.actorOf(FreeLancelotActorService.props(ws));
+                tar.tell(new FreeLancelotActorService.projectSearchActorClass("java"), getRef());
+            }
+        };
+    }
+    
+    /**
+	 * A test to check word stats of a string.
+	 * @author Gurpreet Singh
+	 * @throws InterruptedIOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @throws JsonProcessingException when it occurs
+	 * @version 2.0
+	 * @since 1.0
+	 */
     @Test
     public void testWordActor() throws InterruptedException, ExecutionException, JsonProcessingException,
             InterruptedIOException, IOException {
@@ -69,7 +102,17 @@ public class FreelancelotActorTest {
             }
         };
     }
-
+    
+    /**
+	 * A test to check global word stats of a string.
+	 * @author Gurpreet Singh
+	 * @throws InterruptedIOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @throws JsonProcessingException when it occurs
+	 * @version 2.0
+	 * @since 1.0
+	 */
     @Test
     public void testGlobalActor() throws InterruptedException, ExecutionException, JsonProcessingException,
             InterruptedIOException, IOException {

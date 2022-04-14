@@ -31,6 +31,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 
+/** This Actor class holds is used to fetch data for Global Word Stats 
+ * @author  Gurpreet Singh
+ * @version 2.0
+ * @since 1.0
+*/
 public class FreelanceLotGlobalStats extends AbstractLoggingActor{
 	
 	ObjectMapper mapper;
@@ -41,7 +46,6 @@ public class FreelanceLotGlobalStats extends AbstractLoggingActor{
 		this.ws = ws;
 	    mapper = new ObjectMapper();
 	    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	        //context.getLog().info("Device actor {}-{} started");
 	}
 	
 	public static class globalStatsActorClass {
@@ -63,6 +67,11 @@ public class FreelanceLotGlobalStats extends AbstractLoggingActor{
                 .build();
 	}
 	
+	/** This method is used to get the data from API for Global Word Stats
+	 * @author  Gurpreet Singh
+	 * @version 2.0
+	 * @since 1.0
+	*/
 	public void globalStatistics(globalStatsActorClass obj) {
 	    final ActorRef senderRef = sender();
 	    
