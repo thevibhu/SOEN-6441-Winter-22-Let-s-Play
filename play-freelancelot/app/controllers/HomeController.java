@@ -199,7 +199,12 @@ public class HomeController extends Controller {
     }
     
     
-    //javadoc here
+    
+    /***
+     * This function initiate socket connection to FreelanceLot api
+     * @param keyWord topic name that is to be searched
+     * @return
+     */
     public WebSocket socket(String keyWord) {
         return WebSocket.Text.accept(
                         request -> {
