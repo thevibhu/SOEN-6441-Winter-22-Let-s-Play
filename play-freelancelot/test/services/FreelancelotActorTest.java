@@ -20,15 +20,23 @@ import akka.actor.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.io.*;
-import dao.Project;
-import dao.ProjectResponse;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import services.FreeLancelotWordStatsActor.*;
 import play.libs.ws.WSClient;
 
-import org.junit.ClassRule;
-import org.junit.Test;
 
 public class FreelancelotActorTest {
-	@Mock
+    @Mock
     private WSClient ws;
 
     @Mock
@@ -40,25 +48,24 @@ public class FreelancelotActorTest {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
-	
-	 
-	@Test
-	public void test() {
-		String data = "I javascript java";
+
+    /**
+     * This is a unit test method for the test SearchHelperActor 
+     */
+    @Test
+    public void testWordActor() throws InterruptedException, ExecutionException, JsonProcessingException,
+            InterruptedIOException, IOException {
+        
         systemMock = ActorSystem.create();
         new TestKit(systemMock) {
             {
-                final ActorRef tar = systemMock.actorOf(FreeLancelotActorService.props(ws));
-                tar.tell(new FreeLancelotActorService.projectSearchActorClass("java"), getRef());
+                final ActorRef tar = systemMock.actorOf(FreeLancelotWordStatsActor.props(ws));
+                tar.tell(new FreeLancelotWordStatsActor.wordStatsActorClass("java"), getRef());
 
             }
         };
-		
-		 /*TestProbe<FreeLancelotActorService.projectSearchActorClass> probe =
-				    testKit.createTestProbe(FreeLancelotActorService.projectSearchActorClass.class);
-		 ActorRef<FreeLancelotActorService.Command> actor = testKit.spawn(FreeLancelotActorService.create("group", "device"));
-		 actor.tell(new FreeLancelotActorService.streamProjects(new FreeLancelotActorService.projectSearchActorClass("java")));
-		 ArrayList<Project> response = probe.receiveMessage();*/
-	}
+    }
+
 
 }
+
