@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import akka.testkit.javadsl.TestKit;
+import dao.ProjectResponse;
+
 import org.mockito.MockitoAnnotations;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import services.FreeLancelotWordStatsActor.*;
+import services.FreelanceLotGlobalStats.*;
 import play.libs.ws.WSClient;
 
 
@@ -66,6 +70,25 @@ public class FreelancelotActorTest {
         };
     }
 
+    @Test
+    public void testGlobalActor() throws InterruptedException, ExecutionException, JsonProcessingException,
+            InterruptedIOException, IOException {
+        
+    	List<ProjectResponse> l = new ArrayList<ProjectResponse>();
+		ProjectResponse p = new ProjectResponse();
+		p.setPrevDescriptor("preview descriptor");
+		l.add(p);
+		HashMap<String,List<ProjectResponse>> hm = new HashMap<String,List<ProjectResponse>>();
+		hm.put("key", l);
+    	
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock) {
+            {
+                final ActorRef tar = systemMock.actorOf(FreelanceLotGlobalStats.props(ws));
+                tar.tell(new FreelanceLotGlobalStats.globalStatsActorClass(hm), getRef());
 
+            }
+        };
+    }
 }
 
