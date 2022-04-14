@@ -16,6 +16,13 @@ import akka.japi.pf.DeciderBuilder;
 import play.libs.ws.*;
 import javax.inject.Inject;
 
+
+/**
+ * This controller supervisor handles various exceptions in the Actor System at the service level.
+ * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+ * @version 2.0
+ * @since 1.0
+ */
 public class ServiceActorSupervisor extends AbstractLoggingActor{
 	private final WSClient ws;
 
@@ -26,9 +33,13 @@ public class ServiceActorSupervisor extends AbstractLoggingActor{
 	@Override
 	public Receive createReceive() {
 		 final ActorRef child = context().actorOf(FreelancerAPIcallsActorService.props(ws));
+		 final ActorRef child2 = context().actorOf(FreeLancelotActorService.props(ws));
 	        return receiveBuilder()
 	                .match(FreelancerAPIcallsActorService.SearchProjectsApi.class, any -> {
 	                    child.forward(any, getContext());
+	                })
+	                .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
+	                    child2.forward(any, getContext());
 	                })
 	                .build();
 	}

@@ -16,18 +16,24 @@ import javax.inject.Inject;
 
 import services.*;
 
-public class SuperVisor extends AbstractLoggingActor {
+/**
+ * This controller supervisor handles various exceptions in the Actor System at the controller level.
+ * @author Vaibhav, Felipe, Gagandeep, Gurpreet
+ * @version 2.0
+ * @since 1.0
+ */
+public class ControllerSupervisor extends AbstractLoggingActor {
     private final WSClient ws;
 
     @Inject
-    public SuperVisor(WSClient ws) {
+    public ControllerSupervisor(WSClient ws) {
         this.ws = ws;
     }
 
     @Override
     public Receive createReceive() {
 
-        final ActorRef projectSearchChild = getContext().actorOf(FreeLancelotActorService.props(ws));
+        final ActorRef fleschChild = getContext().actorOf(FleschActorService.props(ws));
         
         final ActorRef projectWordStats = getContext().actorOf(FreeLancelotWordStatsActor.props(ws));
         final ActorRef projectGlobalStats = getContext().actorOf(FreelanceLotGlobalStats.props(ws));
@@ -37,8 +43,8 @@ public class SuperVisor extends AbstractLoggingActor {
         final ActorRef skills = getContext().actorOf(SkillsActorService.props(ws));
 
         return receiveBuilder()
-                .match(FreeLancelotActorService.projectSearchActorClass.class, any -> {
-                    projectSearchChild.forward(any, getContext());
+                .match(FleschActorService.fleschActorClass.class, any -> {
+                	fleschChild.forward(any, getContext());
                 })
                 .match(FreeLancelotWordStatsActor.wordStatsActorClass.class, any -> {
                 	projectWordStats.forward(any, getContext());
@@ -75,6 +81,6 @@ public class SuperVisor extends AbstractLoggingActor {
     }
 
     public static Props props(WSClient ws) {
-        return Props.create(SuperVisor.class, ws);
+        return Props.create(ControllerSupervisor.class, ws);
     }
 }

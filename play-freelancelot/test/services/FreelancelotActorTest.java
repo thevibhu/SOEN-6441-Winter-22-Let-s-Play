@@ -56,7 +56,7 @@ public class FreelancelotActorTest {
 
     /**
 	 * A test to check Search Helper Actor of a string.
-	 * @author Vaibhav Verma
+	 * @author Vaibhav, Felipe, Gagandeep, Gurpreet
 	 * @throws InterruptedIOException when it occurs
 	 * @throws ExecutionException when it occurs
 	 * @throws InterruptedException when it occurs
@@ -77,6 +77,31 @@ public class FreelancelotActorTest {
             }
         };
     }
+    
+    /**
+	 * A test to check flesch Actor.
+	 * @author Vaibhav Verma
+	 * @throws InterruptedIOException when it occurs
+	 * @throws ExecutionException when it occurs
+	 * @throws InterruptedException when it occurs
+	 * @throws JsonProcessingException when it occurs
+	 * @version 2.0
+	 * @since 1.0
+	 */
+    @Test
+    public void testfleschActor() throws InterruptedException, ExecutionException, JsonProcessingException,
+            InterruptedIOException, IOException {
+        String data = "golang developer";
+        ProjectResponse projectResults = new ProjectResponse();
+        systemMock = ActorSystem.create();
+        new TestKit(systemMock) {
+            {
+                final ActorRef tar = systemMock.actorOf(FleschActorService.props(ws));
+                tar.tell(new FleschActorService.fleschActorClass("golang developer"), getRef());
+            }
+        };
+    }
+    
 
     /**
 	 * A test to check word stats of a string.
@@ -146,9 +171,9 @@ public class FreelancelotActorTest {
             List<ProjectResponse> result;
             final ActorRef skillActor = systemMock.actorOf((SkillsActorService.props(ws)));
             skillActor.tell(new SkillsActorService.SkillSearchActorClass("java"), getRef());
-            /*SkillsActorService.SkillSearchResponse obj = probe.receiveMessage(Duration.ofSeconds(120));
-            result = obj.result;
-            result.forEach(project -> Assert.assertTrue(project.skills.contains("java")));*/
+//            SkillsActorService.SkillSearchResponse obj = probe.receiveMessage(Duration.ofSeconds(120));
+//            result = obj.result;
+//            result.forEach(project -> Assert.assertTrue(project.skills.contains("java")));
             }
         };
     }

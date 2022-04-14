@@ -34,20 +34,20 @@
 			}
             }
 
-			async function onOpen(evt) {
-                writeToScreen("CONNECTED");
+			async function onOpen(event) {
+                writeToScreen("Web Socket connected");
             }
 
-            async function onClose(evt) {
-                writeToScreen("DISCONNECTED");
+            async function onClose(event) {
+                writeToScreen("Web Socket disconnected");
             }
 
-            async function onError(evt) {
-                writeToScreen("ERROR: " + JSON.stringify(evt));
+            async function onError(event) {
+                writeToScreen("Web Socket error: " + JSON.stringify(event));
             }
             
-            async function onMessage(evt) {
-            	var webSocketData = JSON.parse(evt.data);
+            async function onMessage(event) {
+            	var webSocketData = JSON.parse(event.data);
             	console.log("Data from Web Socket call ↓");
 				console.log(webSocketData);
                 
@@ -62,7 +62,8 @@
                 if (webSocketData.length!=0) {
                 	for (let i = 0; i < webSocketData.length; i++) {
                 		let asyncData = webSocketData[i];
-                		tableContent +=
+						if ('@searchResult'.includes(asyncData.title)){
+							tableContent +=
                 		"<tr><td>" + (i+1) + "</td>" +
 			    		"<td>" + asyncData.owner_id + "</td>" +
 			    		"<td>" + asyncData.time_submitted + "</td>" +
@@ -84,10 +85,15 @@
 			    		"<td>" + asyncData.flesch_index + "</td>" + 
 			    		"<td>" + asyncData.fkgl + "</td>" +
 			    		"<td>" + asyncData.edu_level + "</td></tr>";
+						var table = document.getElementById("infoTable");
+						var row = table.insertRow(0);
+						row.innerHTML = tableContent;
+						}
+					
+                		
                 	}
                 }
-                
-                document.getElementById("infoTable").innerHTML = tableContent;
+						
             }
    
     </script>

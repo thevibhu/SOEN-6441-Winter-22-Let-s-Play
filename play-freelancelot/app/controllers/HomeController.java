@@ -57,7 +57,7 @@ public class HomeController extends Controller {
     	cache = new HashMap<String, List<ProjectResponse>>();
     	  this.ws = ws;
     	  this.httpExecutionContext = httpExecutionContext;
-    	  this.superActor = system.actorOf(SuperVisor.props(ws));
+    	  this.superActor = system.actorOf(ControllerSupervisor.props(ws));
     	  
     }
     
@@ -81,8 +81,8 @@ public class HomeController extends Controller {
                     .thenApplyAsync(response -> ok(views.html.index.render(cache.get(keyWord),request,keyWord,cache)));
         }  else {
                 return FutureConverters
-                                .toJava(ask(superActor,// call stream projects method here
-                                                new FreeLancelotActorService.projectSearchActorClass(keyWord),
+                                .toJava(ask(superActor,
+                                                new FleschActorService.fleschActorClass(keyWord),
                                                 10000))
                                 .thenApplyAsync(response -> {
                                     if(((List<ProjectResponse>)response).size() > 0) {
@@ -210,20 +210,17 @@ public class HomeController extends Controller {
                         request -> {
                                 Sink<String, ?> in = Sink.foreach(System.out::println);
                                 ObjectMapper o = new ObjectMapper();
-                                // Send a single 'Hello!' message and then leave the socket open
                                 Source<String, ?> out = null;
                                 out = Source.tick(
                                                 Duration.ofSeconds(4),
                                                 Duration.ofSeconds(4),
                                                 FutureConverters.toJava(ask(superActor,
-                                                                new FreeLancelotActorService.projectSearchActorClass(
+                                                                new FleschActorService.fleschActorClass(
                                                                                 keyWord),
                                                                 10000))
                                                                 .thenApplyAsync(response -> {
-                                                                       // if (response.size() > 0) {
                                                                                 cache.put(keyWord,
                                                                                                 (List<ProjectResponse>) response);
-                                                                        //}
                                                                         return response;
                                                                 })
                                                                 .thenApply(res -> {
