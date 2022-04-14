@@ -133,6 +133,10 @@ public class FreelancelotActorTest {
         };
     }
 
+    /**
+     * A test for the Skill Search Actor.
+     * @author Felipe Kosin Jorge
+     */
     @Test
     public void testSkillActor(){
         //TestProbe<SkillsActorService> probe = testKit.createTestProbe(SkillsActorService.class);
